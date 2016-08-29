@@ -1,0 +1,79 @@
+.button{
+  padding: 6px 16px;
+  transition: all 0.4s;
+  background-size: 200% 200%;
+  background-position: 50%;
+  transition: all 0.4s;
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+  border: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  &:focus{
+    outline: 0;
+  }
+  &:hover{
+    background-color: #f0f0f0;
+  }
+  &:active{
+    background-color: #e0e0e0;
+    background-size: 1000% 1000%;
+    background-repeat: no-repeat;
+    background-image: radial-gradient(circle, #e0e0e0 10%, #fff 11%);
+  }
+
+  &_primary{
+    color: #fff;
+    background-color: #2196f3;
+    &:hover{
+      background-color: #0d87e9;
+    }
+    &:active{
+      background-color: #0b76cc;
+      background-image: radial-gradient(circle, #0b76cc 10%, #2196f3 11%);
+    }
+  }
+  &_success{
+    color: #fff;
+    background-color: #4CAF50;
+    &:hover{
+      background-color: darken(#4CAF50, 5%);
+    }
+    &:active{
+      background-color: darke(#4CAF50, 10%);
+      background-image: radial-gradient(circle, darken(#4CAF50, 10%) 10%, #4CAF50 11%);
+    }
+  }
+  &_danger{
+    color: #fff;
+    background-color: #F44336;
+    &:hover{
+      background-color: darken(#F44336, 5%);
+    }
+    &:active{
+      background-color: darke(#F44336, 10%);
+      background-image: radial-gradient(circle, darken(#F44336, 10%) 10%, #F44336 11%);
+    }
+  }
+  &_circle{
+    width: 2em;
+    height: 2em;
+    color: #fff;
+    padding: 0;
+    font-size: 1.25em;
+    border-radius: 3em;
+    line-height: 1em;
+  }
+  &_delete{
+    background-color: #e51c23;
+    &:hover{
+       background-color: darken(#e51c23, 5%);
+    }
+    &:active{
+       background-color: darken(#e51c23, 10%);
+       background-image: radial-gradient(circle, darken(#e51c23, 10%) 10%, #e51c23 11%);
+    }
+  }
+}

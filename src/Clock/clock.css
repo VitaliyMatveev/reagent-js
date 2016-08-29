@@ -1,0 +1,17 @@
+.clock{
+  font-size: 1.2em;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+
+.clock .clock__line{
+    display: inline-block;
+    padding-right: 10px;
+    vertical-align: top;
+}
+
+.clock .clock__number {
+    padding: 0 2.5px;
+    font-weight: bold;
+}

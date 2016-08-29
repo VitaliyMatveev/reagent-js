@@ -1,0 +1,22 @@
+.text-input .text-input__input {
+  padding: 3px 0 3px 10px !important;
+  width: 100%;
+  border: none;
+  outline: none;
+  box-shadow: inset 0 -1px 0 #ddd;
+}
+
+.text-input .text-input__input:focus {
+  box-shadow: inset 0 -2px 0 #2196f3;
+}
+
+.text-input .text-input__input:focus+.text-input__help {
+  visibility: visible;
+}
+
+.text-input .text-input__help{
+  display: block;
+  color: #a6a6a6;
+  font-size: 0.75em;
+  visibility: hidden;
+}

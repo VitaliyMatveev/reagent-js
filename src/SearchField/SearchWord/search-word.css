@@ -1,0 +1,8 @@
+.search-word{
+  background-color: #FFC107;
+  display: inline-block;
+  line-height: 1;
+  margin-right: 5px;
+  vertical-align: top;
+  cursor: pointer;
+}
