@@ -81,8 +81,12 @@ const getFieldData = (field, fieldName, elements, parentName) => {
         return result
       }, {})
     }
+    case 'number': {
+      return Number.parseFloat(elements[fullName].value)
+    }
+
     default:
-      if (!elements[fullName]) throw new Error(`Не найдено поле с именем ${fullName} ${JSON.stringify(field)}`)
+      if (!elements[fullName]) throw new Error(`Не найден элемент с именем ${fullName} из схемы ${JSON.stringify(field)}`)
       return elements[fullName].value && elements[fullName].value != '' ? elements[fullName].value : null
   }
 }
@@ -104,7 +108,7 @@ class Form extends Component {
       let formData = new FormData(e.target)
       onSubmit(formData, type)
     } else {
-      onSubmit({...getFieldData(schema, null, elements)})
+      onSubmit({...getFieldData(schema, schema.name, elements)})
     }
   }
 

@@ -50,7 +50,7 @@ export default class FileField extends Component{
           className={`file-upload-widget__label ${hasValue || focused ? 'file-upload-widget__label_focused' : ''}`}
           muiTheme={muiTheme}
           htmlFor={name}
-          shrink={hasValue || focused}
+          shrink={hasValue == true || focused}
           style={{
             color: hasValue || focused ? primary1Color : secondaryTextColor
           }}

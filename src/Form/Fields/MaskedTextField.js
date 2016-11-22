@@ -26,7 +26,7 @@ class MaskedTextField extends Component {
     const {name, mask, title, value, defaultValue} = this.props
     const {focused, hasValue} = this.state
     const {muiTheme} = this.context
-    const {primary1Color, secondaryTextColor} = muiTheme.palette
+    const { hintColor, focusColor } = muiTheme.textField
     return (
       <div className='c-text-field'>
         <TextFieldLabel
@@ -35,7 +35,7 @@ class MaskedTextField extends Component {
           htmlFor={name}
           shrink={focused || hasValue}
           style={{
-            color: focused ? primary1Color : secondaryTextColor
+            color: focused ? focusColor : hintColor
           }}
           >
           {title}

@@ -56,7 +56,7 @@ class RichTextField extends Component {
           name={ name }
           className='c-rich-text-field__editor'
           placeholder='test'
-          value={value}
+          value={value || ''}
         />
         <label className='c-rich-text-field__label'>
           {title}

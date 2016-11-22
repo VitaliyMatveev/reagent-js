@@ -5,7 +5,7 @@ import MaterialTextField from 'material-ui/TextField'
 const TextField  = ({mask, title, required, value, defaultValue, ...other}) => mask ? (
   <MaskedTextField
     mask={mask} {...other}
-    title={title}
+    title={ required && title ? title+' *' : title }
     required={required}
     defaultValue={value || defaultValue}
     {...other}
@@ -13,7 +13,7 @@ const TextField  = ({mask, title, required, value, defaultValue, ...other}) => m
 ) : (
   <MaterialTextField
     fullWidth={true}
-    floatingLabelText={required && title ? title+' *' : title}
+    floatingLabelText={ required && title ? title+' *' : title }
     required={required}
     defaultValue={value || defaultValue}
     {...other}

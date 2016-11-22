@@ -2,7 +2,7 @@
 
 .c-editor-panel{
   display: flex;
-  margin: 1rem;
+  margin: 0 1rem 1rem 1rem;
   flex-direction: row;
   flex-wrap: wrap;
 
@@ -17,6 +17,7 @@
 }
 .c-field {
   margin-top: 1rem;
+  width: 100%;
   &.c-field_focused {
     .c-field__label {
       color: @focus-color;
@@ -69,6 +70,12 @@
   }
 }
 
+.c-address-field {
+  width: 100%;
+  .c-address-field__input {
+    max-width: calc(~"100% - 40px")
+  }
+}
 .c-address-field-popup {
   width: 100%;
   .c-address-field-popup__title {
