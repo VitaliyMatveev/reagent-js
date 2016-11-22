@@ -23,7 +23,7 @@ class MaskedTextField extends Component {
     this.setState({hasValue: value && value != ''})
   }
   render () {
-    const {name, mask, title, value, defaultValue} = this.props
+    const {name, mask, title, value, defaultValue, required} = this.props
     const {focused, hasValue} = this.state
     const {muiTheme} = this.context
     const { hintColor, focusColor } = muiTheme.textField
@@ -47,6 +47,7 @@ class MaskedTextField extends Component {
           onBlur={this.handleBlur.bind(this)}
           onChange={this.handleChange.bind(this)}
           id={name}
+          required={required}
           mask={mask}
           name={name}
           value={value || defaultValue}

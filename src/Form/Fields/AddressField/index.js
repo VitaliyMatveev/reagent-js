@@ -5,35 +5,27 @@ import SocialLocationCity from 'material-ui/svg-icons/social/location-city'
 
 import AddressDialog from './AddressDialog'
 
-function formatAddressString(address) {
-  const {
-    zip,
-    region,
-    sub_region,
-    city,
-    settlement,
-    street,
-    house,
-    building,
-    appartment
-  } = address
-  let addrStr = zip ? `${zip}, ${region}` : region
-  addrStr = sub_region ? `${addrStr}, ${sub_region}` : addrStr
-  addrStr = city ? `${addrStr}, ${city}` : addrStr
-  addrStr = settlement ? `${addrStr}, ${settlement}` : addrStr
-  addrStr = street ? `${addrStr}, ${street}` : addrStr
-  addrStr = house ? `${addrStr}, д.${house}` : addrStr
-  addrStr = building ? `${addrStr}, корп.${building}` : addrStr
-  addrStr = appartment ? `${addrStr}, кв.${appartment}` : addrStr
-  return addrStr
+function formatAddressString(address={}) {
+  const appendStringToAddress = (addrStr, string, prefix) => {
+    if (string) {
+      return `${addrStr}${addrStr ? ', ' : ''}${prefix || ''}${string}`
+    } else {
+      return addrStr
+    }
+  }
+  return Object.keys(address).reduce((addrStr, key) => (
+    appendStringToAddress(addrStr, address[key])
+  ), '')
 }
 
 class AddressField extends Component {
   constructor (props) {
     super (props)
+    const { value } = props
     this.state={
+      value,
       open: false,
-      address: ''
+      address: formatAddressString(value)
     }
   }
   _handleOpen (){
@@ -44,12 +36,12 @@ class AddressField extends Component {
   }
   _handleSubmit (e){
     e.preventDefault()
-    const values = Object.keys(addressPartitionals).reduce((result, name) => {
+    const value = Object.keys(addressPartitionals).reduce((result, name) => {
       const { value } = e.target.elements.namedItem(name)
       value ? result[name] = value : null
       return result
     },{})
-    this.setState({address: formatAddressString(values), open: false})
+    this.setState({address: formatAddressString(value), value, open: false})
     Object.keys(addressPartitionals).map(name => {
       const { value } = e.target.elements.namedItem(name)
       this.refs[name].value = value
@@ -62,8 +54,8 @@ class AddressField extends Component {
     e.keyCode==27 && this._handleClose()
   }
   render () {
-    const {title, value, defaultValue, name, required} = this.props
-    const { open, address } = this.state
+    const {title, name, required} = this.props
+    const { open, address, value } = this.state
     return (
       <div className='c-field c-address-field'>
         <TextField
@@ -71,10 +63,9 @@ class AddressField extends Component {
           onKeyUp={this._handleKeyUp.bind(this)}
           floatingLabelText={ required ? title+' *' : title }
           required={ required }
-          defaultValue={value || defaultValue}
           fullWidth={true}
           ref='text_field'
-          value={address}
+          value={address || ''}
         />
         <FloatingActionButton
           mini={true}
@@ -87,20 +78,21 @@ class AddressField extends Component {
         <AddressDialog
           open={ open }
           title={ title }
+          value={ value }
           addressPartitionals={ addressPartitionals }
           onClose={ this._handleClose.bind(this) }
           onSubmit={ this._handleSubmit.bind(this) }
           onKeyUp={ this._handlePopupKeyUp.bind(this) }
         />
         {
-          // Object.keys(addressPartitionals).map((addressName, i) => (
-          //   <input
-          //     key={i}
-          //     type='hidden'
-          //     ref={ addressName }
-          //     name={ `${name}[${addressName}]` }
-          //   />
-          // ))
+          Object.keys(addressPartitionals).map((addressName, i) => (
+            <input
+              key={i}
+              type='hidden'
+              ref={ addressName }
+              name={ `${name}[${addressName}]` }
+            />
+          ))
         }
       </div>
     )

@@ -9,14 +9,11 @@ import './style.css'
 
 const getObjectFieldData = ({properties}, elements, fullName) => Object.keys(properties).reduce((values, name) => {
   const fieldData = getFieldData(properties[name], name, elements, fullName)
-  if (fieldData) {
-    return ({
-      ...values,
-      [name]: getFieldData(properties[name], name, elements, fullName)
-    })
-  } else {
-    return values
-  }
+  //console.log('fieldData', name, fieldData)
+  return ({
+    ...values,
+    [name]: fieldData
+  })
 },{})
 
 const getFieldData = (field, fieldName, elements, parentName) => {
@@ -61,7 +58,7 @@ const getFieldData = (field, fieldName, elements, parentName) => {
       return elements.namedItem(`${fullName}[data]`)
     }
     case 'toggle': {
-      return elements[fullName].checked
+      return elements.namedItem(fullName).checked
     }
     case 'address': {
       const addressPartitionals = [
@@ -87,7 +84,7 @@ const getFieldData = (field, fieldName, elements, parentName) => {
 
     default:
       if (!elements[fullName]) throw new Error(`Не найден элемент с именем ${fullName} из схемы ${JSON.stringify(field)}`)
-      return elements[fullName].value && elements[fullName].value != '' ? elements[fullName].value : null
+      return elements[fullName].value //&& elements[fullName].value != '' ? elements[fullName].value : null
   }
 }
 
@@ -100,7 +97,7 @@ class Form extends Component {
     this.submit = () => this.refs.submitButton.click()
   }
   _handleSubmit(e){
-    console.log('form submit');
+
     const {onSubmit, schema, type='application/json'} = this.props
     e.preventDefault();
     const {elements} = e.target
@@ -108,7 +105,8 @@ class Form extends Component {
       let formData = new FormData(e.target)
       onSubmit(formData, type)
     } else {
-      onSubmit({...getFieldData(schema, schema.name, elements)})
+      const data = getFieldData(schema, schema.name, elements)      
+      onSubmit(data)
     }
   }
 

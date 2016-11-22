@@ -1,12 +1,12 @@
 {
   "name": "reagents-js",
-  "version": "0.0.29",
+  "version": "0.0.44",
   "description": "React components set",
   "main": "./lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "NODE_ENV=release babel --presets es2015,stage-0,react ./src --out-dir ./lib; autoless --no-watch src lib",
-    "prePublish": "compile"
+    "prepublish": "npm run compile"
   },
   "keywords": [
     "react",
@@ -33,7 +33,7 @@
   "dependencies": {
     "react": "~15.3.2",
     "react-dom": "~15.3.2",
-    "material-ui": "^0.16.1",
+    "material-ui": "^0.15.4",
     "react-maskedinput": "^3.2.4",
     "draft-js": "^0.7.0",
     "draft-js-import-html": "^0.2.0",
