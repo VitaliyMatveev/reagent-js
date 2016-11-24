@@ -23,7 +23,7 @@ class MaskedTextField extends Component {
     this.setState({hasValue: value && value != ''})
   }
   render () {
-    const {name, mask, title, value, defaultValue, required} = this.props
+    const {name, mask, title, value, defaultValue, pattern, required} = this.props
     const {focused, hasValue} = this.state
     const {muiTheme} = this.context
     const { hintColor, focusColor } = muiTheme.textField
@@ -50,6 +50,7 @@ class MaskedTextField extends Component {
           required={required}
           mask={mask}
           name={name}
+          pattern={pattern}
           value={value || defaultValue}
           placeholder={focused ? '' : ' '}
         />

@@ -6,6 +6,17 @@ import SocialLocationCity from 'material-ui/svg-icons/social/location-city'
 import AddressDialog from './AddressDialog'
 
 function formatAddressString(address={}) {
+  const addressPartitionals = {
+    zip: 'Индекс',
+    region: 'Регион',
+    sub_region: 'Район',
+    city: 'Город',
+    settlement: 'Населенный пункт',
+    street: 'Улица',
+    house: 'Дом',
+    building: 'Строение',
+    appartment: 'Помещение'
+  }
   const appendStringToAddress = (addrStr, string, prefix) => {
     if (string) {
       return `${addrStr}${addrStr ? ', ' : ''}${prefix || ''}${string}`
@@ -13,7 +24,7 @@ function formatAddressString(address={}) {
       return addrStr
     }
   }
-  return Object.keys(address).reduce((addrStr, key) => (
+  return Object.keys(addressPartitionals).reduce((addrStr, key) => (
     appendStringToAddress(addrStr, address[key])
   ), '')
 }
@@ -21,7 +32,7 @@ function formatAddressString(address={}) {
 class AddressField extends Component {
   constructor (props) {
     super (props)
-    const { value } = props
+    const { value={} } = props
     this.state={
       value,
       open: false,
@@ -41,10 +52,16 @@ class AddressField extends Component {
       value ? result[name] = value : null
       return result
     },{})
-    this.setState({address: formatAddressString(value), value, open: false})
     Object.keys(addressPartitionals).map(name => {
       const { value } = e.target.elements.namedItem(name)
       this.refs[name].value = value
+    })
+    this.setState({
+      value,
+      open: false,
+      address: formatAddressString(value)
+    }, () => {
+      this.refs.text_field.focus()
     })
   }
   _handleKeyUp(e) {
@@ -56,6 +73,7 @@ class AddressField extends Component {
   render () {
     const {title, name, required} = this.props
     const { open, address, value } = this.state
+    console.log('AddressField', this.state, this.props);
     return (
       <div className='c-field c-address-field'>
         <TextField
@@ -90,6 +108,7 @@ class AddressField extends Component {
               key={i}
               type='hidden'
               ref={ addressName }
+              value={ value[addressName] }
               name={ `${name}[${addressName}]` }
             />
           ))

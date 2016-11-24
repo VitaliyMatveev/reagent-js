@@ -21,8 +21,9 @@ class SelectField extends Component {
 
   _handleSelect(event) {
     const {items} = this.props
-    const {value} = event.target
-    this.setState({selectedItem: items.find(item => item.value == value)})
+    const {value} = event.target    
+    const selectedItem = items.find(item => item.id == value)
+    this.setState({selectedItem})
   }
 
   _handleKeyDown(event) {
@@ -55,7 +56,7 @@ class SelectField extends Component {
     this.setState({
       opened: false}, () => {
         this.refs.textField.focus()
-        onChange && onChange(selectedItem.value)
+        onChange && onChange(selectedItem.id)
       }
     )
 
@@ -81,7 +82,7 @@ class SelectField extends Component {
           onBlur={this._handleBlur.bind(this)}
           onKeyDown={this._handleKeyDown.bind(this)}
         />
-        <input type='hidden' name={name} value={selectedItem.value}/>
+      <input type='hidden' name={name} value={selectedItem.id}/>
         <Popover
           anchorEl={this.refs.textField && this.refs.textField.input}
           anchorOrigin={{'horizontal':'left','vertical':'bottom'}}
@@ -92,7 +93,7 @@ class SelectField extends Component {
             className='c-select'
             style={{overflow: 'visible'}}
             size={items.length}
-            value={selectedItem.value}
+            value={selectedItem.id}
             onChange={this._handleSelect.bind(this)}
             onKeyDown={this._handleSelectKeyDown.bind(this)}
             onClick={this._closePopover.bind(this)}
@@ -103,8 +104,8 @@ class SelectField extends Component {
                 <option
                   className='c-select__item'
                   style={{padding:'1rem', cursor: 'pointer'}}
-                  key={item.value}
-                  value={item.value}
+                  key={item.id}
+                  value={item.id}
                   >
                   {item.title}
                 </option>
@@ -117,7 +118,15 @@ class SelectField extends Component {
   }
 }
 
-const getDefaultChecked = (item, value) =>
-  value && ([].concat(value).indexOf(item.id)>-1 || [].concat(value).indexOf(item.title)>-1)
+SelectField.propTypes = {
+  items: PropTypes.arrayOf( PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired
+  })).isRequired,
+  name: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  required: PropTypes.bool,
+  value: PropTypes.string
+}
 
 export default SelectField
