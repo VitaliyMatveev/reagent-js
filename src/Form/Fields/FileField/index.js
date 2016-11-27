@@ -19,9 +19,9 @@ export default class FileField extends Component{
 
   _handleChange(e){
     const { onChange } = this.props
-    let input = e.target
+    let { name: fileName } = e.target.files[0]
     console.log('change',e);
-    this.setState({hasValue: true, fileName: input.files[0].name})
+    this.setState({hasValue: true, fileName})
     onChange && onChange(e)
   }
   _handleClick(){
@@ -29,7 +29,7 @@ export default class FileField extends Component{
     hasValue ? this._handleReset() : this.refs.input.click()
   }
   _handleReset (){
-    this.setState({hasValue: false, fileName: null})
+    this.setState({ hasValue: false, fileName: null})
     this.refs.input.value=''
   }
   _handleFocus (){
@@ -61,7 +61,6 @@ export default class FileField extends Component{
           type='text'
           className={`file-upload-widget__file-name ${hasValue || focused ? 'file-upload-widget__file-name_focused' : ''}`}
           readOnly={true}
-          name={`${name}[filename]`}
           tabIndex={-1}
           value={fileName || 'Выберите файл для загрузки'}
         />
@@ -75,12 +74,16 @@ export default class FileField extends Component{
             hasValue ? <NavigationClose/> : <FileUpload/>
           }
         </FloatingActionButton>
-        <input id={ name } name={`${name}[data]`} type='file'
-           className='file-upload-widget__input'
-           onFocus={ this._handleFocus.bind(this) }
-           onBlur={ this._handleBlur.bind(this) }
-           onChange={ this._handleChange.bind(this) }
-           ref='input' required={ !!required }
+        <input
+          id={ name }
+          name={ name }
+          type='file'
+          ref='input'
+          required={ !!required }
+          className='file-upload-widget__input'
+          onFocus={ this._handleFocus.bind(this) }
+          onBlur={ this._handleBlur.bind(this) }
+          onChange={ this._handleChange.bind(this) }
         />
       </div>
     )
