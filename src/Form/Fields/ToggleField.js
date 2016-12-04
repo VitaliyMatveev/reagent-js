@@ -1,17 +1,15 @@
 import React, { PropTypes } from 'react'
 import Toggle from 'material-ui/Toggle'
 
-const ToggleField = ({title, name, value, required, defaultValue}) => (
+const ToggleField = ({title, name, value, required, onChange, defaultValue}) => (
   <div className='c-field c-toggle-field'>
     <Toggle
       label={title}
       name={name}
       defaultToggled={value || defaultValue}
+      onToggle={ onChange }
       required={required}
-      labelPosition='right'
-      labelStyle={{
-        color: 'inherit'
-      }}
+      labelPosition='right'    
     />
   </div>
 )
