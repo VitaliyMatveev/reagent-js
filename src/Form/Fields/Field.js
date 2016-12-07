@@ -9,6 +9,7 @@ import RadioField from './RadioField'
 import ToggleField from './ToggleField'
 import DateField from './DateField'
 import SelectField from './SelectField'
+import MultiSelectField from './SelectField/MultiSelectField'
 import ArrayField from './ArrayField'
 import AddressField from './AddressField'
 
@@ -78,8 +79,10 @@ const Field = (props) => {
       )
     }
     case 'select': {
+      const { multiple } = field
+      const SelectFieldComponent = multiple ? MultiSelectField : SelectField
       return (
-        <SelectField
+        <SelectFieldComponent
           key={name}
           {...field}
           name={fieldName}
