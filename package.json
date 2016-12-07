@@ -1,6 +1,7 @@
 {
   "name": "reagents-js",
-  "version": "0.0.67",
+  "version": "0.0.68",
+  "version": "0.0.63",
   "description": "React components set",
   "main": "./lib/index.js",
   "scripts": {
@@ -16,19 +17,20 @@
   "author": "Vitaliy Matveev",
   "license": "MIT",
   "devDependencies": {
+    "autoless": "^0.1.7",
     "babel-cli": "^6.14.0",
     "babel-core": "^6.18.2",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.7",
-    "style-loader": "~0.13.1",
-    "css-loader": "~0.23.1",
-    "node-uuid": "^1.4.7",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "~0.23.1",
     "eslint": "^3.4.0",
     "eslint-plugin-react": "^6.2.0",
-    "less": "^2.7.1"
+    "less": "^2.7.1",
+    "node-uuid": "^1.4.7",
+    "style-loader": "~0.13.1"
   },
   "dependencies": {
     "react": "~15.3.2",

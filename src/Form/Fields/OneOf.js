@@ -11,7 +11,7 @@ class OneOf extends Component {
       selectedItem: value[keyField] ? items.findIndex(item => item.properties[keyField].value == value[keyField]) : 0
     }
   }
-  _handleChange(value) {    
+  _handleChange(value) {
     this.setState({selectedItem: value})
   }
   render() {
@@ -22,7 +22,7 @@ class OneOf extends Component {
     const { properties, required } = items[selectedItem]
     const keyFieldTitle = items[0].properties[keyField].title
     return (
-      <div>
+      <div style={{width: '100%'}}>
         <SelectField
           value={selectedItem}
           title={keyFieldTitle}
