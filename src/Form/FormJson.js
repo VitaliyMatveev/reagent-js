@@ -70,12 +70,12 @@ class FormJson {
       case 'file': {
         const { files } = elements.namedItem(fullName)
         if ( files.length > 0 ) {
-          const { name: file_name, size, lastModified: last_modified, type: mime_type } = files[0]
+          const { name: filename, size, lastModified: last_modified, type: mime_type } = files[0]
           this.__registerPromise__(new Promise((resolve) => {
             const fr = new FileReader()
             fr.addEventListener('load', () => {
               this.__setValue__ (fullName, [{
-                file_name,
+                filename,
                 size,
                 last_modified,
                 mime_type,

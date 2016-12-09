@@ -29,7 +29,7 @@ export default class FileField extends Component{
     hasValue ? this._handleReset() : this.refs.input.click()
   }
   _handleReset (){
-    this.setState({ hasValue: false, fileName: null})
+    this.setState({ hasValue: false, filename: null})
     this.refs.input.value=''
   }
   _handleFocus (){
@@ -42,7 +42,7 @@ export default class FileField extends Component{
     const { required, label, name, title, defaultValue, value } = this.props
     const { muiTheme } = this.context
     const { primary1Color, secondaryTextColor } = muiTheme.palette
-    const { hasValue, fileName, focused } = this.state
+    const { hasValue, filename, focused } = this.state
 
     return (
       <div className='file-upload-widget'>
@@ -62,7 +62,7 @@ export default class FileField extends Component{
           className={`file-upload-widget__file-name ${hasValue || focused ? 'file-upload-widget__file-name_focused' : ''}`}
           readOnly={true}
           tabIndex={-1}
-          value={fileName || 'Выберите файл для загрузки'}
+          value={filename || 'Выберите файл для загрузки'}
         />
         <FloatingActionButton
           className='file-upload-widget__button'
