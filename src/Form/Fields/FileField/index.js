@@ -13,15 +13,14 @@ export default class FileField extends Component{
     this.state={
       hasValue: value || defaultValue,
       focused: false,
-      fileName: value || defaultValue || ''
+      filename: value || defaultValue || ''
     }
   }
 
   _handleChange(e){
     const { onChange } = this.props
-    let { name: fileName } = e.target.files[0]
-    console.log('change',e);
-    this.setState({hasValue: true, fileName})
+    let { name: filename } = e.target.files[0]    
+    this.setState({hasValue: true, filename})
     onChange && onChange(e)
   }
   _handleClick(){
@@ -39,7 +38,7 @@ export default class FileField extends Component{
     this.setState({focused: false})
   }
   render(){
-    const { required, label, name, title, defaultValue, value } = this.props
+    const { required, name, title } = this.props
     const { muiTheme } = this.context
     const { primary1Color, secondaryTextColor } = muiTheme.palette
     const { hasValue, filename, focused } = this.state
@@ -55,7 +54,7 @@ export default class FileField extends Component{
             color: hasValue || focused ? primary1Color : secondaryTextColor
           }}
           >
-          { title}
+          { title }
         </TextFieldLabel>
         <input
           type='text'
