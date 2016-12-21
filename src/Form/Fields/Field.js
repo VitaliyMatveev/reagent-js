@@ -63,6 +63,7 @@ const Field = (props) => {
         <RadioField
           key={name}
           {...field}
+          required={required}
           name={fieldName}
           value={value}
         />
@@ -73,6 +74,7 @@ const Field = (props) => {
         <CheckboxField
           key={name}
           {...field}
+          required={required}
           name={fieldName}
           value={value}
         />
@@ -85,6 +87,7 @@ const Field = (props) => {
         <SelectFieldComponent
           key={name}
           {...field}
+          required={required}
           name={fieldName}
           value={value}
           defaultValue={defaultValue}

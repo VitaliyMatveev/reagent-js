@@ -6,6 +6,8 @@ import {List, ListItem} from 'material-ui/List'
 
 import NavigationClose from 'material-ui/svg-icons/navigation/close'
 
+import FieldTitle from '../FieldTitle'
+
 const mergeArrays = (arr1, arr2) => {
   if (Array.isArray(arr1) && Array.isArray(arr2)) {
     return arr1.concat(arr2)
@@ -96,23 +98,18 @@ class MultiSelectField extends Component {
   }
 
   render () {
-    const { title, items, name } = this.props
+    const { title, items, name, required } = this.props
     const { searchWords, selectedItems, focused, open } = this.state
-    const { muiTheme } = this.context
-    const { hintColor, focusColor } = muiTheme.textField
     const findedItems = searchWords == '' ? items : items.filter(({title}) => title.toLowerCase().includes(searchWords))
     return (
       <div
         className='c-field'
         >
-        <label
-          className='c-field__label'
-          style={{
-            color: focused || open ? focusColor : hintColor
-          }}
-          >
-          { title }
-        </label>
+        <FieldTitle
+          title={title}
+          required={required}
+          focused={focused || open}
+        />
         <div>
           <TextField
             name='multiselect_input'
@@ -217,9 +214,5 @@ const DictionaryItem = ({id, title, checked, onCheck}) => (
     }
   />
 )
-
-MultiSelectField.contextTypes = {
-  muiTheme: PropTypes.object
-}
 
 export default MultiSelectField
