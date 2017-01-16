@@ -9,7 +9,7 @@ class SelectField extends Component {
     this.state = {
       focused: false,
       opened: false,
-      selectedItem: value ? items[value] : items[0]
+      selectedItem: items.find(item => item.id == value) || items[0]
     }
   }
   _handleFocus() {
@@ -21,7 +21,7 @@ class SelectField extends Component {
 
   _handleSelect(event) {
     const {items} = this.props
-    const {value} = event.target    
+    const {value} = event.target
     const selectedItem = items.find(item => item.id == value)
     this.setState({selectedItem})
   }
