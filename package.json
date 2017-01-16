@@ -1,6 +1,6 @@
 {
   "name": "reagents-js",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "React components set",
   "main": "./lib/index.js",
   "scripts": {
