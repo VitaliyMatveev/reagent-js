@@ -32,12 +32,11 @@ export default class FileField extends Component{
   _validation = () => {
     const { hasValue } = this.state
     const { required } = this.props
-    const { input } = this.refs
-    //console.log('[MULTISELECT FIELD] validation', selectedItems, min, max);
+    const { filename } = this.refs    
     if ( required && !hasValue ) {
-      input.setCustomValidity('Загрузите файл')
+      filename.setCustomValidity('Загрузите файл')
     } else {
-      input.setCustomValidity('')
+      filename.setCustomValidity('')
     }
   }
 
@@ -82,7 +81,7 @@ export default class FileField extends Component{
           type='text'
           className={`file-upload-widget__file-name ${hasValue || focused ? 'file-upload-widget__file-name_focused' : ''}`}
           tabIndex={-1}
-          ref='input'
+          ref='filename'
           value={filename || 'Выберите файл для загрузки'}
         />
         <FloatingActionButton
