@@ -43,6 +43,7 @@ const AddressDialog = ({onClose, onSubmit, onKeyUp, open, title, addressPartitio
                     name={name}
                     ref={c => i==0 && c && c.focus && c.focus()}
                     defaultValue={value && value[name] || ''}
+                    maxLength={i==0 ? 6 : 200}
                     fullWidth={true}
                   />
                 </td>

@@ -10,33 +10,55 @@ export default class FileField extends Component{
   constructor (props){
     super (props)
     const { value, defaultValue } = props
+    const fieldValue = value || defaultValue || []
     this.state={
-      hasValue: value || defaultValue,
+      hasValue: fieldValue.length > 0,
       focused: false,
-      filename: value || defaultValue || ''
+      filename: fieldValue.length > 0 ? fieldValue[0].filename : ''
     }
+  }
+
+  componentDidMount () {
+    this._validation()
   }
 
   _handleChange(e){
     const { onChange } = this.props
-    let { name: filename } = e.target.files[0]    
+    let { name: filename } = e.target.files[0]
     this.setState({hasValue: true, filename})
     onChange && onChange(e)
   }
+
+  _validation = () => {
+    const { hasValue } = this.state
+    const { required } = this.props
+    const { input } = this.refs
+    //console.log('[MULTISELECT FIELD] validation', selectedItems, min, max);
+    if ( required && !hasValue ) {
+      input.setCustomValidity('Загрузите файл')
+    } else {
+      input.setCustomValidity('')
+    }
+  }
+
   _handleClick(){
     const { hasValue } = this.state
     hasValue ? this._handleReset() : this.refs.input.click()
   }
+
   _handleReset (){
     this.setState({ hasValue: false, filename: null})
     this.refs.input.value=''
   }
+
   _handleFocus (){
     this.setState({focused: true})
   }
+
   _handleBlur (){
-    this.setState({focused: false})
+    this.setState({focused: false}, this._validation)
   }
+
   render(){
     const { required, name, title } = this.props
     const { muiTheme } = this.context
@@ -54,13 +76,13 @@ export default class FileField extends Component{
             color: hasValue || focused ? primary1Color : secondaryTextColor
           }}
           >
-          { title }
+          { title ? required ? title + ' *' : title : null }
         </TextFieldLabel>
         <input
           type='text'
           className={`file-upload-widget__file-name ${hasValue || focused ? 'file-upload-widget__file-name_focused' : ''}`}
-          readOnly={true}
           tabIndex={-1}
+          ref='input'
           value={filename || 'Выберите файл для загрузки'}
         />
         <FloatingActionButton
@@ -90,6 +112,13 @@ export default class FileField extends Component{
 }
 
 FileField.propTypes={
+  value: PropTypes.arrayOf( PropTypes.shape({
+    filename: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    last_modified: PropTypes.number.isRequired,
+    mime_type: PropTypes.string.isRequired,
+    size: PropTypes.number.isRequired
+  })),
   name: PropTypes.string.isRequired,
   title: PropTypes.string,
   onChange: PropTypes.func
