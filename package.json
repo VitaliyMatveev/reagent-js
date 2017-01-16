@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "NODE_ENV=release babel --presets es2015,stage-0,react ./src --out-dir ./lib; autoless --no-watch src lib",
     "prepublish": "npm run compile",
-    "postversion": "npm run publish"
+    "postversion": "npm publish"
   },
   "keywords": [
     "react",
