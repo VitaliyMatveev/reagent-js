@@ -65,13 +65,15 @@ export default class FileField extends Component{
     const { hasValue, filename, focused } = this.state
 
     return (
-      <div className='file-upload-widget'>
+      <div
+        className='file-upload-widget'
+        title={ title }
+        >
         <TextFieldLabel
           className={`file-upload-widget__label ${hasValue || focused ? 'file-upload-widget__label_focused' : ''}`}
           muiTheme={ muiTheme }
           htmlFor={ name }
           shrink={ hasValue == true || focused }
-          title={ title }
           style={{
             color: hasValue || focused ? primary1Color : secondaryTextColor
           }}
