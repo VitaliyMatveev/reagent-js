@@ -32,7 +32,7 @@ export default class FileField extends Component{
   _validation = () => {
     const { hasValue } = this.state
     const { required } = this.props
-    const { filename } = this.refs    
+    const { filename } = this.refs
     if ( required && !hasValue ) {
       filename.setCustomValidity('Загрузите файл')
     } else {
@@ -68,9 +68,10 @@ export default class FileField extends Component{
       <div className='file-upload-widget'>
         <TextFieldLabel
           className={`file-upload-widget__label ${hasValue || focused ? 'file-upload-widget__label_focused' : ''}`}
-          muiTheme={muiTheme}
-          htmlFor={name}
-          shrink={hasValue == true || focused}
+          muiTheme={ muiTheme }
+          htmlFor={ name }
+          shrink={ hasValue == true || focused }
+          title={ title }
           style={{
             color: hasValue || focused ? primary1Color : secondaryTextColor
           }}
@@ -79,10 +80,10 @@ export default class FileField extends Component{
         </TextFieldLabel>
         <input
           type='text'
-          className={`file-upload-widget__file-name ${hasValue || focused ? 'file-upload-widget__file-name_focused' : ''}`}
-          tabIndex={-1}
+          className={ `file-upload-widget__file-name ${hasValue || focused ? 'file-upload-widget__file-name_focused' : ''}` }
+          tabIndex={ -1 }
           ref='filename'
-          value={filename || 'Выберите файл для загрузки'}
+          value={ filename || 'Выберите файл для загрузки' }
         />
         <FloatingActionButton
           className='file-upload-widget__button'
