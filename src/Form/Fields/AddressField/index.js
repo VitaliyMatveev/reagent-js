@@ -5,7 +5,9 @@ import SocialLocationCity from 'material-ui/svg-icons/social/location-city'
 
 import AddressDialog from './AddressDialog'
 
-function formatAddressString(address={}) {
+function formatAddressString(address) {
+  if (!address) return 'Адрес не указан'
+  
   const addressPartitionals = {
     zip: 'Индекс',
     region: 'Регион',
