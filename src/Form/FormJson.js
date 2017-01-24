@@ -31,7 +31,7 @@ class FormJson {
   }
   __getFieldData___ (field, fieldName, elements, parentName) {
     //console.log('getFieldData', field, fieldName, parentName)
-    let fullName = fieldName ? parentName ? `${parentName}[${fieldName}]` : `${fieldName}` : ''
+    let fullName = field.name ? field.name : fieldName ? parentName ? `${parentName}[${fieldName}]` : `${fieldName}` : ''
     switch (field.type) {
       case 'object': {
         const {oneOf, name:fieldName} = field
