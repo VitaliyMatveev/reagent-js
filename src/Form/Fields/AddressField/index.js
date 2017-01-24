@@ -7,7 +7,7 @@ import AddressDialog from './AddressDialog'
 
 function formatAddressString(address) {
   if (!address) return 'Адрес не указан'
-  
+
   const addressPartitionals = {
     zip: 'Индекс',
     region: 'Регион',
@@ -34,7 +34,7 @@ function formatAddressString(address) {
 class AddressField extends Component {
   constructor (props) {
     super (props)
-    const { value={} } = props
+    const { value } = props
     this.state={
       value,
       open: false,
@@ -110,7 +110,7 @@ class AddressField extends Component {
               key={i}
               type='hidden'
               ref={ addressName }
-              value={ value[addressName] }
+              value={ value ? value[addressName] : '' }
               name={ `${name}[${addressName}]` }
             />
           ))
