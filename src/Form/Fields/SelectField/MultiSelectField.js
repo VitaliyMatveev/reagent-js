@@ -113,7 +113,7 @@ class MultiSelectField extends Component {
         <div>
           <TextField
             name='multiselect_input'
-            value='Выбрать из справочника'            
+            value='Выбрать из справочника'
             onChange={ () => { return false } }
             fullWidth={ true }
             onClick={ this.handleOpen }
@@ -186,7 +186,7 @@ class MultiSelectField extends Component {
                   <DictionaryItem
                     key={item.id}
                     { ...item }
-                    checked={ selectedItems.includes(item.id) }
+                    checked={ selectedItems.includes(item.id+'') }
                     onCheck={ this.handleItemCheck }
                   />
                 ))
