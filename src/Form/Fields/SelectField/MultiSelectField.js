@@ -113,8 +113,7 @@ class MultiSelectField extends Component {
         <div>
           <TextField
             name='multiselect_input'
-            value='Выбрать из справочника'
-            autoComplete={ false }
+            value='Выбрать из справочника'            
             onChange={ () => { return false } }
             fullWidth={ true }
             onClick={ this.handleOpen }
@@ -126,13 +125,14 @@ class MultiSelectField extends Component {
             {
               selectedItems
                 .map( id => items.find( item => item.id == id) )
-                .map( ({ id, title }, index, arr) => (
+                .map( ({ id, title, description }, index, arr) => (
                   <ListItem
                     key={ id }
                     leftIcon= { <NavigationClose/> }
                     value={ id }
                     onClick={ () => this.handleSelectedItemClick (id) }
                     primaryText={ `${title}${index == arr.length-1 ? '.' : ';'}` }
+                    secondaryText={ description }
                   />
                 ))
             }
@@ -199,10 +199,11 @@ class MultiSelectField extends Component {
   }
 }
 
-const DictionaryItem = ({id, title, checked, onCheck}) => (
+const DictionaryItem = ({id, title, description, checked, onCheck}) => (
   <ListItem
     key={id}
     primaryText={ title }
+    secondaryText={ description }
     leftCheckbox={
       onCheck ?
         <Checkbox

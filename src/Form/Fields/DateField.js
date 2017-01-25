@@ -67,7 +67,7 @@ class DateField extends Component {
           ref='input'
           onKeyDown={this._handleKeyPress.bind(this)}
           onChange={this._handleChange.bind(this)}
-          autocomplete={false}
+          autoComplete={ false }
         />
         <Avatar
           size={32}

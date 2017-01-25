@@ -53,6 +53,7 @@ class MaskedTextField extends Component {
           pattern={pattern}
           value={value || defaultValue}
           placeholder={focused ? '' : ' '}
+          autoComplete={ false }
         />
         <TextFieldUnderline
           muiTheme={muiTheme}
