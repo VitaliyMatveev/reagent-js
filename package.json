@@ -1,6 +1,6 @@
 {
   "name": "reagents-js",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "description": "React components set",
   "main": "./lib/index.js",
   "scripts": {
@@ -33,12 +33,13 @@
     "style-loader": "~0.13.1"
   },
   "dependencies": {
-    "react": "~15.3.2",
-    "react-dom": "~15.3.2",
-    "material-ui": "^0.15.4",
-    "react-maskedinput": "^3.2.4",
     "draft-js": "^0.7.0",
+    "draft-js-export-html": "^0.5.0",
     "draft-js-import-html": "^0.2.0",
-    "draft-js-export-html": "^0.4.0"
+    "material-ui": "~0.16.4",
+    "react": "~15.4.2",
+    "react-dom": "~15.4.2",
+    "react-maskedinput": "^3.2.4",
+    "react-tap-event-plugin": "^2.0.1"
   }
 }
