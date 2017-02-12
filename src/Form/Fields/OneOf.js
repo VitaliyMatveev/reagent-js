@@ -15,7 +15,7 @@ class OneOf extends Component {
     this.setState({selectedItem: value})
   }
   render() {
-    console.debug('OneOf', this.props, this.state)
+    //console.debug('OneOf', this.props, this.state)
     const { items, keyField, parentName, value } = this.props
     const titles = items.map ((item, index) => ({title: item.title, id: index}))
     const { selectedItem } = this.state

@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import FieldTitle from './FieldTitle'
 
 class RadioField extends Component {
   constructor (props) {
@@ -9,11 +10,15 @@ class RadioField extends Component {
     }
   }
   render () {
-    const {name, style, items, title, onChange} = this.props
+    const {name, style, items, title, required, onChange} = this.props
     const {focused} = this.state
     return (
-      <div className={`c-field ${focused ? 'c-field_focused' : ''}`}>
-        {title ? <label className='c-field__label'>{title}</label> : null}
+      <div className='c-field'>
+        <FieldTitle
+          title={title}
+          required={required}
+          focused={focused}
+        />
         <RadioButtonGroup
           name={name}
           defaultSelected={getDefaultSelected (this.props)}

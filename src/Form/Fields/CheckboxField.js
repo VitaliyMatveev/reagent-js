@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import Checkbox from 'material-ui/Checkbox'
+import FieldTitle from './FieldTitle'
 
 class CheckboxField extends Component {
   constructor (props) {
@@ -12,8 +13,12 @@ class CheckboxField extends Component {
     const {title, items, name, value, required} = this.props
     const {focused} = this.state
     return (
-      <div className={`c-field ${focused ? 'c-field_focused' : ''}`}>
-        {title ? <label className='c-field__label'>{title}</label> : null}
+      <div className='c-field'>
+        <FieldTitle
+          title={title}
+          required={required}
+          focused={focused}
+        />
         {
           items.map(item => (
             <Checkbox
