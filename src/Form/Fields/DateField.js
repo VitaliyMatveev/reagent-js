@@ -8,7 +8,7 @@ class DateField extends Component {
     super(props)
     const {value, defaultValue} = props
     this.state = {
-      value: value || defaultValue || ''
+      value: value || defaultValue || new Date()
     }
   }
 
@@ -16,26 +16,9 @@ class DateField extends Component {
     this.setState({value: date.toLocaleDateString('ru')})
   }
 
-  _handleChange(e, value) {
-    console.log('test', value)
-    //value && value[value.length - 1] != ' ' && this.setState({value: new Date(value)})
-  }
-
-  _parseDate(value) {
-    if (value && value.length>0) {
-      const today = new Date()
-      let [
-        day,
-        month,
-        year
-      ] = value.split('.')
-      day = day ? day : today.getDate()
-      month = month ? month : today.getMonth()+1
-      year = year ? year.length > 2 ? year : `20${year}` : today.getFullYear()
-      return new Date(`${year}-${month}-${day}`)
-    } else {
-      return new Date()
-    }
+  _handleChange(e, str) {
+    const value = new Date(str)
+    value != 'Invalid Date' && this.setState({value})
   }
 
   _showCalendar(){
@@ -44,7 +27,7 @@ class DateField extends Component {
   _hideCalendar() {
     this.refs.dialog.setState({open: false})
   }
-  _handleKeyPress(e) {
+  _handleKeyPress(e) {    
     switch (e.keyCode) {
       case 32: {
         this._showCalendar()
@@ -63,15 +46,17 @@ class DateField extends Component {
     const {title, name, required} = this.props
     const {value} = this.state
     return (
-      <div className='c-field c-date-field'>
+      <div
+        className='c-field c-date-field'
+        onKeyDown={this._handleKeyPress.bind(this)}
+        >
         <TextField
           floatingLabelText={required ? title+' *' : title}
           required={required}
           name={name}
-
-          mask='11.11-1111'
+          mask='11.11.1111'
+          pattern='\d{2,2}.\d{2,2}.\d{4,4}'
           ref='input'
-          onKeyDown={this._handleKeyPress.bind(this)}
           onChange={this._handleChange.bind(this)}
           autoComplete={ false }
         />
@@ -89,7 +74,7 @@ class DateField extends Component {
           ref='dialog'
           autoOk={true}
           onAccept={this._handleAccept.bind(this)}
-          initialDate={this._parseDate(value)}
+          initialDate={ value }
         />
       </div>
     )

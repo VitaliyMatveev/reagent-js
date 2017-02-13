@@ -31,6 +31,7 @@ class RadioField extends Component {
                 key={item.id}
                 value={item.id}
                 label={item.title}
+                required={ required }
                 onFocus={() => this.setState({focused: true})}
                 onBlur={() => this.setState({focused: false})}
                 {...item}
