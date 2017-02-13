@@ -1,6 +1,6 @@
 {
   "name": "reagents-js",
-  "version": "0.1.27",
+  "version": "0.1.28",
   "description": "React components set",
   "main": "./lib/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "prepublish": "npm run compile",
     "postversion": "npm publish",
     "build": "webpack",
-    "start" : "webpack-dev-server"
+    "start": "webpack-dev-server"
   },
   "keywords": [
     "react",
