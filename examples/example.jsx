@@ -11,9 +11,18 @@ const App = () => {
           date: {
             type: 'date',
             title: 'Дата'
+          },
+          date2: {
+            type: 'date',
+            title: 'test'
+          },
+          text: {
+            type: 'string',
+            title: 'Строка'
           }
         }
       }}
+      value={{date: '11.01.1992'}}
       onSubmit={() => {}}
     />
   )

@@ -8,6 +8,15 @@ import Field from './Fields/Field'
 import FormJson from './FormJson'
 import './style.less'
 
+import TextField2 from 'material-ui/TextField'
+import RichTextField2 from './Fields/RichTextField'
+import SelectField2 from './Fields/SelectField'
+import FileField2 from './Fields/FileField'
+import ObjectField2 from './Fields/ObjectField'
+import RadioField2 from './Fields/RadioField'
+import ToggleField2 from './Fields/ToggleField'
+import DateField2 from './Fields/DateField'
+
 class Form extends Component {
   constructor(props){
     super(props)
@@ -80,11 +89,13 @@ class Form extends Component {
 
 export default Form
 
-export {TextField} from 'material-ui/TextField'
-export {RichTextField} from './Fields/RichTextField'
-export {SelectField} from './Fields/SelectField'
-export {FileField} from './Fields/FileField'
-export {ObjectField} from './Fields/ObjectField'
-export {RadioField} from './Fields/RadioField'
-export {ToggleField} from './Fields/ToggleField'
-export {DateField} from './Fields/DateField'
+export {
+  TextField2 as TextField,
+  RichTextField2 as RichTextField,
+  SelectField2 as SelectField,
+  FileField2 as FileField,
+  ObjectField2 as ObjectField,
+  RadioField2 as RadioField,
+  ToggleField2 as ToggleField,
+  DateField2 as DateField
+}

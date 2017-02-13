@@ -6,20 +6,26 @@ import Calendar from 'material-ui/svg-icons/action/today'
 class DateField extends Component {
   constructor(props) {
     super(props)
-    const {value, defaultValue} = props
+    //console.log('test', parsedValue);
+    const value = props.value || props.defaultValue
+
     this.state = {
-      value: value || defaultValue || new Date()
+      value: value ? parseDate(value) : null
     }
+    console.log('constructor', this.state);
   }
 
-  _handleAccept(date) {
-    this.setState({value: date.toLocaleDateString('ru')})
+  _handleAccept = (date) => {
+    console.log('onAccept', date);
+    this.setState({value: date})
   }
 
   _handleChange(e, str) {
-    const value = new Date(str)
+    console.log('handleChange', str);
+    const value = parseDate(str)
     value != 'Invalid Date' && this.setState({value})
   }
+
 
   _showCalendar(){
     this.refs.dialog.show()
@@ -27,7 +33,7 @@ class DateField extends Component {
   _hideCalendar() {
     this.refs.dialog.setState({open: false})
   }
-  _handleKeyPress(e) {    
+  _handleKeyPress(e) {
     switch (e.keyCode) {
       case 32: {
         this._showCalendar()
@@ -45,17 +51,19 @@ class DateField extends Component {
   render() {
     const {title, name, required} = this.props
     const {value} = this.state
+    console.log('Date', value);
     return (
       <div
         className='c-field c-date-field'
         onKeyDown={this._handleKeyPress.bind(this)}
         >
         <TextField
-          floatingLabelText={required ? title+' *' : title}
+          title={required ? title+' *' : title}
           required={required}
           name={name}
           mask='11.11.1111'
           pattern='\d{2,2}.\d{2,2}.\d{4,4}'
+          value={ value && value.toLocaleDateString('ru') }
           ref='input'
           onChange={this._handleChange.bind(this)}
           autoComplete={ false }
@@ -70,22 +78,29 @@ class DateField extends Component {
           container='inline'
           mode='landscape'
           locale='en-US'
+          cancelLabel='Закрыть'
           firstDayOfWeek={1}
           ref='dialog'
           autoOk={true}
-          onAccept={this._handleAccept.bind(this)}
-          initialDate={ value }
+          onAccept={ this._handleAccept }
+          initialDate={ value || new Date() }
         />
       </div>
     )
   }
 }
 
+const parseDate = (value) => {
+  console.log('parseDate', value);
+  const dateParts = value.split('.')
+  return new Date(--dateParts[2], --dateParts[1], dateParts[0])
+}
+
 DateField.propTypes = {
   title: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.bool,
-  defaultValue: PropTypes.bool,
+  value: PropTypes.string,
+  defaultValue: PropTypes.string,
   required: PropTypes.bool
 }
 

@@ -9,7 +9,7 @@ class MaskedTextField extends Component {
     const {value, defaultValue} = props
     this.state = {
       focused: false,
-      hasValue: defaultValue || value
+      hasValue: !!(defaultValue || value)
     }
   }
   handleFocus() {
