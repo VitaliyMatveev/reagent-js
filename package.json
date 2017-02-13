@@ -1,12 +1,12 @@
 {
   "name": "reagents-js",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "React components set",
   "main": "./dist/reagents.bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "NODE_ENV=release babel --presets es2015,stage-0,react ./src --out-dir ./lib; autoless --no-watch src lib",
-    "prepublish": "npm run compile",
+    "prepublish": "npm run build:dist",
     "postversion": "npm publish",
     "build:dev": "webpack --env=dev --progress --profile --colors",
     "build:dist": "webpack --env=prod --progress --profile --colors",
