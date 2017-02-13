@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 
 import Field from '../Field'
 import OneOf from '../OneOf'
-import './style.css'
+import './style.less'
 
 const ObjectField = (props) => {  
   const {properties, name, title, direction, value={}, required} = props

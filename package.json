@@ -8,7 +8,8 @@
     "compile": "NODE_ENV=release babel --presets es2015,stage-0,react ./src --out-dir ./lib; autoless --no-watch src lib",
     "prepublish": "npm run compile",
     "postversion": "npm publish",
-    "build": "webpack"    
+    "build": "webpack",
+    "start": "node server.js"
   },
   "keywords": [
     "react",
@@ -31,9 +32,12 @@
     "eslint": "^3.4.0",
     "eslint-plugin-react": "^6.2.0",
     "less": "^2.7.1",
+    "less-loader": "^2.2.3",
     "node-uuid": "^1.4.7",
+    "react-hot-loader": "^1.3.1",
     "style-loader": "~0.13.1",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
     "draft-js": "^0.7.0",

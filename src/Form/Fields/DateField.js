@@ -11,12 +11,15 @@ class DateField extends Component {
       value: value || defaultValue || ''
     }
   }
+
   _handleAccept(date) {
     this.setState({value: date.toLocaleDateString('ru')})
   }
+
   _handleChange(e, value) {
-    value && value[value.length - 1] != ' ' && this._parseDate(value) != 'Invalid Date' && this.setState({value})
+    value && value[value.length - 1] != ' ' && this.setState({value: new Date(value)})
   }
+
   _parseDate(value) {
     if (value && value.length>0) {
       const today = new Date()
@@ -33,6 +36,7 @@ class DateField extends Component {
       return new Date()
     }
   }
+
   _showCalendar(){
     this.refs.dialog.show()
   }
@@ -64,6 +68,7 @@ class DateField extends Component {
           required={required}
           name={name}
           value={value}
+          mask='11.11.1111'
           ref='input'
           onKeyDown={this._handleKeyPress.bind(this)}
           onChange={this._handleChange.bind(this)}

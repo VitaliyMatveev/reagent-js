@@ -6,7 +6,7 @@ import CloseIcon from 'material-ui/svg-icons/navigation/close';
 
 import Field from './Fields/Field'
 import FormJson from './FormJson'
-import './style.css'
+import './style.less'
 
 class Form extends Component {
   constructor(props){

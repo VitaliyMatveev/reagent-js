@@ -6,7 +6,7 @@ import AddIcon from 'material-ui/svg-icons/content/add'
 
 import ArrayFieldItem from './ArrayFieldItem'
 
-import './array_field.css'
+import './array_field.less'
 
 class ArrayField extends Component {
   constructor (props) {

@@ -4,7 +4,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FileUpload from 'material-ui/svg-icons/file/file-upload'
 import NavigationClose from 'material-ui/svg-icons/navigation/close'
 
-import './style.css'
+import './style.less'
 
 export default class FileField extends Component{
   constructor (props){

@@ -1,13 +1,17 @@
 var path = require('path');
-//var webpack = require('webpack');
+var webpack = require('webpack');
 
 module.exports = {
   //devtool: 'eval',
   context: path.join(__dirname, './examples'),
-  entry: './index.jsx',
+  entry: [
+    'webpack-dev-server/client?http://0.0.0.0:8080',
+    'webpack/hot/only-dev-server',
+    './index.jsx'
+  ],
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname,'./examples/build')
+    filename: '[name].bundle.js',
+    path: path.resolve( __dirname,'./examples/build')
   },
   module: {
   //   // preLoaders: [
@@ -21,12 +25,14 @@ module.exports = {
         test: /\.jsx?$/,
         use: [
           {
+            loader: 'react-hot-loader'
+          },
+          {
             loader: 'babel-loader',
             options: {
-              presets: ['es2015', 'react'],
+              presets: ['es2015', 'react', 'stage-0'],
               plugins: ['transform-runtime']
-            },
-            //plugins: ['transform-runtime']
+            }
           }
         ],
         exclude: /node_modules/,
@@ -37,14 +43,15 @@ module.exports = {
   //       loader: 'style!css!less'
   //     },
       {
-        test: /\.css$/,
+        test: /(\.css|\.less)$/,
         use: [
           'style-loader',
-          'css-loader'
+          'css-loader',
+          'less-loader'
         ]
       }
     ]
-  }
+  },
   //     {
   //       test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
   //       loader: 'file?name=[path][name].[ext]'
@@ -57,4 +64,7 @@ module.exports = {
   // resolve: {
   //   root: path.resolve(__dirname, './app/frontend')
   // }
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 }

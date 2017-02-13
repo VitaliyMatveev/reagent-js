@@ -1,8 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
 //import { Provider } from 'react-redux'
-import Form from '../lib/Form'
-
+import { Form } from '../src'
+console.log('Form', Form);
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 

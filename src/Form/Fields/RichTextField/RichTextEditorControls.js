@@ -13,7 +13,7 @@ import FormatBold from 'material-ui/svg-icons/editor/format-bold'
 import FormatUnderlined from 'material-ui/svg-icons/editor/format-underlined'
 import FormatItalic from 'material-ui/svg-icons/editor/format-italic'
 
-import './style.css'
+import './style.less'
 
 const StyleButton = ({onToggle, active, icon, title, style}) => {
   const iconStyle={
