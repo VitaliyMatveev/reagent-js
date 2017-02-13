@@ -1,6 +1,7 @@
 {
   "name": "reagents-js",
-  "version": "0.1.31",
+  "version": "0.1.32",
+  "main": "./dist/index.js",
   "description": "React components set",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
