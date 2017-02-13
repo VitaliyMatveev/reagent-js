@@ -1,25 +1,28 @@
 import React from 'react'
 import { render } from 'react-dom'
 //import { Provider } from 'react-redux'
-import { Form } from '../src'
-console.log('Form', Form);
+
+import { AppContainer } from 'react-hot-loader'
+import App from './example.jsx'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-render (
-  <MuiThemeProvider muiTheme={ getMuiTheme() }>
-    <Form
-      schema={{
-        type: 'object',
-        properties: {
-          date: {
-            type: 'date',
-            title: 'Дата'
-          }
-        }
-      }}
-      onSubmit={() => {}}
-    />
-  </MuiThemeProvider>,
-  document.getElementById('container')
-)
+const hotRender = (Component) => {
+  render(
+    <AppContainer>
+      <MuiThemeProvider muiTheme={ getMuiTheme() }>
+        <Component/>
+      </MuiThemeProvider>
+    </AppContainer>,
+    document.getElementById('container')
+  )
+}
+
+hotRender(App)
+
+if (module.hot) {
+  console.log('hot', App);
+  module.hot.accept('./index.jsx', () => {
+    hotRender (App)
+  })
+}

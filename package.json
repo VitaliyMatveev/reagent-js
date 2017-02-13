@@ -9,7 +9,7 @@
     "prepublish": "npm run compile",
     "postversion": "npm publish",
     "build": "webpack",
-    "start": "node server.js"
+    "start" : "webpack-dev-server"
   },
   "keywords": [
     "react",

@@ -2,16 +2,23 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  //devtool: 'eval',
+  devtool: 'cheap-module-eval-source-map',
   context: path.join(__dirname, './examples'),
   entry: [
+    'react-hot-loader/patch',
     'webpack-dev-server/client?http://0.0.0.0:8080',
     'webpack/hot/only-dev-server',
     './index.jsx'
   ],
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve( __dirname,'./examples/build')
+    path: path.resolve( __dirname,'./examples'),
+    publicPath: '/'
+  },
+  devServer: {
+    hot: true,
+    contentBase: path.resolve(__dirname, './examples'),
+    publicPath: '/'
   },
   module: {
   //   // preLoaders: [
@@ -23,18 +30,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        use: [
-          {
-            loader: 'react-hot-loader'
-          },
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: ['es2015', 'react', 'stage-0'],
-              plugins: ['transform-runtime']
-            }
-          }
-        ],
+        use: 'babel-loader',
         exclude: /node_modules/,
         enforce: 'pre',
       },
@@ -65,6 +61,7 @@ module.exports = {
   //   root: path.resolve(__dirname, './app/frontend')
   // }
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin()
   ]
 }

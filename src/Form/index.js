@@ -80,11 +80,11 @@ class Form extends Component {
 
 export default Form
 
-export TextField from 'material-ui/TextField'
-export RichTextField from './Fields/RichTextField'
-export SelectField from './Fields/SelectField'
-export FileField from './Fields/FileField'
-export ObjectField from './Fields/ObjectField'
-export RadioField from './Fields/RadioField'
-export ToggleField from './Fields/ToggleField'
-export DateField from './Fields/DateField'
+export {TextField} from 'material-ui/TextField'
+export {RichTextField} from './Fields/RichTextField'
+export {SelectField} from './Fields/SelectField'
+export {FileField} from './Fields/FileField'
+export {ObjectField} from './Fields/ObjectField'
+export {RadioField} from './Fields/RadioField'
+export {ToggleField} from './Fields/ToggleField'
+export {DateField} from './Fields/DateField'

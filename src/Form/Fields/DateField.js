@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog'
-import TextField from 'material-ui/TextField'
+import TextField from './MaskedTextField'
 import Avatar from 'material-ui/Avatar'
 import Calendar from 'material-ui/svg-icons/action/today'
 class DateField extends Component {
@@ -17,7 +17,8 @@ class DateField extends Component {
   }
 
   _handleChange(e, value) {
-    value && value[value.length - 1] != ' ' && this.setState({value: new Date(value)})
+    console.log('test', value)
+    //value && value[value.length - 1] != ' ' && this.setState({value: new Date(value)})
   }
 
   _parseDate(value) {
@@ -67,8 +68,8 @@ class DateField extends Component {
           floatingLabelText={required ? title+' *' : title}
           required={required}
           name={name}
-          value={value}
-          mask='11.11.1111'
+
+          mask='11.11-1111'
           ref='input'
           onKeyDown={this._handleKeyPress.bind(this)}
           onChange={this._handleChange.bind(this)}
