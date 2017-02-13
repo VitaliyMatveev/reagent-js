@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "NODE_ENV=release babel --presets es2015,stage-0,react ./src --out-dir ./lib; autoless --no-watch src lib",
     "prepublish": "npm run compile",
-    "postversion": "npm publish"
+    "postversion": "npm publish",
+    "build": "webpack"    
   },
   "keywords": [
     "react",
@@ -22,6 +23,7 @@
     "babel-core": "^6.18.2",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.7",
+    "babel-plugin-transform-runtime": "^6.22.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
@@ -30,7 +32,8 @@
     "eslint-plugin-react": "^6.2.0",
     "less": "^2.7.1",
     "node-uuid": "^1.4.7",
-    "style-loader": "~0.13.1"
+    "style-loader": "~0.13.1",
+    "webpack": "^2.2.1"
   },
   "dependencies": {
     "draft-js": "^0.7.0",

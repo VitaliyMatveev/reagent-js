@@ -26,13 +26,13 @@ class Form extends Component {
       onSubmit(formData, type)
     } else {
       const formJson = new FormJson()
-      formJson.getFormJson(schema, form, onSubmit)      
+      formJson.getFormJson(schema, form, onSubmit)
     }
   }
 
   render () {
     const {controls, style, direction='vertical',onCancel, schema, required, value, defaultValue, hideControls} = this.props
-    const defaultControls = hideControls ? <button type='submit' ref='submitButton' style={{display: 'none'}}/> : [
+    const defaultControls = hideControls ? [] : [
       <RaisedButton
         key='submit'
         type='submit'
@@ -70,6 +70,7 @@ class Form extends Component {
         <div className='c-editor-panel__controls'>
           {controls || defaultControls}
         </div>
+        <button type='submit' ref='submitButton' style={{display: 'none'}}/>
       </form>
     )
   }
