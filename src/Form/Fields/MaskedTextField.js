@@ -2,13 +2,15 @@ import React, { PropTypes, Component } from 'react'
 import TextFieldLabel from 'material-ui/TextField/TextFieldLabel'
 import TextFieldUnderline from 'material-ui/TextField/TextFieldUnderline'
 import MaskedInput from 'react-maskedinput'
+import { findDOMNode } from 'react-dom'
 
 class MaskedTextField extends Component {
   constructor(props) {
     super(props)
-    const {value, defaultValue} = props
+    const {value, errorText, defaultValue} = props
     this.state = {
       focused: false,
+      errorText,
       hasValue: !!(defaultValue || value)
     }
   }
@@ -16,11 +18,16 @@ class MaskedTextField extends Component {
     this.setState({focused: true})
   }
   componentWillReceiveProps(nextProps) {
-    const { value, defaultValue } = nextProps
-    this.setState({hasValue: !!(defaultValue || value)})
+    if ('value' in nextProps) {
+      this.setState({hasValue: !!nextProps.value})
+    }
+    if ('errorText' in nextProps) {
+      this.setState({errorText: nextProps.errorText})
+    }
   }
   handleBlur() {
-    this.setState({focused: false})
+    const el = findDOMNode(this.refs.input)
+    this.setState({focused: false, errorText: el.validationMessage})
   }
   handleChange(event) {
     const {value} = event.target
@@ -30,10 +37,10 @@ class MaskedTextField extends Component {
     })
   }
   render () {
-    const {name, mask, title, value, defaultValue, pattern, required, onKeyDown} = this.props
-    const {focused, hasValue} = this.state
+    const {name, mask, title, value, defaultValue, pattern, required} = this.props
+    const {focused, hasValue, errorText} = this.state
     const {muiTheme} = this.context
-    const { hintColor, focusColor } = muiTheme.textField
+    const { hintColor, focusColor, errorColor } = muiTheme.textField
     return (
       <div className='c-text-field'>
         <TextFieldLabel
@@ -42,7 +49,7 @@ class MaskedTextField extends Component {
           htmlFor={name}
           shrink={focused || hasValue}
           style={{
-            color: focused ? focusColor : hintColor
+            color: errorText ? errorColor : focused ? focusColor : hintColor
           }}
           >
           {title}
@@ -53,7 +60,6 @@ class MaskedTextField extends Component {
           onFocus={this.handleFocus.bind(this)}
           onBlur={this.handleBlur.bind(this)}
           onChange={this.handleChange.bind(this)}
-          onKeyDown={ onKeyDown }
           id={name}
           required={required}
           mask={mask}
@@ -66,11 +72,30 @@ class MaskedTextField extends Component {
         <TextFieldUnderline
           muiTheme={muiTheme}
           focus={focused}
+          error={!!errorText}
+        />
+        <ErrorText
+          muiTheme={muiTheme}
+          errorText={errorText}
         />
       </div>
     )
   }
 }
+
+const ErrorText = ({errorText, muiTheme}) => errorText ? (
+  <div
+    style={{
+      color: muiTheme.textField.errorColor,
+      fontSize: '12px',
+      position: 'absolute',
+      bottom: '-1rem',
+      whiteSpace: 'nowrap'
+    }}
+    >
+    { errorText }
+  </div>
+) : null
 
 MaskedTextField.contextTypes = {
   muiTheme: PropTypes.object

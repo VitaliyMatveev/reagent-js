@@ -20,7 +20,8 @@ const App = () => {
             type: 'string',
             title: 'Строка'
           }
-        }
+        },
+        required: ['date2']
       }}
       value={{date: '11.01.1992'}}
       onSubmit={() => {}}

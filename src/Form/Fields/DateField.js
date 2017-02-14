@@ -6,26 +6,28 @@ import Calendar from 'material-ui/svg-icons/action/today'
 class DateField extends Component {
   constructor(props) {
     super(props)
-    //console.log('test', parsedValue);
     const value = props.value || props.defaultValue
-
     this.state = {
-      value: value ? parseDate(value) : null
+      value: value,
+      date: parseDate(value),
+      error: ''
     }
-    console.log('constructor', this.state);
   }
 
   _handleAccept = (date) => {
-    console.log('onAccept', date);
-    this.setState({value: date})
+    this.setState({date})
   }
 
-  _handleChange(e, str) {
-    console.log('handleChange', str);
-    const value = parseDate(str)
-    value != 'Invalid Date' && this.setState({value})
+  _handleChange(e, value) {
+    try {
+      const date = parseDate(value)
+      this.setState({date, error: ''})
+    } catch (e) {
+      this.setState({error: e.message})
+    } finally {
+      this.setState({value})
+    }
   }
-
 
   _showCalendar(){
     this.refs.dialog.show()
@@ -50,8 +52,8 @@ class DateField extends Component {
   }
   render() {
     const {title, name, required} = this.props
-    const {value} = this.state
-    console.log('Date', value);
+    const {value, date, error} = this.state
+
     return (
       <div
         className='c-field c-date-field'
@@ -63,10 +65,11 @@ class DateField extends Component {
           name={name}
           mask='11.11.1111'
           pattern='\d{2,2}.\d{2,2}.\d{4,4}'
-          value={ value && value.toLocaleDateString('ru') }
+          value={ value }
           ref='input'
           onChange={this._handleChange.bind(this)}
           autoComplete={ false }
+          errorText={error}
         />
         <Avatar
           size={32}
@@ -83,7 +86,7 @@ class DateField extends Component {
           ref='dialog'
           autoOk={true}
           onAccept={ this._handleAccept }
-          initialDate={ value || new Date() }
+          initialDate={ date || new Date() }
         />
       </div>
     )
@@ -91,9 +94,14 @@ class DateField extends Component {
 }
 
 const parseDate = (value) => {
-  console.log('parseDate', value);
+  if (!value || value.indexOf('_') > -1) return null
   const dateParts = value.split('.')
-  return new Date(--dateParts[2], --dateParts[1], dateParts[0])
+  const date = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`)
+  //console.log('parseDate', value, date);
+  if (date == 'Invalid Date') {
+    throw new Error('Дата должна быть в формате дд.мм.гггг')
+  }
+  return date
 }
 
 DateField.propTypes = {
