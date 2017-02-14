@@ -15,6 +15,10 @@ class MaskedTextField extends Component {
   handleFocus() {
     this.setState({focused: true})
   }
+  componentWillReceiveProps(nextProps) {
+    const { value, defaultValue } = nextProps
+    this.setState({hasValue: !!(defaultValue || value)})
+  }
   handleBlur() {
     this.setState({focused: false})
   }
