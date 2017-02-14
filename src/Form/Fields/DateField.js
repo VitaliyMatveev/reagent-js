@@ -15,7 +15,7 @@ class DateField extends Component {
   }
 
   _handleAccept = (date) => {
-    this.setState({date})
+    this.setState({value: date.toLocaleDateString('ru'), date})
   }
 
   _handleChange(e, value) {
