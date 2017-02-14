@@ -19,12 +19,16 @@ const App = () => {
           text: {
             type: 'string',
             title: 'Строка'
+          },
+          address: {
+            type: 'address',
+            title: 'Адрес'
           }
         },
-        required: ['date2']
+        required: ['address']
       }}
       value={{date: '11.01.1992'}}
-      onSubmit={() => {}}
+      onSubmit={data => console.log('submit', data)}
     />
   )
 }

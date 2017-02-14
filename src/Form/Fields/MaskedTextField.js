@@ -27,7 +27,8 @@ class MaskedTextField extends Component {
   }
   handleBlur() {
     const el = findDOMNode(this.refs.input)
-    this.setState({focused: false, errorText: el.validationMessage})
+    const { errorText } = this.props
+    this.setState({focused: false, errorText: errorText || el.validationMessage})
   }
   handleChange(event) {
     const {value} = event.target
