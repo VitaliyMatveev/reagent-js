@@ -1,11 +1,10 @@
 import React, { PropTypes, Component } from 'react'
-import {default as UUID} from 'node-uuid';
 
-import RaisedButton from 'material-ui/RaisedButton';
+import Divider from 'material-ui/Divider'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AddIcon from 'material-ui/svg-icons/content/add'
 
 import ArrayFieldItem from './ArrayFieldItem'
-
 import './array_field.less'
 
 class ArrayField extends Component {
@@ -13,52 +12,53 @@ class ArrayField extends Component {
     super (props)
 
     this.state = {
-      items: {}
+      value: props.value || []
     }
   }
 
-  _handleRemoveComponent (index){
-    let items = this.state.items;
-    delete items[index]
-    this.setState({ items: items })
+  _handleRemove (index){
+    this.setState({ value: this.state.value.filter((el, i) => i != index) })
   }
 
   _handleAddComponents () {
-    const {items, name, title, direction, value={}, required} = this.props
-    let uuid = UUID.v4();
-    let components = this.state.items;
-    components[uuid] = <ArrayFieldItem
-                   key={UUID.v4()}
-                   index={uuid}
-                   handleRemoveComponent={this._handleRemoveComponent.bind(this)}
-                   items={items.properties}
-                   name={name}
-                   title={title}
-                   direction={direction}
-                   value={value}
-                   required={required} />
-
-    this.setState({items: components})
+    const {items, name, title, direction, required} = this.props
+    this.setState({value: this.state.value.concat([null])})
   }
 
   render() {
-    const {properties, name, title, direction, value={}, required} = this.props
+    const {properties, name, title, direction, items, required} = this.props
+    const {value=[]} = this.state
     return (
       <div className={`c-dynamic-field${direction == 'horizontal' ? ' c-dynamic-field_horizontal' : ''}`}>
-        { title ? <h4 className='c-object-field__title'>{title}</h4> : null }
-        <RaisedButton
-          key={`add-${UUID.v4()}`}
-          type='button'
-          icon={<AddIcon/>}
-          primary={true}
-          onClick={this._handleAddComponents.bind(this)}
-          style={{marginRight: '0.25rem'}}
-        />
-        <div>
-          {
-            Object.values(this.state.items)
-          }
+        <div style={{
+            display: 'flex',
+            alignItems: 'flex-end'
+          }}>
+          <h4 className='c-array-field__title'>
+            {title}
+          </h4>
+          <FloatingActionButton
+            secondary={true}
+            mini={true}
+            onClick={() => this._handleAddComponents()}
+            style={{marginRight: '0.25rem'}}
+            >
+            <AddIcon/>
+          </FloatingActionButton>
         </div>
+        {
+          value.map((val, index) => (
+            <ArrayFieldItem
+              key={index}
+              onSave={this._handleAddComponents.bind(this)}
+              onRemove={ () => this._handleRemove(index)}
+              items={items}
+              name={`${name}[]`}
+              required={required}
+              value={val}
+            />            
+          ))
+        }
       </div>
     )
   }

@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 module.exports = (env) => ({
   entry: {
-    Form: './src/Form'
+    Form: './src/Form'    
   },
   output: {
     filename: '[name]/index.js',

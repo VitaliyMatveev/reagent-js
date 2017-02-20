@@ -4,7 +4,7 @@ import Field from '../Field'
 import OneOf from '../OneOf'
 import './style.less'
 
-const ObjectField = (props) => {  
+const ObjectField = (props) => {
   const {properties, name, title, direction, value={}, required} = props
   let body
   if ('oneOf' in props) {
@@ -24,7 +24,7 @@ const ObjectField = (props) => {
         key={fieldName}
         parentName={name}
         name={fieldName}
-        value={value[fieldName]}
+        value={value && value[fieldName]}
         field={{
           ...properties[fieldName]
         }}
@@ -35,7 +35,9 @@ const ObjectField = (props) => {
   return (
     <div className='c-object-field'>
       <FieldTitle title={title}/>
-      { body }
+      <div className='c-object-field__content'>
+        { body }
+      </div>
     </div>
   )
 }

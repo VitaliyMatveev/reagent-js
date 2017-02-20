@@ -25,16 +25,18 @@ class MaskedTextField extends Component {
       this.setState({errorText: nextProps.errorText})
     }
   }
-  handleBlur() {
-    const el = findDOMNode(this.refs.input)
-    const { errorText } = this.props
-    this.setState({focused: false, errorText: errorText || el.validationMessage})
+  handleBlur = (e) => {
+    const { validationMessage, value } = e.target
+    const { errorText, onChange } = this.props
+    this.setState({focused: false, errorText: errorText || validationMessage}, () => {
+      validationMessage == '' && onChange && onChange(value)
+    })
   }
   handleChange(event) {
     const {value} = event.target
     const { onChange } = this.props
     this.setState({hasValue: value && value != ''}, () => {
-      onChange && onChange(event, value)
+      //onChange && onChange(event, value)
     })
   }
   render () {
