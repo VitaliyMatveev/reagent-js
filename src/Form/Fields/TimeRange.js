@@ -41,7 +41,7 @@ class TimeRange extends Component {
           pattern='.+(([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]).+(([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9])'
           required={required}
           title={title}
-          value={ value ? `с ${value.from} до ${value.to}` : null}
+          value={ value ? `с ${value.start} до ${value.finish}` : null}
           errorText={error}
           onChange={this._validate}
         />

@@ -147,8 +147,8 @@ class FormJson {
         const times = elements[fullName].value.match(/\d{2,2}:\d{2,2}/g)
         if (times && times.length == 2) {
           return {
-            from: times[0],
-            to: times[1]
+            start: times[0],
+            finish: times[1]
           }
         } else {
           return null
