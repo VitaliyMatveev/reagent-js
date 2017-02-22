@@ -8,34 +8,6 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close'
 
 import FieldTitle from '../FieldTitle'
 
-const mergeArrays = (arr1, arr2) => {
-  if (Array.isArray(arr1) && Array.isArray(arr2)) {
-    return arr1.concat(arr2)
-      .reduce((result, item) =>
-        result.includes(item) ? result : result.concat(item),[]
-      )
-  } else {
-    return null
-  }
-}
-
-const unmergeArrays = (arr1, arr2) => {
-  if (Array.isArray(arr1) && Array.isArray(arr2)) {
-    return arr1.filter(item => !arr2.includes(item))
-  } else {
-    return null
-  }
-}
-
-const isArrayEquals = (arr1, arr2) => {
-  if (Array.isArray(arr1) && Array.isArray(arr2)) {
-    return arr1.length == arr2.length &&
-      arr1.every(item => arr2.includes(item))
-  } else {
-    return null
-  }
-}
-
 class MultiSelectField extends Component {
   constructor (props) {
     super (props)
@@ -96,11 +68,20 @@ class MultiSelectField extends Component {
       node.setCustomValidity('')
     }
   }
-
+  filterItems (items, searchWords, selectedItems) {
+    return items.filter( item =>
+      !item.disabled && (
+        searchWords == '' ? true : item.title.toLowerCase().includes(searchWords.toLowerCase())
+      ) && (
+        !selectedItems.includes(item)
+      )
+    )
+    //const findedItems = searchWords == '' ? items : items.filter(({title}) => title.toLowerCase().includes(searchWords))
+  }
   render () {
     const { title, items, name, required } = this.props
     const { searchWords, selectedItems, focused, open } = this.state
-    const findedItems = searchWords == '' ? items : items.filter(({title}) => title.toLowerCase().includes(searchWords))
+    const filteredItems = this.filterItems(items, searchWords, selectedItems)
     return (
       <div
         className='c-field'
@@ -182,7 +163,7 @@ class MultiSelectField extends Component {
                 // />
               }
               {
-                findedItems.map(item => (
+                filteredItems.map(item => (
                   <DictionaryItem
                     key={item.id}
                     { ...item }

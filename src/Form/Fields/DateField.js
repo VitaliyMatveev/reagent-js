@@ -18,8 +18,7 @@ class DateField extends Component {
     this.setState({value: date.toLocaleDateString('ru'), date})
   }
 
-  _handleChange(value) {
-    console.log('change', value);
+  _handleChange(value) {     
     try {
       const date = parseDate(value)
       this.setState({date, error: ''})
