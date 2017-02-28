@@ -12,24 +12,19 @@ import SelectField from './SelectField'
 import MultiSelectField from './SelectField/MultiSelectField'
 import ArrayField from './ArrayField'
 import AddressField from './AddressField'
+import TimeRange from './TimeRange'
 
-const getFullFieldName = ({parentName, name}) => {
-  if (!name) {
-    return ''
-  } else {
-    return parentName ? `${parentName}[${name}]` : name
-  }
-}
+import { getFullFieldName } from '../utils'
 const Field = (props) => {
   const {name, field, parentName, value, defaultValue, required} = props
   const {type} = field
   //const fieldValue = name ? value[name] : value
-  const fieldName = field.name || getFullFieldName({parentName, name})
+  const fieldName = getFullFieldName(props)  
   switch (type) {
     case 'html': {
       return (
         <RichTextField
-          key={name}
+          key={fieldName}
           {...field}
           required={required}
           name={fieldName}
@@ -40,7 +35,7 @@ const Field = (props) => {
     case 'array': {
       return (
         <ArrayField
-          key={name}
+          key={fieldName}
           {...field}
           name={fieldName}
           value={value}
@@ -50,7 +45,7 @@ const Field = (props) => {
     case 'file': {
       return (
         <FileField
-          key={name}
+          key={fieldName}
           {...field}
           required={required}
           name={fieldName}
@@ -61,7 +56,7 @@ const Field = (props) => {
     case 'radio': {
       return (
         <RadioField
-          key={name}
+          key={fieldName}
           {...field}
           required={required}
           name={fieldName}
@@ -72,7 +67,7 @@ const Field = (props) => {
     case 'checkbox': {
       return (
         <CheckboxField
-          key={name}
+          key={fieldName}
           {...field}
           required={required}
           name={fieldName}
@@ -85,7 +80,7 @@ const Field = (props) => {
       const SelectFieldComponent = multiple ? MultiSelectField : SelectField
       return (
         <SelectFieldComponent
-          key={name}
+          key={fieldName}
           {...field}
           required={required}
           name={fieldName}
@@ -97,7 +92,7 @@ const Field = (props) => {
     case 'object': {
       return (
         <ObjectField
-          key={name}
+          key={fieldName}
           {...field}
           name={fieldName}
           value={value}
@@ -107,7 +102,7 @@ const Field = (props) => {
     case 'hidden': {
       return (
         <input
-          key={name}
+          key={fieldName}
           type='hidden'
           name={fieldName}
           value={field.value}
@@ -118,7 +113,7 @@ const Field = (props) => {
     case 'toggle': {
       return (
         <ToggleField
-          key={name}
+          key={fieldName}
           {...field}
           name={fieldName}
           value={value}
@@ -129,7 +124,7 @@ const Field = (props) => {
     case 'date': {
       return (
         <DateField
-          key={name}
+          key={fieldName}
           {...field}
           required={required}
           name={fieldName}
@@ -141,7 +136,19 @@ const Field = (props) => {
     case 'address': {
       return (
         <AddressField
-          key={name}
+          key={fieldName}
+          {...field}
+          required={required}
+          name={fieldName}
+          value={value}
+        />
+      )
+    }
+
+    case 'time_ranges': {
+      return (
+        <TimeRange
+          key={fieldName}
           {...field}
           required={required}
           name={fieldName}
@@ -154,7 +161,7 @@ const Field = (props) => {
       const {title, ...other} = field
       return (
         <TextField
-          key={name}
+          key={fieldName}
           title={title}
           {...other}
           required={required}

@@ -8,7 +8,7 @@ import Field from './Fields/Field'
 import FormJson from './FormJson'
 import './style.less'
 
-import TextField2 from 'material-ui/TextField'
+import TextField2 from './Fields/TextField'
 import RichTextField2 from './Fields/RichTextField'
 import SelectField2 from './Fields/SelectField'
 import FileField2 from './Fields/FileField'
@@ -22,11 +22,20 @@ class Form extends Component {
     super(props)
   }
 
+  getChildContext() {
+    return {
+      onChange: this.props.onChange
+    }
+  }
+
+  static childContextTypes = {
+    onChange: PropTypes.func
+  }
+
   componentDidMount() {
     this.submit = () => this.refs.submitButton.click()
   }
   _handleSubmit(e){
-
     const {onSubmit, schema, type='application/json'} = this.props
     e.preventDefault();
     const form = e.target

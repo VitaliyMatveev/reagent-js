@@ -1,3 +1,5 @@
+import { getFullFieldName } from './utils'
+
 class FormJson {
   constructor() {
     this.data = {}
@@ -31,7 +33,7 @@ class FormJson {
   }
   __getFieldData___ (field, fieldName, elements, parentName) {
     //console.log('getFieldData', field, fieldName, parentName)
-    let fullName = field.name ? field.name : fieldName ? parentName ? `${parentName}[${fieldName}]` : `${fieldName}` : ''
+    let fullName = getFullFieldName ({field, name: fieldName, parentName})
     switch (field.type) {
       case 'object': {
         const {oneOf, name:fieldName} = field
@@ -60,8 +62,21 @@ class FormJson {
         }
       }
       case 'array': {
-        console.log(elements)
-        return []
+        if (field.items.type == 'object') {
+          throw new Error('Не поддерживаются массивы с вложенными объектами')
+        }
+        const els = elements[`${fullName}[]`]
+        let res = []
+        if (!els) {
+          return null
+        } else if (els.length) {
+          for (var el of els) {
+            res.push( this.__getFieldData___(field.items, name, {[`${fullName}[]`]: el}, `${fullName}[]`) )
+          }
+        } else {
+          res.push( this.__getFieldData___(field.items, name, {[`${fullName}[]`]: els}, `${fullName}[]`) )
+        }
+        return res
       }
       case 'boolean': {
         const target = elements.namedItem(`${fullName}`)
@@ -98,7 +113,6 @@ class FormJson {
           for (let el of children) {
             data.push(el.value)
           }
-          console.log('select data', data, field, fullName, elements);
           return data
         } else {
           return elements[fullName].value
@@ -129,7 +143,17 @@ class FormJson {
       case 'number': {
         return Number.parseFloat(elements[fullName].value)
       }
-
+      case 'time_ranges': {
+        const times = elements[fullName].value.match(/\d{2,2}:\d{2,2}/g)
+        if (times && times.length == 2) {
+          return {
+            start: times[0],
+            finish: times[1]
+          }
+        } else {
+          return null
+        }
+      }
       default:
         if (!elements[fullName]) throw new Error(`Не найден элемент с именем ${fullName} из схемы ${JSON.stringify(field)}`)
         return elements[fullName].value //&& elements[fullName].value != '' ? elements[fullName].value : null

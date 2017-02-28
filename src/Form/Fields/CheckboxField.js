@@ -6,14 +6,38 @@ class CheckboxField extends Component {
   constructor (props) {
     super (props)
     this.state = {
-      focused: false
+      focused: false,
+      value: props.value || []
     }
   }
+  static contextTypes = {
+    onChange: PropTypes.func
+  }
+
+  _handleChange = (checked, id) => {
+    const {value} = this.state
+    this.setState({
+      value: checked ?
+        value.concat(id) : value.filter(el => el != id)
+    }, () => {
+      const {onChange} = this.context
+      const {name} = this.props
+      onChange && onChange({[name]: this.state.value})
+    })
+  }
+
+  _handleFocus = () => this.setState({focused: true})
+
+  _handleBlur = () => this.setState({focused: false})
+
   render () {
-    const {title, items, name, value, required} = this.props
-    const {focused} = this.state
+    const {title, items, name, required} = this.props
+    const {focused, value} = this.state
     return (
-      <div className='c-field'>
+      <div
+        className='c-field'
+        ref='field'
+        >
         <FieldTitle
           title={title}
           required={required}
@@ -26,9 +50,10 @@ class CheckboxField extends Component {
               name={name+'[]'}
               label={item.title}
               value={item.id}
-              defaultChecked={value && [].concat(value).indexOf(item.title)>-1}
-              onFocus={() => this.setState({focused: true})}
-              onBlur={() => this.setState({focused: false})}
+              onCheck={(e, checked) => this._handleChange(checked, item.id)}
+              checked={value.includes(item.id)}
+              onFocus={this._handleFocus}
+              onBlur={this._handleBlur}
             />
           ))
         }

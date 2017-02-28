@@ -50,13 +50,9 @@ export default class FileField extends Component{
     this.refs.input.value=''
   }
 
-  _handleFocus (){
-    this.setState({focused: true})
-  }
+  _handleFocus = () => this.setState({focused: true})
 
-  _handleBlur (){
-    this.setState({focused: false}, this._validation)
-  }
+  _handleBlur = () => this.setState({focused: false}, this._validation)
 
   render(){
     const { required, name, title } = this.props
@@ -68,6 +64,9 @@ export default class FileField extends Component{
       <div
         className='file-upload-widget'
         title={ title }
+        tabIndex={1}
+        onFocus={ this._handleFocus }
+        onBlur={ this._handleBlur }
         >
         <TextFieldLabel
           className={`file-upload-widget__label ${hasValue || focused ? 'file-upload-widget__label_focused' : ''}`}
@@ -104,8 +103,6 @@ export default class FileField extends Component{
           ref='input'
           required={ !!required }
           className='file-upload-widget__input'
-          onFocus={ this._handleFocus.bind(this) }
-          onBlur={ this._handleBlur.bind(this) }
           onChange={ this._handleChange.bind(this) }
         />
       </div>

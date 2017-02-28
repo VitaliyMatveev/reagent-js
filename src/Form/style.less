@@ -17,7 +17,7 @@
   }
 }
 .c-field {
-  margin-top: 1rem;
+  //margin-top: 1rem;
   width: 100%;
   &.c-field_focused {
     .c-field__label {
@@ -38,8 +38,11 @@
   }
 }
 
-.c-toggle-field input:focus + div {
-  color: @focus-color;
+.c-toggle-field {
+  margin-top: 1rem;
+  input:focus + div {
+    color: @focus-color;
+  }
 }
 
 .c-date-field {
@@ -76,8 +79,10 @@
 
 .c-address-field {
   width: 100%;
+  display: flex;
+  align-items: baseline;
   .c-address-field__input {
-    max-width: calc(~"100% - 40px")
+    flex: 1 1 100%;
   }
 }
 .c-address-field-popup {
