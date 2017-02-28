@@ -4,21 +4,23 @@ import AceEditor from 'react-ace'
 import 'brace/mode/json';
 
 import 'brace/theme/monokai';
+const def = (
+`{
+  "type": "object",
+  "properties": {
+    "test": {
+      "type": "string",
+      "title": "Test"
+    }
+  }
+}`
+)
 class App extends Component {
   constructor(props) {
     super (props)
-    var def = {
-      type: 'object',
-      properties: {
-        test: {
-          type: 'string',
-          title: 'Test'
-        }
-      }
-    }
     this.state={
-      editor: JSON.stringify(def),
-      scheme: def
+      editor: def,
+      scheme: JSON.parse(def)
     }
   }
   handleChange = val => this.setState({editor: val})
@@ -35,19 +37,38 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap'
+        }}
+        >
         <AceEditor
           mode='json'
           theme='monokai'
           name='form_scheme'
           value={this.state.editor}
+          fontSize={14}
+          tabSize={2}
           onChange={this.handleChange}
         />
-        <button type='button' onClick={this.handleSubmit}>Сгенерировать</button>
-        <button type='button' onClick={this.handleDownload}>Скачать</button>
-        <Form
-          schema={this.state.scheme}
-        />
+        <div
+          style={{
+            flex: '1 1 auto'
+          }}
+          >
+          <Form
+            schema={this.state.scheme}
+          />
+        </div>
+        <div
+          style={{
+            flex: '1 0 100%'
+          }}
+          >
+          <button type='button' onClick={this.handleSubmit}>Сгенерировать</button>
+          <button type='button' onClick={this.handleDownload}>Скачать</button>
+        </div>
       </div>
     )
   }
