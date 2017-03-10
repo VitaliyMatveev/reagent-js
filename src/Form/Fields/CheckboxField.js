@@ -14,11 +14,11 @@ class CheckboxField extends Component {
     onChange: PropTypes.func
   }
 
-  _handleChange = (checked, id) => {
+  _handleChange = (checked, item) => {
     const {value} = this.state
     this.setState({
       value: checked ?
-        value.concat(id) : value.filter(el => el != id)
+        value.concat(item.id) : value.filter(el => el != item.id && el != item.title)
     }, () => {
       const {onChange} = this.context
       const {name} = this.props
@@ -50,7 +50,7 @@ class CheckboxField extends Component {
               name={name+'[]'}
               label={item.title}
               value={item.id}
-              onCheck={(e, checked) => this._handleChange(checked, item.id)}
+              onCheck={(e, checked) => this._handleChange(checked, item)}
               checked={value.includes(item.id) || value.includes(item.title)}
               onFocus={this._handleFocus}
               onBlur={this._handleBlur}
