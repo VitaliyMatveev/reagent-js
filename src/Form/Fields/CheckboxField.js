@@ -51,7 +51,7 @@ class CheckboxField extends Component {
               label={item.title}
               value={item.id}
               onCheck={(e, checked) => this._handleChange(checked, item.id)}
-              checked={value.includes(item.id)}
+              checked={value.includes(item.id) || value.includes(item.title)}
               onFocus={this._handleFocus}
               onBlur={this._handleBlur}
             />
