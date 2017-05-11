@@ -13,7 +13,7 @@ class RadioField extends Component {
     const {name, style, items, title, required, onChange} = this.props
     const {focused} = this.state
     return (
-      <div className='c-field'>
+      <div className='c-field c-toggle-field'>
         <FieldTitle
           title={title}
           required={required}
