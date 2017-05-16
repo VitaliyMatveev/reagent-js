@@ -1,22 +1,26 @@
 import React, { PropTypes, Component } from 'react'
-import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField'
-import Checkbox from 'material-ui/Checkbox'
-import {List, ListItem} from 'material-ui/List'
 
-import NavigationClose from 'material-ui/svg-icons/navigation/close'
+import TextField from 'material-ui/TextField'
 
 import FieldTitle from '../FieldTitle'
+import SelectDialog from './SelectDialog'
+import SelectedItemList from './SelectedItemList'
+
+import { getText } from '../../utils.js'
 
 class MultiSelectField extends Component {
   constructor (props) {
     super (props)
     const { value, defaultValue } = props
+    const selectedItems = value || defaultValue || []
     this.state = {
       open: false,
       searchWords: '',
       focused: false,
-      selectedItems: value || defaultValue || []
+      selectedItems
+    }
+    this.lang = {
+      text: 'Поиск в справочнике'
     }
   }
 
@@ -32,10 +36,7 @@ class MultiSelectField extends Component {
 
   handleClose = () => this.setState({open: false, searchWords: ''}, this.focus)
 
-  handleSearch = (e) => {
-    const { value } = e.target
-    this.setState({searchWords: value})
-  }
+  handleSearch = (e, text) => this.setState({searchWords: text})
 
   handleItemCheck = (e, isSelected) => {
     const { selectedItems } = this.state
@@ -51,6 +52,8 @@ class MultiSelectField extends Component {
     const { selectedItems } = this.state
     this.setState({selectedItems: selectedItems.filter( item => item != id )}, this.focus)
   }
+
+  handleChange = (e, text) => this.setState({open: true, searchWords: text})
 
   focus = () => this.refs.input.focus()
 
@@ -68,6 +71,7 @@ class MultiSelectField extends Component {
       node.setCustomValidity('')
     }
   }
+
   filterItems (items, searchWords, selectedItems) {
     return items.filter( item =>
       !item.disabled && (
@@ -78,9 +82,17 @@ class MultiSelectField extends Component {
     )
     //const findedItems = searchWords == '' ? items : items.filter(({title}) => title.toLowerCase().includes(searchWords))
   }
+  handleShowMore = () => {
+    const { lastViewedIndex } = this.state
+    if (lastViewedIndex < this.props.items.length) {
+      this.setState({lastViewedIndex: lastViewedIndex + 20})
+    }
+  }
+
   render () {
     const { title, items, name, required } = this.props
-    const { searchWords, selectedItems, focused, open } = this.state
+    const { MultiSelectField } = this.context
+    const { searchWords, selectedItems, focused, open, lastViewedIndex } = this.state
     const filteredItems = this.filterItems(items, searchWords, selectedItems)
     return (
       <div
@@ -94,107 +106,41 @@ class MultiSelectField extends Component {
         <div>
           <TextField
             name='multiselect_input'
-            value='Выбрать из справочника'
-            onChange={ () => { return false } }
+            hintText={ getText(this.lang, MultiSelectField, 'text') }
             fullWidth={ true }
-            onClick={ this.handleOpen }
+            value=""
+            onChange={ this.handleChange }
             onFocus={ this.handleFocus }
             onBlur={ this.handleBlur }
             ref='input'
           />
-        <List>
-            {
-              selectedItems
-                .map( id => items.find( item => item.id == id) )
-                .map( ({ id, title, description }, index, arr) => (
-                  <ListItem
-                    key={ id }
-                    leftIcon= { <NavigationClose/> }
-                    value={ id }
-                    onClick={ () => this.handleSelectedItemClick (id) }
-                    primaryText={ `${title}${index == arr.length-1 ? '.' : ';'}` }
-                    secondaryText={ description }
-                  />
-                ))
-            }
-          </List>
+          <SelectedItemList
+            items={items}
+            onClick={this.handleSelectedItemClick}
+            selectedItems={selectedItems}
+            dialogOpen={this.state.open}
+          />
         </div>
-        <select
-          style={{display: 'none'}}
-          name={`${name}[]`}
-          multiple={true}
-          value={selectedItems}
-          >
-          {
-            selectedItems.map(id => (
-              <option key={id} value={id}/>
-            ))
-          }
-        </select>
-        <Dialog
-          title={ title }
-          open={ open }
-          onRequestClose={this.handleClose}
-          >
-          <div style={{
-              maxHeight: 'inherit',
-              display: 'flex',
-              flexDirection: 'column'
-            }}>
-            <TextField
-              hintText='Поиск...'
-              ref={ c => c && c.focus && c.focus() }
-              onChange={this.handleSearch}
-              fullWidth={true}
-            />
-            <List style={{
-              overflow: 'auto'
-              }}
-              >
-              {
-                // <DictionaryItem
-                //   id='all'
-                //   title={`${searchWords == '' ? 'Выбрать все' : 'Выбрать найденное'}`}
-                //   onCheck={ this.handleCheckAll }
-                //   checked={ searchWords == '' ?
-                //     items.length == selectedItems.length :
-                //     isArrayEquals(selectedItems, findedItems)
-                //   }
-                // />
-              }
-              {
-                filteredItems.map(item => (
-                  <DictionaryItem
-                    key={item.id}
-                    { ...item }
-                    checked={ selectedItems.includes(item.id+'') }
-                    onCheck={ this.handleItemCheck }
-                  />
-                ))
-              }
-            </List>
-          </div>
-        </Dialog>
+        <SelectDialog
+          title={title}
+          open={this.state.open}
+          items={filteredItems}
+          selectedItems={selectedItems}
+          searchWords={searchWords}
+          totalCount={items.length}
+          onClose={this.handleClose}
+          onMore={this.handleShowMore}
+          onSearch={this.handleSearch}
+          onCheck={this.handleItemCheck}
+        />
       </div>
     )
   }
 }
 
-const DictionaryItem = ({id, title, description, checked, onCheck}) => (
-  <ListItem
-    key={id}
-    primaryText={ title }
-    secondaryText={ description }
-    leftCheckbox={
-      onCheck ?
-        <Checkbox
-          value={ id }
-          checked={ checked }
-          onCheck={ onCheck }
-        />
-      : null
-    }
-  />
-)
-
+MultiSelectField.contextTypes = {
+  MultiSelectField: PropTypes.shape({
+    text: PropTypes.string
+  })
+};
 export default MultiSelectField

@@ -76,6 +76,7 @@ class Form extends Component {
         ref='form'
         onSubmit={this._handleSubmit.bind(this)}
         >
+        <button type='submit' ref='submitButton' style={{display: 'none'}}/>
         <div className='c-editor-panel__content'>
           <Field
             field={{...schema}}
@@ -88,7 +89,6 @@ class Form extends Component {
         <div className='c-editor-panel__controls'>
           {controls || defaultControls}
         </div>
-        <button type='submit' ref='submitButton' style={{display: 'none'}}/>
       </form>
     )
   }

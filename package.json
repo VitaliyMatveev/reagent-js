@@ -1,6 +1,6 @@
 {
   "name": "reagents-js",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "main": "dist/index.js",
   "module": "src/index.js",
   "description": "React components set",
@@ -43,7 +43,7 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
-    "material-ui": "~0.16.4",
+    "material-ui": "~0.18.1",
     "draft-js": "^0.7.0",
     "draft-js-export-html": "^0.5.0",
     "draft-js-import-html": "^0.2.0",

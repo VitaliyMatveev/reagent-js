@@ -5,6 +5,7 @@ import FieldTitle from './FieldTitle'
 class CheckboxField extends Component {
   constructor (props) {
     super (props)
+    console.log('test');
     this.state = {
       focused: false,
       value: props.value || []
@@ -24,6 +25,11 @@ class CheckboxField extends Component {
       const {name} = this.props
       onChange && onChange({[name]: this.state.value})
     })
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('Checkbox', nextProps, this.props, nextState);
+    return true
   }
 
   _handleFocus = () => this.setState({focused: true})
