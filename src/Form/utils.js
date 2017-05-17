@@ -10,7 +10,7 @@ export const getFullFieldName = ({field, parentName, name}) => {
 }
 
 export const getText = (defaultTemplates, templates, param, ...args) => (
-  formatString( templates[param] || defaultTemplates[param], ...args )
+  formatString( templates && templates[param] || defaultTemplates[param], ...args )
 )
 
 function formatString(str, ...args) {
