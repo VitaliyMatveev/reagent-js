@@ -35,10 +35,27 @@ class App extends Component {
     return (
       <Form
         schema={{
-          type: 'select',
-          title: 'test',
-          multiple: true,
-          items
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+              title: 'String'
+            },
+            date: {
+              type: 'date',
+              title: 'date'
+            },
+            // text2: {
+            //   type: 'string',
+            //   title: 'String'
+            // },
+            select: {
+              type: 'select',
+              title: 'test',
+              multiple: true,
+              items
+            }
+          }
         }}
         onSubmit={data => console.log('res:', data)}
       />
