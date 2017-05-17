@@ -17,14 +17,7 @@ const def = (
 )
 class App extends Component {
   getChildContext() {
-    return {
-      MultiSelectField: {
-        text: 'Search in dictionary'
-        // searchFieldHintText: 'Search...',
-        // hasMoreText: 'Showed first {1} from {2}',
-        // emptyText: 'Empty'
-      }
-    }
+
   }
 
   static childContextTypes = {
