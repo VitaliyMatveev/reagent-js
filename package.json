@@ -6,7 +6,7 @@
   "description": "React components set",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "NODE_ENV=release babel --presets es2015,stage-0,react ./src --out-dir ./lib; autoless --no-watch src lib",
+    "compile": "NODE_ENV=release babel --presets es2015,stage-0,react ./src --out-dir ./dist; autoless --no-watch src dist",
     "prepublish": "npm run build:dist",
     "postversion": "npm publish",
     "build:dev": "webpack --env=dev --progress --profile --colors",
