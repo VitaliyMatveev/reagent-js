@@ -115,6 +115,7 @@ class MultiSelectField extends Component {
             ref='input'
           />
           <SelectedItemList
+            name={name}
             items={items}
             onClick={this.handleSelectedItemClick}
             selectedItems={selectedItems}

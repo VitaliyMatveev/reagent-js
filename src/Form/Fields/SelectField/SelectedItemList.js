@@ -8,7 +8,7 @@ class SelectedItemList extends React.PureComponent {
   }
 
   render () {
-    const { selectedItems, items, onClick } = this.props
+    const { name, selectedItems, items, onClick } = this.props
     return (
       <div>
         <List>
