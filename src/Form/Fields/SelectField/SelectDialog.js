@@ -4,6 +4,7 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField'
 import Checkbox from 'material-ui/Checkbox'
 import {List, ListItem} from 'material-ui/List'
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
 import { getText } from '../../utils.js'
 
@@ -45,7 +46,7 @@ class ItemListWithFilter extends React.Component {
   }
 
   render() {
-    const {title, open, items, selectedItems, searchWords, onClose, onSearch, onCheck} = this.props
+    const {title, open, items, selectedItems, searchWords, onClose, onSearch, onCheck, max} = this.props
     const format = getText.bind(null, { searchFieldHintText: 'Поиск...'}, this.context.MultiSelectField || {})
     return (
       <div style={{
@@ -66,14 +67,19 @@ class ItemListWithFilter extends React.Component {
           ref='itemList'
           >
           {
-            items.concat([]).splice(0, 30).map(item => (
+            max === 1 ? (
+              <RadioItems
+                items={ items }
+                onCheck={ onCheck }
+              />
+            ) : items.concat([]).splice(0, 30).map(item => (
               <DictionaryItem
                 key={item.id}
                 { ...item }
                 checked={ selectedItems.includes(item.id+'') }
                 onCheck={ onCheck }
               />
-          ))
+            ))
           }
         </div>
         <Notification
@@ -139,6 +145,24 @@ const DictionaryItem = ({id, title, description, checked, onCheck}) => (
       : null
     }
   />
+)
+
+const RadioItems = ({ items, onCheck }) => (
+  <RadioButtonGroup
+    name="radioItems"
+    onChange={ onCheck }
+  >
+    {
+      items.slice(0, 30).map(({ id, title }) => (
+        <RadioButton
+          key={ id }
+          value={ id }
+          label={ title }
+          style={ { paddingTop: 8 } }
+        />
+      ))
+    }
+  </RadioButtonGroup>
 )
 
 export default SelectDialog
