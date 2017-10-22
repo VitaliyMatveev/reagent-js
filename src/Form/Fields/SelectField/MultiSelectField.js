@@ -40,8 +40,11 @@ class MultiSelectField extends Component {
 
   handleItemCheck = (e, isSelected) => {
     const { selectedItems } = this.state
+    const { max } = this.props
     const { value } = e.target
-    if ( isSelected ) {
+    if (max === 1) {
+      this.setState({ selectedItems: [value] })
+    } else if ( isSelected ) {
       this.setState({selectedItems: selectedItems.concat(value)})
     } else {
       this.setState({selectedItems: selectedItems.filter( id => id != value )})
@@ -90,7 +93,7 @@ class MultiSelectField extends Component {
   }
 
   render () {
-    const { title, items, name, required } = this.props
+    const { title, items, name, required, max } = this.props
     const { MultiSelectField } = this.context
     const { searchWords, selectedItems, focused, open, lastViewedIndex } = this.state
     const filteredItems = this.filterItems(items, searchWords, selectedItems)
@@ -133,6 +136,7 @@ class MultiSelectField extends Component {
           onMore={this.handleShowMore}
           onSearch={this.handleSearch}
           onCheck={this.handleItemCheck}
+          max={ max }
         />
       </div>
     )
