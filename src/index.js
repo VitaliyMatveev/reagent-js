@@ -1,5 +1,1 @@
-import Form from './Form/index.js'
-
-export {
-  Form
-}
+export { default } from './Form'

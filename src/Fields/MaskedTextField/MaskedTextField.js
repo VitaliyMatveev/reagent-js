@@ -1,22 +1,24 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
+import { object } from 'prop-types'
 import TextFieldLabel from 'material-ui/TextField/TextFieldLabel'
 import TextFieldUnderline from 'material-ui/TextField/TextFieldUnderline'
 import MaskedInput from 'react-maskedinput'
-import { findDOMNode } from 'react-dom'
 
-class MaskedTextField extends Component {
+export default class MaskedTextField extends Component {
+  static contextTypes = {
+    muiTheme: object,
+  }
+
   constructor(props) {
     super(props)
-    const {value, errorText, defaultValue} = props
+    const { value, errorText, defaultValue } = props
     this.state = {
       focused: false,
       errorText,
       hasValue: !!(defaultValue || value)
     }
   }
-  handleFocus() {
-    this.setState({focused: true})
-  }
+
   componentWillReceiveProps(nextProps) {
     if ('value' in nextProps) {
       this.setState({hasValue: !!nextProps.value})
@@ -25,20 +27,25 @@ class MaskedTextField extends Component {
       this.setState({errorText: nextProps.errorText})
     }
   }
-  handleBlur = (e) => {
+
+  handleFocus = () => this.setState({ focused: true })
+
+  handleBlur = e => {
     const { validationMessage, value } = e.target
     const { errorText, onChange } = this.props
     this.setState({focused: false, errorText: errorText || validationMessage}, () => {
       validationMessage == '' && onChange && onChange(value)
     })
   }
-  handleChange(event) {
-    const {value} = event.target
-    const { onChange } = this.props
+
+  handleChange = e => {
+    const {value} = e.target
+    //const { onChange } = this.props
     this.setState({hasValue: value && value != ''}, () => {
       //onChange && onChange(event, value)
     })
   }
+
   render () {
     const {name, mask, title, value, defaultValue, pattern, required} = this.props
     const {focused, hasValue, errorText} = this.state
@@ -60,9 +67,9 @@ class MaskedTextField extends Component {
         <MaskedInput
           ref='input'
           className='c-text-field__input'
-          onFocus={this.handleFocus.bind(this)}
-          onBlur={this.handleBlur.bind(this)}
-          onChange={this.handleChange.bind(this)}
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          onChange={this.handleChange}
           id={name}
           required={required}
           mask={mask}
@@ -99,8 +106,3 @@ const ErrorText = ({errorText, muiTheme}) => errorText ? (
     { errorText }
   </div>
 ) : null
-
-MaskedTextField.contextTypes = {
-  muiTheme: PropTypes.object
-}
-export default MaskedTextField;

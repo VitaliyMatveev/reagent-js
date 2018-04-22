@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import { Form } from '../src'
+import Form from '../src'
 import AceEditor from 'react-ace'
 import 'brace/mode/json';
 
@@ -41,20 +41,6 @@ class App extends Component {
               type: 'string',
               title: 'String'
             },
-            date: {
-              type: 'date',
-              title: 'date'
-            },
-            // text2: {
-            //   type: 'string',
-            //   title: 'String'
-            // },
-            select: {
-              type: 'select',
-              title: 'test',
-              multiple: true,
-              items
-            }
           }
         }}
         onSubmit={data => console.log('res:', data)}
