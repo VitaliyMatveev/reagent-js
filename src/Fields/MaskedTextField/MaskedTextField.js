@@ -31,23 +31,13 @@ export default class MaskedTextField extends Component {
   handleFocus = () => this.setState({ focused: true })
 
   handleBlur = e => {
-    const { validationMessage, value } = e.target
-    const { errorText, onChange } = this.props
-    this.setState({focused: false, errorText: errorText || validationMessage}, () => {
-      validationMessage == '' && onChange && onChange(value)
-    })
-  }
-
-  handleChange = e => {
-    const {value} = e.target
-    //const { onChange } = this.props
-    this.setState({hasValue: value && value != ''}, () => {
-      //onChange && onChange(event, value)
-    })
+    //const { validationMessage, value } = e.target
+    //const { errorText, onChange } = this.props
+    this.setState({ focused: false })
   }
 
   render () {
-    const {name, mask, title, value, defaultValue, pattern, required} = this.props
+    const {name, mask, title, value, defaultValue, pattern, onChange, required} = this.props
     const {focused, hasValue, errorText} = this.state
     const {muiTheme} = this.context
     const { hintColor, focusColor, errorColor } = muiTheme.textField
@@ -69,13 +59,13 @@ export default class MaskedTextField extends Component {
           className='c-text-field__input'
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
-          onChange={this.handleChange}
+          onChange={onChange}
           id={name}
           required={required}
           mask={mask}
           name={name}
           pattern={pattern}
-          value={value || defaultValue}
+          value={value}
           placeholder={focused ? '' : ' '}
           autoComplete={ false }
         />

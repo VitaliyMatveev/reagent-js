@@ -1,12 +1,12 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { object, string, arrayOf } from 'prop-types'
 
-import renderField from '../renderField'
+import Field from '../Field'
 
 // import OneOf from '../OneOf'
 import './style.less'
 
-export default class ObjectField extends PureComponent {
+export default class ObjectField extends Component {
   static propTypes = {
     properties: object,
     name: string,
@@ -19,29 +19,22 @@ export default class ObjectField extends PureComponent {
     value: {},
   }
 
-  // static getValue = (elements, name, field) => {
-
-  // // __getObjectFieldData__ ({properties}, elements, fullName) {
-  //   //console.log('getObjectFieldData', properties, fullName);
-  //   return Object.keys(properties).reduce((values, name) => {
-  //     const value = this.__getFieldData___ (properties[name], name, elements, fullName)
-  //     return {
-  //       ...values,
-  //       [name]: value
-  //     }
-  //   }, {})
-  // }
-
   renderChildFields = () => {
-    const { properties, name: parentName, value, required } = this.props
+    const { properties, name: parentName, required } = this.props
     return (
-      <div>{Object.keys(properties).map(name => renderField({
-      name,
-      parentName,
-      value: value[name],
-      required: required.includes(name),
-      field: properties[name],
-      }))}</div>)
+      <div>
+        {
+          Object.keys(properties).map(name => 
+            <Field
+              key={name}
+              name={parentName ? `${parentName}.${name}` : name}
+              // required={required.includes(name)}
+              field={properties[name]}
+            />
+          )
+        }
+      </div>
+    )
   }
 
   render() {

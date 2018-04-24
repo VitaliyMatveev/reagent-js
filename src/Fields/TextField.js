@@ -1,52 +1,49 @@
-import React, { PureComponent } from 'react'
-import { string, bool } from 'prop-types'
+import React from 'react'
+import { Field } from 'react-final-form'
+
 import MaskedTextField from './MaskedTextField'
 import MaterialTextField from 'material-ui/TextField'
 
-export default class TextField extends PureComponent {
-  static propTypes = {
-    title: string.isRequired,
-    defaultValue: string,
-    value: string,
-    required: bool,
-    mask: string
-  }
+// const getTitle = ({ title, required }) => `${title}${required ? '*' : ''}`
 
-  static getValue = (elements, name) => elements[name].value
-
-  getTitle = () => {
-    const { title, required } = this.props
-    if (required) {
-      return `${title} *`
-    }
-    return title
-  }
-
+export default class TextField extends React.PureComponent {
+  renderField = ({
+    input: { name, onChange, value, ...input },
+    meta: { error, touched },
+    mask,
+    title,
+    required,
+    defaultValue,
+  }) => mask ? (
+    <MaskedTextField
+      mask={mask}
+      name={name}
+      title={title}
+      required={required}
+      onChange={onChange}
+      value={value || defaultValue || ''}
+      {...input}
+    />
+  ) : (
+    <MaterialTextField
+      name={name}
+      fullWidth={true}
+      autoComplete={false}
+      floatingLabelText={title}
+      required={required}
+      value={value || defaultValue || ''}
+      onChange={onChange}
+      helperText={touched ? error : undefined}
+      error={error && touched}
+      {...input}
+    />
+  )
   render() {
-    const { mask, required, value, defaultValue, ...other } = this.props
-    if (mask) {
-      return (
-        <MaskedTextField
-          mask={mask}
-          title={this.getTitle()}
-          required={required}
-          defaultValue={value || defaultValue}
-          {...other}
-        />
-      )
-    }
-
     return (
-      <MaterialTextField
-        fullWidth={true}
-        autoComplete={false}
-        floatingLabelText={this.getTitle()}
-        required={required}
-        defaultValue={value || defaultValue}
-        {...other}
+      <Field
+        component={this.renderField}
+        {...this.props}
       />
     )
   }
 }
-
-

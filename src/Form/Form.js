@@ -1,11 +1,12 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PureComponent } from 'react'
+import { Form } from 'react-final-form'
 
 import RaisedButton from 'material-ui/RaisedButton';
 import SaveIcon from 'material-ui/svg-icons/content/save';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
 
-import renderField, { fields } from '../Fields/renderField'
-import FormJson from './FormJson'
+import Field from '../Fields'
+// import FormJson from './FormJson'
 import './style.less'
 
 const styles = {
@@ -17,37 +18,27 @@ const styles = {
   }
 }
 
-class Form extends Component {
-  getChildContext() {
-    return {
-      onChange: this.props.onChange
-    }
-  }
-
-  static childContextTypes = {
-    onChange: PropTypes.func
-  }
-
+export default class RegentForm extends PureComponent {
   static defaultProps = {
     direction: 'vertical',
   }
 
-  componentDidMount() {
-    this.submit = () => this.refs.submitButton.click()
-  }
+  // componentDidMount() {
+  //   this.submit = () => this.refs.submitButton.click()
+  // }
 
-  _handleSubmit(e){
-    const {onSubmit, schema, type='application/json'} = this.props
-    e.preventDefault();
-    const form = e.target
-    if (type=='multipart/form-data') {
-      let formData = new FormData(form)
-      onSubmit(formData, type)
-    } else {
-      const formJson = new FormJson({ fields, form, schema })
-      formJson.getFormJson(onSubmit)
-    }
-  }
+  // _handleSubmit(e){
+  //   const {onSubmit, schema, type='application/json'} = this.props
+  //   e.preventDefault();
+  //   const form = e.target
+  //   if (type=='multipart/form-data') {
+  //     let formData = new FormData(form)
+  //     onSubmit(formData, type)
+  //   } else {
+  //     const formJson = new FormJson({ fields, form, schema })
+  //     formJson.getFormJson(onSubmit)
+  //   }
+  // }
 
   renderControls = () => {
     const { hideControls, controls, onCancel } = this.props
@@ -82,34 +73,37 @@ class Form extends Component {
 
   getFormClassName = () => `c-editor-panel ${this.props.direction=='vertical' ? 'c-editor-panel_vertical' : ''}`
   
+  renderForm = ({ handleSubmit }) => (
+    <form
+      className={this.getFormClassName()}
+      style={this.props.style}
+      ref='form'
+      onSubmit={handleSubmit}
+    >
+      <button type='submit' ref='submitButton' style={styles.formSubmitButton}/>
+      <div className='c-editor-panel__content'>
+        {
+          <Field
+            field={this.props.schema}
+            required={this.props.required}
+          />
+        }
+      </div>
+      <div className='c-editor-panel__controls'>
+        {this.renderControls()}
+      </div>
+    </form>
+  )
+
   render () {
-    const { style, schema: field, required, value, defaultValue } = this.props
+    const { onSubmit, value } = this.props
     return (
-      <form
-        className={this.getFormClassName()}
-        style={style}
-        ref='form'
-        onSubmit={this._handleSubmit.bind(this)}
-        >
-        <button type='submit' ref='submitButton' style={{display: 'none'}}/>
-        <div className='c-editor-panel__content'>
-          {
-            renderField({
-              field,
-              required: required,
-              value,
-              defaultValue,
-            })
-          }
-        </div>
-        <div className='c-editor-panel__controls'>
-          {this.renderControls()}
-        </div>
-      </form>
+      <Form
+        onSubmit={onSubmit}
+        initialValues={value}
+        render={this.renderForm}
+      />
     )
   }
 }
 
-
-
-export default Form
