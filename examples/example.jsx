@@ -38,25 +38,10 @@ class App extends Component {
           type: 'object',
           properties: {
             text: {
-              type: 'string',
-              title: 'String'
-            },
-            inner: {
-              type: 'object',
-              properties: {
-                innerText: {
-                  type: 'time_ranges',
-                  title: 'Toggl',
-                }
-              }
+              type: 'file',
+              title: 'String',
             }
           }
-        }}
-        value={{
-          inner: {innerText: {
-            start: '10:00',
-            finish: '12:00'
-          }}
         }}
         onSubmit={data => console.log('res:', data)}
       />
