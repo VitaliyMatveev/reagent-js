@@ -1,42 +1,49 @@
-import React, { PropTypes, Component } from 'react'
-
+import React, { Component } from 'react'
+import { shape, string, bool, func, number, arrayOf } from 'prop-types'
 import TextField from 'material-ui/TextField'
 
 import FieldTitle from '../FieldTitle'
 import SelectDialog from './SelectDialog'
 import SelectedItemList from './SelectedItemList'
 
-import { getText } from '../../utils.js'
+export default class SelectInputWithDialog extends Component {
+  static propTypes = {
+    input: shape({
+      onChange: func,
+      onBlur: func,
+      onFocus: func,
+      value: arrayOf(number)
+    }).isRequired,
+    meta: shape({
+      active: bool,
+    }),
+    items: arrayOf(
+      shape({
+        id: number,
+        title: string,
+      })
+    ),
+    title: string,
+  }
+  static defaultProps = {
+    input: {
+      value: []
+    }
+  }
 
-class MultiSelectField extends Component {
   constructor (props) {
     super (props)
-    const { value, defaultValue } = props
-    const selectedItems = value || defaultValue || []
     this.state = {
       open: false,
       searchWords: '',
-      focused: false,
-      selectedItems
-    }
-    this.lang = {
-      text: 'Поиск в справочнике'
     }
   }
 
-  componentDidMount = () => {
-    this.validation()
-  }
+  handleOpen = () => this.setState({ open: true })
 
-  handleFocus = () => this.setState({focused: true})
+  handleClose = () => this.setState({ open: false, searchWords: '' }, this.focus)
 
-  handleBlur = () => this.setState({focused: false}, this.validation)
-
-  handleOpen = () => this.setState({open: true})
-
-  handleClose = () => this.setState({open: false, searchWords: ''}, this.focus)
-
-  handleSearch = (e, text) => this.setState({searchWords: text})
+  handleSearch = (e, text) => this.setState({ searchWords: text })
 
   handleItemCheck = (e, isSelected) => {
     const { selectedItems } = this.state
@@ -93,35 +100,34 @@ class MultiSelectField extends Component {
   }
 
   render () {
-    const { title, items, name, required, max } = this.props
-    const { MultiSelectField } = this.context
-    const { searchWords, selectedItems, focused, open, lastViewedIndex } = this.state
-    const filteredItems = this.filterItems(items, searchWords, selectedItems)
+    const { title, items, required, input, meta } = this.props
+    const { onBlur, onFocus, value } = input
+    const { active } = meta
+    const { searchWords, open } = this.state
+    const filteredItems = this.filterItems(items, searchWords, value)
     return (
-      <div
-        className='c-field'
-        >
+      <div className='c-field'>
         <FieldTitle
           title={title}
           required={required}
-          focused={focused || open}
+          focused={active || open}
         />
         <div>
           <TextField
             name='multiselect_input'
-            hintText={ getText(this.lang, MultiSelectField, 'text') }
-            fullWidth={ true }
-            value=""
-            onChange={ this.handleChange }
-            onFocus={ this.handleFocus }
-            onBlur={ this.handleBlur }
+            //hintText={ getText(this.lang, MultiSelectField, 'text') }
+            fullWidth
+            value=''
+            onChange={this.handleChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
             ref='input'
           />
           <SelectedItemList
             name={name}
             items={items}
             onClick={this.handleSelectedItemClick}
-            selectedItems={selectedItems}
+            selectedItems={value}
             dialogOpen={this.state.open}
           />
         </div>
@@ -129,23 +135,16 @@ class MultiSelectField extends Component {
           title={title}
           open={this.state.open}
           items={filteredItems}
-          selectedItems={selectedItems}
+          selectedItems={value}
           searchWords={searchWords}
           totalCount={items.length}
           onClose={this.handleClose}
           onMore={this.handleShowMore}
           onSearch={this.handleSearch}
           onCheck={this.handleItemCheck}
-          max={ max }
+          // max={max}
         />
       </div>
     )
   }
 }
-
-MultiSelectField.contextTypes = {
-  MultiSelectField: PropTypes.shape({
-    text: PropTypes.string
-  })
-};
-export default MultiSelectField

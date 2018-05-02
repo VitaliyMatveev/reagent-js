@@ -1,9 +1,11 @@
 import TextField from './TextField'
-import TimeRangeField from './TimeRange'
+import TimeRangeField from './TimeRangeField'
 import ToggleField from './ToggleField'
 import ObjectField from './ObjectField'
 import CheckboxField from './CheckboxField'
 import FileField from './FileField'
+import AddressField from './AddressField'
+import SelectField from './SelectField'
 
 export const fields = {
   string: TextField,
@@ -12,6 +14,8 @@ export const fields = {
   object: ObjectField,
   checkbox: CheckboxField,
   file: FileField,
+  address: AddressField,
+  select: SelectField
 }
 
 export { default } from './Field'

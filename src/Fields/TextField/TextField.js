@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field } from 'react-final-form'
 
-import MaskedTextField from './MaskedTextField'
+import MaskedTextField from '../MaskedTextField'
 import MaterialTextField from 'material-ui/TextField'
 
 // const getTitle = ({ title, required }) => `${title}${required ? '*' : ''}`

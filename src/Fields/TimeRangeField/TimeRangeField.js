@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field } from 'react-final-form'
 
-import MaskedTextField from './MaskedTextField'
+import MaskedTextField from '../MaskedTextField'
 
 export default class TimeRangeField extends React.Component {
   pattern = '.+(([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]).+(([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9])'
@@ -24,7 +24,7 @@ export default class TimeRangeField extends React.Component {
 
   renderField = ({
     input: { name, onChange, value },
-    meta: { error, touched },
+    //meta: { error, touched },
     title,
     required,
   }) => (

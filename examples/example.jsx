@@ -37,11 +37,23 @@ class App extends Component {
         schema={{
           type: 'object',
           properties: {
-            text: {
-              type: 'file',
-              title: 'String',
-            }
-          }
+            test: {
+              type: 'select',
+              title: 'Test',
+              multiple: true,
+              items: [{
+                id: '1',
+                title: 'val1',
+              }, {
+                id: 2,
+                title: 'val2',
+              }, {
+                id: 3,
+                title: 'val3',
+              }]
+            },
+          },
+          required: ['test'],
         }}
         onSubmit={data => console.log('res:', data)}
       />
