@@ -39,7 +39,7 @@ export default class SelectedItemList extends PureComponent {
 
   render () {
     const { selectedItems } = this.props
-
+    console.log('selectedItems', selectedItems)
     if (!selectedItems) { 
       return null
     }

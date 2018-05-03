@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Field } from 'react-final-form'
 
 import Checkbox from 'material-ui/Checkbox'
-import FieldTitle from '../FieldTitle'
+import FieldTitle from '../../components/FieldTitle'
 
 export default class CheckboxField extends Component { 
   handleChange = (id, {value, onChange}) => {
@@ -28,7 +28,7 @@ export default class CheckboxField extends Component {
   //parse = ()
   renderField = ({
     input,
-    meta: { error, touched, active },
+    meta: { active },
     items,
     title,
     required,

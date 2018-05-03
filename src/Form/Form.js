@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SaveIcon from 'material-ui/svg-icons/content/save';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
 
-import Field from '../Fields'
+import Field from '../fields'
 // import FormJson from './FormJson'
 import './style.less'
 

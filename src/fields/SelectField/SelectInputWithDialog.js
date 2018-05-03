@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { shape, string, bool, func, number, arrayOf } from 'prop-types'
 import TextField from 'material-ui/TextField'
 
-import FieldTitle from '../FieldTitle'
-import SelectDialog from './SelectDialog'
+import SelectDialog from '../../components/SelectDialog'
+import FieldTitle from '../../components/FieldTitle'
+
 import SelectedItemList from './SelectedItemList'
 
 export default class SelectInputWithDialog extends Component {
@@ -46,15 +47,15 @@ export default class SelectInputWithDialog extends Component {
   handleSearch = (e, text) => this.setState({ searchWords: text })
 
   handleItemCheck = (e, isSelected) => {
-    const { selectedItems } = this.state
+    const { value: selectedItems, onChange } = this.props.input
     const { max } = this.props
     const { value } = e.target
     if (max === 1) {
-      this.setState({ selectedItems: [value] })
+      onChange(selectedItems)
     } else if ( isSelected ) {
-      this.setState({selectedItems: selectedItems.concat(value)})
+      onChange([value].concat(selectedItems))
     } else {
-      this.setState({selectedItems: selectedItems.filter( id => id != value )})
+      onChange(selectedItems.filter( id => id != value ))
     }
   }
 
@@ -100,10 +101,11 @@ export default class SelectInputWithDialog extends Component {
   }
 
   render () {
-    const { title, items, required, input, meta } = this.props
+    const { title, items, required, input, meta, max } = this.props
     const { onBlur, onFocus, value } = input
     const { active } = meta
     const { searchWords, open } = this.state
+    console.log('value', value)
     const filteredItems = this.filterItems(items, searchWords, value)
     return (
       <div className='c-field'>
@@ -142,7 +144,7 @@ export default class SelectInputWithDialog extends Component {
           onMore={this.handleShowMore}
           onSearch={this.handleSearch}
           onCheck={this.handleItemCheck}
-          // max={max}
+          type={max === 1 ? 'radio' : 'select'}
         />
       </div>
     )

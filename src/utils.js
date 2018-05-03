@@ -13,7 +13,7 @@ export const getText = (defaultTemplates, templates, param, ...args) => (
   formatString( templates && templates[param] || defaultTemplates[param], ...args )
 )
 
-function formatString(str, ...args) {
+export function formatString(str, ...args) {
   const regEx = /{\d}/g
   return regEx.test(str) ? str.match(regEx).reduce(
     (result, match, index) => result.replace(match, args[index]), str
