@@ -17,6 +17,8 @@ export default class SelectInputWithDialog extends Component {
     }).isRequired,
     meta: shape({
       active: bool,
+      error: string,
+      touched: bool,
     }),
     items: arrayOf(
       shape({
@@ -25,6 +27,7 @@ export default class SelectInputWithDialog extends Component {
       })
     ),
     title: string,
+    max: number,
   }
   static defaultProps = {
     input: {
@@ -51,37 +54,26 @@ export default class SelectInputWithDialog extends Component {
     const { max } = this.props
     const { value } = e.target
     if (max === 1) {
-      onChange(selectedItems)
+      onChange(value)
     } else if ( isSelected ) {
-      onChange([value].concat(selectedItems))
+      onChange(selectedItems ? selectedItems.concat(value) : [value])
     } else {
       onChange(selectedItems.filter( id => id != value ))
     }
   }
 
-  handleSelectedItemClick = (id) => {
-    const { selectedItems } = this.state
-    this.setState({selectedItems: selectedItems.filter( item => item != id )}, this.focus)
+  handleSelectedItemClick = id => {
+    const { max, input: { value, onChange } } = this.props    
+    if (max === 1) {
+      onChange(null)
+    } else {
+      onChange(value.filter(el => el !== id))
+    }
   }
 
   handleChange = (e, text) => this.setState({open: true, searchWords: text})
 
   focus = () => this.refs.input.focus()
-
-  validation = () => {
-    const { selectedItems } = this.state
-    const { min, max } = this.props
-    const { input } = this.refs
-    const node = input.getInputNode()
-    //console.log('[MULTISELECT FIELD] validation', selectedItems, min, max);
-    if (min && selectedItems.length < min) {
-      node.setCustomValidity(`Должно быть выбрано более ${min} элементов`)
-    } else if (max && selectedItems.length > max) {
-      node.setCustomValidity(`Должно быть выбрано менее ${max} элементов`)
-    } else {
-      node.setCustomValidity('')
-    }
-  }
 
   filterItems (items, searchWords, selectedItems) {
     return items.filter( item =>
@@ -103,9 +95,9 @@ export default class SelectInputWithDialog extends Component {
   render () {
     const { title, items, required, input, meta, max } = this.props
     const { onBlur, onFocus, value } = input
-    const { active } = meta
+    const { active, touched, error } = meta
     const { searchWords, open } = this.state
-    console.log('value', value)
+
     const filteredItems = this.filterItems(items, searchWords, value)
     return (
       <div className='c-field'>
@@ -117,7 +109,7 @@ export default class SelectInputWithDialog extends Component {
         <div>
           <TextField
             name='multiselect_input'
-            //hintText={ getText(this.lang, MultiSelectField, 'text') }
+            hintText='поиск...'
             fullWidth
             value=''
             onChange={this.handleChange}
@@ -146,6 +138,9 @@ export default class SelectInputWithDialog extends Component {
           onCheck={this.handleItemCheck}
           type={max === 1 ? 'radio' : 'select'}
         />
+        {
+          touched && error && <span style={{color: 'red'}}>{error}</span>
+        }
       </div>
     )
   }

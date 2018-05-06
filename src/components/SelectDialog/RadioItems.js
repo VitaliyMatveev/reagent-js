@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import { func } from 'prop-types'
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 
 const styles = {
   radioButton: {
@@ -8,6 +9,10 @@ const styles = {
 }
 
 export default class RadioItems extends PureComponent {
+  static propTypes = {
+    onCheck: func.isRequired,
+  }
+
   renderItem = ({ id, title }) => (
     <RadioButton
       key={id}

@@ -18,7 +18,7 @@ export default class SelectedItemList extends PureComponent {
   shouldComponentUpdate(nextProps){
     return !nextProps.dialogOpen
   }
-
+  handleClick = id => () => this.props.onClick(id)
   renderItem = (id, index, arr) => {
     const item = this.props.items.find(el => el.id == id)
     if (item) {
@@ -27,8 +27,7 @@ export default class SelectedItemList extends PureComponent {
         <ListItem
           key={id}
           leftIcon= {<NavigationClose/>}
-          value={id}
-          onClick={this.props.onClick}
+          onClick={this.handleClick(id)}
           primaryText={ `${title}${index == arr.length-1 ? '.' : ';'}` }
           secondaryText={description}
         />
@@ -39,14 +38,19 @@ export default class SelectedItemList extends PureComponent {
 
   render () {
     const { selectedItems } = this.props
-    console.log('selectedItems', selectedItems)
     if (!selectedItems) { 
       return null
     }
 
     return (
       <List>
-        {selectedItems.map(this.renderItem)}
+        {
+          (
+            Array.isArray(selectedItems) ?
+            selectedItems :
+            [selectedItems]
+          ).map(this.renderItem)
+        }
       </List>
     )
   }
