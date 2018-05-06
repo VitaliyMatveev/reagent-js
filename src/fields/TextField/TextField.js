@@ -9,11 +9,10 @@ import MaterialTextField from 'material-ui/TextField'
 export default class TextField extends React.PureComponent {
   renderField = ({
     input: { name, onChange, value, ...input },
-    meta: { error, touched },
+    meta: { error, touched, active },
     mask,
     title,
     required,
-    defaultValue,
   }) => mask ? (
     <MaskedTextField
       mask={mask}
@@ -21,7 +20,9 @@ export default class TextField extends React.PureComponent {
       title={title}
       required={required}
       onChange={onChange}
-      value={value || defaultValue || ''}
+      value={value}
+      error={touched && error}
+      focused={active}
       {...input}
     />
   ) : (
@@ -31,7 +32,7 @@ export default class TextField extends React.PureComponent {
       autoComplete={false}
       floatingLabelText={title}
       required={required}
-      value={value || defaultValue || ''}
+      value={value}
       onChange={onChange}
       helperText={touched ? error : undefined}
       error={error && touched}

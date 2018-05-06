@@ -9,36 +9,8 @@ export default class MaskedTextField extends Component {
     muiTheme: object,
   }
 
-  constructor(props) {
-    super(props)
-    const { value, errorText, defaultValue } = props
-    this.state = {
-      focused: false,
-      errorText,
-      hasValue: !!(defaultValue || value)
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if ('value' in nextProps) {
-      this.setState({hasValue: !!nextProps.value})
-    }
-    if ('errorText' in nextProps) {
-      this.setState({errorText: nextProps.errorText})
-    }
-  }
-
-  handleFocus = () => this.setState({ focused: true })
-
-  handleBlur = e => {
-    //const { validationMessage, value } = e.target
-    //const { errorText, onChange } = this.props
-    this.setState({ focused: false })
-  }
-
   render () {
-    const {name, mask, title, value, defaultValue, pattern, onChange, required} = this.props
-    const {focused, hasValue, errorText} = this.state
+    const {name, mask, title, value, pattern, onChange, required, focused, error } = this.props
     const {muiTheme} = this.context
     const { hintColor, focusColor, errorColor } = muiTheme.textField
     return (
@@ -47,9 +19,9 @@ export default class MaskedTextField extends Component {
           className='c-text-field__label'
           muiTheme={muiTheme}
           htmlFor={name}
-          shrink={focused || hasValue}
+          shrink={focused || value}
           style={{
-            color: errorText ? errorColor : focused ? focusColor : hintColor
+            color: error ? errorColor : focused ? focusColor : hintColor
           }}
           >
           {title}
@@ -57,8 +29,8 @@ export default class MaskedTextField extends Component {
         <MaskedInput
           ref='input'
           className='c-text-field__input'
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
+          onFocus={this.props.onFocus}
+          onBlur={this.props.onBlur}
           onChange={onChange}
           id={name}
           required={required}
@@ -72,11 +44,11 @@ export default class MaskedTextField extends Component {
         <TextFieldUnderline
           muiTheme={muiTheme}
           focus={focused}
-          error={!!errorText}
+          error={Boolean(error)}
         />
         <ErrorText
           muiTheme={muiTheme}
-          errorText={errorText}
+          errorText={error}
         />
       </div>
     )
