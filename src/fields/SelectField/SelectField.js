@@ -4,20 +4,20 @@ import SelectInput from './SelectInput'
 import SelectInputWithDialog from './SelectInputWithDialog'
 import * as validators from '../../validators'
 
-import { VALIDATE_MESSAGES } from './constants'
+import { SELECT_FIELD } from '../../constants'
 
 export default class SelectField extends PureComponent {
   validate = (value) => {
     const { max, min, required } = this.props
 
     if ((required || min) && validators.required(value)) {
-      return VALIDATE_MESSAGES.REQUIRED
+      return SELECT_FIELD.VALIDATE_MESSAGES.REQUIRED
     }
     if (max && max > 1 && value && validators.max(max)(value.length)) {
-      return VALIDATE_MESSAGES.MAX(max)
+      return SELECT_FIELD.VALIDATE_MESSAGES.MAX(max)
     }
     if (min && validators.min(min)(value.length)) {
-      return VALIDATE_MESSAGES.MIN(min)
+      return SELECT_FIELD.VALIDATE_MESSAGES.MIN(min)
     }
     return null
   }
