@@ -19,3 +19,19 @@ export function formatString(str, ...args) {
     (result, match, index) => result.replace(match, args[index]), str
   ) : str
 }
+
+export const parseDateStr = value => {
+  if (!value) return null
+  
+  if (value.includes('_')) {
+    throw new Error('has_underscore')
+  }
+  
+  const dateParts = value.split('.')
+  const date = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`)
+  
+  if (date == 'Invalid Date') {
+    throw new Error('invalid_date')
+  }
+  return date
+}

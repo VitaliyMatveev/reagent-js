@@ -13,3 +13,10 @@ export const RADIO_FIELD = {
     REQUIRED,
   }
 }
+
+export const DATE_FIELD = {
+  VALIDATE_MESSAGES: {
+    INVALIDATE_DATE: 'Дата должна быть в формате дд.мм.гггг',
+    REQUIRED,
+  }
+}

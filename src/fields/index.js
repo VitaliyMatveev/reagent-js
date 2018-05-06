@@ -7,6 +7,7 @@ import FileField from './FileField'
 import AddressField from './AddressField'
 import SelectField from './SelectField'
 import RadioField from './RadioField'
+import DateField from './DateField'
 
 export const fields = {
   string: TextField,
@@ -17,7 +18,8 @@ export const fields = {
   file: FileField,
   address: AddressField,
   select: SelectField,
-  radio: RadioField
+  radio: RadioField,
+  date: DateField,
 }
 
 export { default } from './Field'
