@@ -8,6 +8,7 @@ import AddressField from './AddressField'
 import SelectField from './SelectField'
 import RadioField from './RadioField'
 import DateField from './DateField'
+import BooleanField from './BooleanField'
 
 export const fields = {
   string: TextField,
@@ -20,6 +21,7 @@ export const fields = {
   select: SelectField,
   radio: RadioField,
   date: DateField,
+  boolean: BooleanField,
 }
 
 export { default } from './Field'
