@@ -6,6 +6,7 @@ import CheckboxField from './CheckboxField'
 import FileField from './FileField'
 import AddressField from './AddressField'
 import SelectField from './SelectField'
+import RadioField from './RadioField'
 
 export const fields = {
   string: TextField,
@@ -15,7 +16,8 @@ export const fields = {
   checkbox: CheckboxField,
   file: FileField,
   address: AddressField,
-  select: SelectField
+  select: SelectField,
+  radio: RadioField
 }
 
 export { default } from './Field'
