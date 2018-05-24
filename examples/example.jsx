@@ -31,29 +31,39 @@ class App extends Component {
   }
 
   render() {
-    const items = getBigDict()
+    // const items = getBigDict()
     return (
       <Form
         schema={{
           type: 'object',
-          properties: {
-            test: {
-              type: 'select',
-              title: 'Test',
-              multiple: true,
-              items: [{
-                id: '1',
-                title: 'val1',
-              }, {
-                id: 2,
-                title: 'val2',
-              }, {
-                id: 3,
-                title: 'val3',
-              }]
-            },
-          },
-          required: ['test'],
+          keyField: 'key',
+          oneOf: [{
+            type: 'object',
+            properties: {
+              key: {
+                type: 'string',
+                value: 'one',
+                title: 'First'
+              },
+              input: {
+                type: 'string',
+                title: 'String'
+              }
+            }
+          }, {
+            type: 'object',
+            properties: {
+              key: {
+                type: 'string',
+                value: 'two',
+                title: 'Second'
+              },
+              input: {
+                type: 'date',
+                title: 'Date'
+              }
+            }
+          }],
         }}
         onSubmit={data => console.log('res:', data)}
       />

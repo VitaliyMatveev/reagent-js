@@ -9,6 +9,8 @@ import SelectField from './SelectField'
 import RadioField from './RadioField'
 import DateField from './DateField'
 import BooleanField from './BooleanField'
+import ArrayField from './ArrayField'
+import RichTextField from './RichTextField'
 
 export const fields = {
   string: TextField,
@@ -22,6 +24,8 @@ export const fields = {
   radio: RadioField,
   date: DateField,
   boolean: BooleanField,
+  array: ArrayField,
+  html: RichTextField,
 }
 
 export { default } from './Field'
