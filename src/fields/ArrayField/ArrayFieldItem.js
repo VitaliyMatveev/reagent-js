@@ -4,7 +4,7 @@ import { shape, func, string, number } from 'prop-types'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
 
-import Field from './Field'
+import Field from '../Field'
 
 const styles = {
   root: {
