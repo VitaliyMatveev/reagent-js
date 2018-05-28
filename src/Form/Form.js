@@ -5,9 +5,9 @@ import R from 'ramda'
 import RaisedButton from 'material-ui/RaisedButton';
 import SaveIcon from 'material-ui/svg-icons/content/save';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
+import arrayMutators from 'final-form-arrays'
 
 import Field from '../fields'
-// import FormJson from './FormJson'
 import './style.less'
 
 const styles = {
@@ -23,23 +23,10 @@ export default class RegentForm extends Component {
   static defaultProps = {
     direction: 'vertical',
   }
+  
+  registerFormRef = el => this.form = el
 
-  // componentDidMount() {
-  //   this.submit = () => this.refs.submitButton.click()
-  // }
-
-  // _handleSubmit(e){
-  //   const {onSubmit, schema, type='application/json'} = this.props
-  //   e.preventDefault();
-  //   const form = e.target
-  //   if (type=='multipart/form-data') {
-  //     let formData = new FormData(form)
-  //     onSubmit(formData, type)
-  //   } else {
-  //     const formJson = new FormJson({ fields, form, schema })
-  //     formJson.getFormJson(onSubmit)
-  //   }
-  // }
+  submit = () => this.form.dispatchEvent(new Event('submit'))
 
   renderControls = () => {
     const { hideControls, controls, onCancel } = this.props
@@ -78,7 +65,7 @@ export default class RegentForm extends Component {
     <form
       className={this.getFormClassName()}
       style={this.props.style}
-      ref='form'
+      ref={this.registerFormRef}
       onSubmit={handleSubmit}
     >
       <button type='submit' ref='submitButton' style={styles.formSubmitButton}/>
@@ -105,6 +92,9 @@ export default class RegentForm extends Component {
     const { value } = this.props
     return (
       <Form
+        mutators={{
+          ...arrayMutators
+        }}
         onSubmit={this.handleSubmit}
         initialValues={value}
         render={this.renderForm}
@@ -141,7 +131,6 @@ const getPath = (path, name) => path ? path.concat(name) : [name]
 
 const convetData = (data, cb) => {
   const promises = []
-
   const findFileList = (value, path) => {
     if (Array.isArray(value)) {
       value.map((el, index) => findFileList(el, getPath(path, index)))

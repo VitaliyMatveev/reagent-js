@@ -19,7 +19,7 @@ const styles = {
   },
 }
 
-export class ArrayFieldItem extends PureComponent {
+export default class ArrayFieldItem extends PureComponent {
   static propTypes = {
     fields: shape({
       remove: func,

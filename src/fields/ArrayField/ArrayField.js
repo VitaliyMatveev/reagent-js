@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 
-import { FieldArray } from 'react-final-form'
+import { FieldArray } from 'react-final-form-arrays'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import AddIcon from 'material-ui/svg-icons/content/add'
 

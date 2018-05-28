@@ -49,10 +49,12 @@
     "draft-js-export-html": "^0.5.0",
     "draft-js-import-html": "^0.2.0",
     "final-form": "^4.6.1",
+    "final-form-arrays": "^1.0.4",
     "material-ui": "~0.18.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-final-form": "^3.4.0",
+    "react-final-form-arrays": "^1.0.4",
     "react-maskedinput": "^3.2.4",
     "react-tap-event-plugin": "^2.0.1"
   }
