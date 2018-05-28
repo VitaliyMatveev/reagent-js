@@ -17,7 +17,7 @@ export default class RadioField extends Component {
     return (
       <Field
         {...this.props}
-        type='radio'
+        allowNull
         component={RadioButtonInput}
         validate={this.validate}
       />

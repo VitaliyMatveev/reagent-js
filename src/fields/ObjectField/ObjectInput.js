@@ -6,7 +6,7 @@ import Field from '../Field'
 export default class ObjectInput extends PureComponent {
   static propTypes = {
     properties: shape({}).isRequired,
-    name: string.isRequired,
+    name: string,
     required: arrayOf(string),
   }
 
