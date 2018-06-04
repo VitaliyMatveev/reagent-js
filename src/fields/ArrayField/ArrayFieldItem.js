@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { any, func, string, number } from 'prop-types'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import DeleteIcon from 'material-ui/svg-icons/action/delete_outline'
 
 import Field from '../Field'
 

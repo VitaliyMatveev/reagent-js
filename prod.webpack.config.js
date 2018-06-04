@@ -1,18 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
 
-module.exports = (env) => ({
-  entry: {
-    Form: './src/Form'    
-  },
+module.exports = () => ({
+  entry: './index.js',
+  context: path.join(__dirname, './src'),
   output: {
-    filename: '[name]/index.js',
-    path: path.resolve( __dirname,'./dist'),
+    filename: 'main.bundle.js',
     publicPath: '/',
-    library: 'reagents-js/[name]',
-    libraryTarget: 'umd',
-    umdNamedDefine: true
-    //sourceMapFilename: '[name].map'
+    path: path.join(__dirname, './dist'),
   },
   module: {
     rules: [
