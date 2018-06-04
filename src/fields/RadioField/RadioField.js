@@ -8,7 +8,7 @@ import RadioButtonInput from './RadioButtonInput'
 export default class RadioField extends Component {
   validate = value => {
     const { required } = this.props
-    if (required && validators(value)) {
+    if (required && validators.required(value)) {
       return RADIO_FIELD.VALIDATE_MESSAGES.REQUIRED
     }
   }
