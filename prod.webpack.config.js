@@ -7,6 +7,9 @@ module.exports = () => ({
   output: {
     filename: 'main.bundle.js',
     publicPath: '/',
+    library: 'reagents-js/form',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
     path: path.join(__dirname, './dist'),
   },
   module: {
