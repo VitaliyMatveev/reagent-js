@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Form } from 'react-final-form'
 import R from 'ramda'
-// import { func } from 'prop-types'
+import { object, string, func, any } from 'prop-types'
 import RaisedButton from 'material-ui/RaisedButton';
 import SaveIcon from 'material-ui/svg-icons/content/save';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
 import arrayMutators from 'final-form-arrays'
 
-import Field from '../fields'
+import Field, { fields } from '../fields'
 import './style.less'
 
 const styles = {
@@ -22,6 +22,27 @@ const styles = {
 export default class RegentForm extends Component {
   static defaultProps = {
     direction: 'vertical',
+  }
+
+  static propTypes = {
+    direction: string,
+    onSubmit: func.isRequired,
+    value: any,
+    customFields: object,
+  }
+
+  static childContextTypes = {
+    fields: object,
+  }
+
+  state={
+    fields: this.props.customFields ? {...fields, ...this.props.customFields } : fields
+  }
+
+  getChildContext() {
+    return {
+      fields: this.state.fields,
+    }
   }
   
   registerFormRef = el => this.form = el
