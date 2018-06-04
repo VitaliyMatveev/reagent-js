@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { shape, func, string, number } from 'prop-types'
+import { any, func, string, number } from 'prop-types'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
@@ -21,15 +21,15 @@ const styles = {
 
 export default class ArrayFieldItem extends PureComponent {
   static propTypes = {
-    fields: shape({
-      remove: func,
-    }),
+    onDelete: func,
     name: string,
     index: number,
+    items: any,
   }
+
   handleDelete = () => {
-    const { fields, index } = this.props
-    fields.remove(index)
+    const { onDelete, index } = this.props
+    onDelete(index)
   }
 
   render() {
