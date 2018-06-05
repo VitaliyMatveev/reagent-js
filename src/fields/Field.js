@@ -4,8 +4,19 @@ import { func } from 'prop-types'
 import { fields } from './'
 
 export default class FormField extends React.PureComponent {
+  getRequired = () => {
+    const { field, required } = this.props
+    if (field.type !== 'object') {
+      return required
+    }
+    if (required) {
+      return field.required
+    }
+    return []
+  }
+
   render() {
-    const { field, name, required } = this.props
+    const { field, name } = this.props
     const { type, ...other } = field
     
     //const fieldName = getFullFieldName(props)  
@@ -14,12 +25,12 @@ export default class FormField extends React.PureComponent {
     }
 
     const Component =  fields[type]
-    
+    const required = this.getRequired()
     return (
-      <Component
-        required={required}
+      <Component      
         name={name}
         {...other}
+        required={required}
       />
     )
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { object, string, arrayOf } from 'prop-types'
+import { object, string } from 'prop-types'
 
 import ObjectInput from './ObjectInput'
 import OneOf from './OneOf'
@@ -11,7 +11,6 @@ export default class ObjectField extends Component {
     properties: object,
     name: string,
     title: string,
-    required: arrayOf(string),
   }
 
   renderInput = () => this.props.oneOf ? (
