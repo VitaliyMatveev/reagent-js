@@ -94,7 +94,6 @@ export default class RegentForm extends Component {
         {
           <Field
             field={this.props.schema}
-            required={this.props.required}
           />
         }
       </div>
