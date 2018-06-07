@@ -9,9 +9,9 @@ export default class RichTextInput extends Component {
   static propTypes = {
     input: shape({
       onChange: func,
-      name: string,
       value: string,
-    })
+    }).isRequired,
+    title: string.isRequired,
   }
 
   constructor(props){
@@ -19,7 +19,7 @@ export default class RichTextInput extends Component {
     this.focus = () => this.refs.editor.focus()
 
     const editorState = EditorState.createWithContent(
-      stateFromHTML(props.defaultValue || '')
+      stateFromHTML(props.input.value || '')
     )
     this.state={
       editorState
