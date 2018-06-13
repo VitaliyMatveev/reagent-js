@@ -1,12 +1,17 @@
 import React from 'react'
 import { Field } from 'react-final-form'
-
 import MaskedTextField from '../MaskedTextField'
 import MaterialTextField from 'material-ui/TextField'
+import * as validators from '../../validators'
+import { TEXT_FIELD } from '../../constants'
+import { formatFieldTitle } from '../../utils';
 
 // const getTitle = ({ title, required }) => `${title}${required ? '*' : ''}`
 
 export default class TextField extends React.PureComponent {
+  static defaultProps = {
+    validate: [],
+  }
   renderField = ({
     input: { name, onChange, value, ...input },
     meta: { error, touched, active },
@@ -17,8 +22,7 @@ export default class TextField extends React.PureComponent {
     <MaskedTextField
       mask={mask}
       name={name}
-      title={title}
-      required={required}
+      title={formatFieldTitle(title, required)}
       onChange={onChange}
       value={value}
       error={touched && error}
@@ -30,20 +34,30 @@ export default class TextField extends React.PureComponent {
       name={name}
       fullWidth={true}
       autoComplete={false}
-      floatingLabelText={title}
-      required={required}
+      floatingLabelText={formatFieldTitle(title, required)}
       value={value}
       onChange={onChange}
-      helperText={touched ? error : undefined}
+      errorText={touched ? error : undefined}
       error={error && touched}
       {...input}
     />
   )
+  validate = value => {
+    const { required, mask } = this.props
+    if (required && validators.required(value)) {
+      return TEXT_FIELD.VALIDATE_MESSAGES.REQUIRED
+    }
+    console.log('test', mask, value)
+    if(mask && validators.maskedText(mask, value)) {
+      return TEXT_FIELD.VALIDATE_MESSAGES.PATTERN_MISMATCH
+    }
+  }
   render() {
     return (
       <Field
-        component={this.renderField}
         {...this.props}
+        component={this.renderField}
+        validate={this.validate}
       />
     )
   }
