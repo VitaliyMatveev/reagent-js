@@ -45,9 +45,11 @@ class OneOfSelectInput extends Component {
   }
 
   componentDidMount() {
-    const { oneOf, input: { name } } = this.props
-    const initialValue = oneOf[0].id
-    this.context.reactFinalForm.change(name, initialValue)
+    const { oneOf, input: { name, value } } = this.props
+    if (!value) {
+      const initialValue = oneOf[0].id 
+      this.context.reactFinalForm.change(name, initialValue)
+    }
   }
 
   getSelectItems = () => this.props.oneOf.map(({ id, title }) => ({
