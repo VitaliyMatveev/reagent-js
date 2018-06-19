@@ -20,7 +20,7 @@ export default class FormField extends React.PureComponent {
     if (field.type !== 'object') {
       return required
     }
-    if (required) {
+    if (required || !field.name) {
       return field.required
     }
     return []
@@ -29,7 +29,7 @@ export default class FormField extends React.PureComponent {
   render() {
     const { field: { type, ...other }, name } = this.props
     const { fields } = this.context
-    
+
     if (!(type in fields)) {
       throw new Error(`Не найдено описание поля для типа ${type}. Доступные типы: ${Object.keys(fields).join(', ')}`)
     }
@@ -37,7 +37,7 @@ export default class FormField extends React.PureComponent {
     const Component =  fields[type]
     const required = this.getRequired()
     return (
-      <Component      
+      <Component
         name={name}
         {...other}
         required={required}

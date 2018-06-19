@@ -36,34 +36,17 @@ class App extends Component {
       <Form
         schema={{
           type: 'object',
-          keyField: 'key',
-          oneOf: [{
-            type: 'object',
-            properties: {
-              key: {
-                type: 'string',
-                value: 'one',
-                title: 'First'
-              },
-              input: {
-                type: 'string',
-                title: 'String'
-              }
-            }
-          }, {
-            type: 'object',
-            properties: {
-              key: {
-                type: 'string',
-                value: 'two',
-                title: 'Second'
-              },
-              input: {
-                type: 'date',
-                title: 'Date'
-              }
-            }
-          }],
+          properties: {
+            inputNumber: {
+              max: 10,
+              min: -10,
+              placeholder: 'placeholder',
+              step: 0.01,
+              title: 'Number',
+              type: 'number',
+            },
+          },
+          required: ['inputNumber'],
         }}
         onSubmit={data => console.log('res:', data)}
       />

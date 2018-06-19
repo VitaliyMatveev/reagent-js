@@ -10,7 +10,16 @@ export default class MaskedTextField extends Component {
   }
 
   render () {
-    const {name, mask, title, value, pattern, onChange, required, focused, error } = this.props
+    const {
+      error,
+      focused,
+      mask,
+      name,
+      onChange,
+      placeholder,
+      title,
+      value,
+    } = this.props;
     const {muiTheme} = this.context
     const { hintColor, focusColor, errorColor } = muiTheme.textField
     return (
@@ -33,13 +42,11 @@ export default class MaskedTextField extends Component {
           onBlur={this.props.onBlur}
           onChange={onChange}
           id={name}
-          required={required}
           mask={mask}
           name={name}
-          pattern={pattern}
           value={value}
-          placeholder={focused ? '' : ' '}
-          autoComplete={ false }
+          placeholder={focused ? placeholder : ' '}
+          autoComplete="off"
         />
         <TextFieldUnderline
           muiTheme={muiTheme}
