@@ -39,9 +39,9 @@ class OneOfSelectInput extends Component {
         id: string.isRequired,
         title: string.isRequired,
         properties: shape({}).isRequired,
-      }).isRequired,
+        required: arrayOf(string),
+      })
     ).isRequired,
-    required: arrayOf(string),
   }
 
   componentDidMount() {
@@ -55,14 +55,14 @@ class OneOfSelectInput extends Component {
     title,
   }))
   
-  getSelectedItemProperties = value => value && this.props.oneOf.find(
+  getSelectedItem = value => value && this.props.oneOf.find(
     ({ id }) => id == value
-  ).properties
+  )
 
   render() {
-    const { fieldName, oneOfFieldTitle, required, ...rest } = this.props
+    const { fieldName, oneOfFieldTitle, ...rest } = this.props
     const { input: { value } } = rest
-    const properties = this.getSelectedItemProperties(value)
+    const { properties, required } = this.getSelectedItem(value)
     return (
       <div>
         <SelectInput 
@@ -73,7 +73,7 @@ class OneOfSelectInput extends Component {
         {
           properties && <ObjectInput
           name={fieldName}
-          properties={this.getSelectedItemProperties(value)}
+          properties={properties}
           required={required}
         />}
       </div>

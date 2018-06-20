@@ -35,3 +35,5 @@ export const parseDateStr = value => {
   }
   return date
 }
+
+export const formatFieldTitle = (title, required) => `${title}${required ? '*' : ''}`

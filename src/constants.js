@@ -20,3 +20,10 @@ export const DATE_FIELD = {
     REQUIRED,
   }
 }
+
+export const TEXT_FIELD = {
+  VALIDATE_MESSAGES: {
+    REQUIRED,
+    PATTERN_MISMATCH: 'Не верный формат'
+  }
+}
