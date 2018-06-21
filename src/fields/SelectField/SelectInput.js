@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Popover from 'material-ui/Popover/Popover'
 import TextField from 'material-ui/TextField'
-import { formatFieldTitle } from '../../utils'
 
 const KEY_CODE = {
   ESC: 13,
@@ -44,13 +43,12 @@ export default class SelectInput extends Component {
   getSelectedItem = () => this.props.items.find(el => el.id == this.props.input.value) || {}
 
   render () {
-    const { title, items, required, input: { value, onChange, onBlur, onFocus }, meta: { active } } = this.props
+    const { title, items, input: { value, onChange, onBlur, onFocus }, meta: { active } } = this.props
     return (
       <div className={`c-field ${value || active ? 'c-field_focused' : ''}`}>
         <TextField
           style={{marginTop: 0, cursor: 'pointer'}}
-          floatingLabelText={formatFieldTitle(title, required)}
-          required={required}
+          floatingLabelText={title}
           value={this.getSelectedItem().title}
           id='variants'
           ref='textField'
