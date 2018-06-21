@@ -1,15 +1,4 @@
-import React, { PureComponent } from 'react'
-import { Field } from 'react-final-form'
+import formField from '../../decorators/formField'
 import BooleanInput from './BooleanInput'
 
-export default class BooleanField extends PureComponent {
-  render() {
-    return (
-      <Field
-        {...this.props}
-        component={BooleanInput}
-        type='checkbox'
-      />
-    )
-  }
-}
+export default formField()(BooleanInput)

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog'
-import TextField from '../MaskedTextField'
+import MaskedTextInput from '../TextField/MaskedTextInput'
 import Avatar from 'material-ui/Avatar'
 import Calendar from 'material-ui/svg-icons/action/today'
 
@@ -40,28 +40,17 @@ export default class DateInput extends PureComponent {
     }
   }
 
-  render() {
-    const { title, required, meta, input: { name, value, onChange, ...input } } = this.props
-    const { touched, error, active } = meta
-    
+  render() { 
     return (
       <div
         className='c-field c-date-field'
         onKeyDown={this.handleKeyPress}
         >
-        <TextField
-          title={required ? title+' *' : title}
-          required={required}
-          name={name}
+        <MaskedTextInput
+          {...this.props}
           mask='11.11.1111'
           pattern='\d{2,2}.\d{2,2}.\d{4,4}'
-          value={value}
-          ref='input'
-          onChange={onChange}
           autoComplete={false}
-          focused={active}
-          error={touched && error}
-          {...input}
         />
         <Avatar
           size={32}
