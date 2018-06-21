@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { Form } from 'react-final-form'
-import R from 'ramda'
 import { object, string, func, any } from 'prop-types'
-import RaisedButton from 'material-ui/RaisedButton';
-import SaveIcon from 'material-ui/svg-icons/content/save';
-import CloseIcon from 'material-ui/svg-icons/navigation/close';
+import RaisedButton from 'material-ui/RaisedButton'
+import SaveIcon from 'material-ui/svg-icons/content/save'
+import CloseIcon from 'material-ui/svg-icons/navigation/close'
 import arrayMutators from 'final-form-arrays'
 
-import Field, { fields } from '../fields'
+import Field, { fields } from '../../fields'
+import { convetData } from '../../utils'
+
 import './style.less'
 
 const styles = {
@@ -120,65 +121,5 @@ export default class RegentForm extends Component {
         render={this.renderForm}
       />
     )
-  }
-}
-
-const parseFile = (files, path) => {
-  if (files.length > 0) {
-    const { name: filename, size, lastModified: last_modified, type: mime_type } = files[0]
-    return new Promise((resolve) => {
-      const fr = new FileReader()
-      fr.addEventListener('load', () => resolve([
-        path,
-        [{
-          filename,
-          size,
-          last_modified,
-          mime_type,
-          content: fr.result
-        }]
-      ]))
-
-      fr.readAsDataURL(files[0])
-    })
-  }
-  return null
-}
-
-const setValue = (data, value, path) => console.log('set value') || R.assocPath(path, value, data)
-
-const getPath = (path, name) => path ? path.concat(name) : [name]
-
-const convetData = (data, cb) => {
-  const promises = []
-  const findFileList = (value, path) => {
-    if (Array.isArray(value)) {
-      value.map((el, index) => findFileList(el, getPath(path, index)))
-    }
-
-    if (typeof value === 'object') {
-      if (value instanceof FileList) {
-        promises.push(parseFile(value, path))
-      }
-      Object.keys(value).reduce((res, key) => ({
-        ...res,
-        [key]: findFileList(value[key], getPath(path, key))
-      }), {})
-    }
-  }
-
-  findFileList(data)
-
-  if (promises.length > 0) {
-    let result = data
-    Promise
-    .all(promises)
-    .then(res => res.forEach(([path, value]) => {
-      result = setValue(result, value, path)
-    })
-    ).then(() => cb(result))
-    .catch(e => console.log('error', e))
-  } else {
-    cb(data)
   }
 }

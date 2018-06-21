@@ -20,10 +20,7 @@ export default class FormField extends React.PureComponent {
     if (field.type !== 'object') {
       return required
     }
-    if (required) {
-      return field.required
-    }
-    return []
+    return field.required
   }
 
   render() {

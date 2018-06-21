@@ -1,50 +1,24 @@
 import React from 'react'
-import { Field } from 'react-final-form'
 
-import MaskedTextField from '../MaskedTextField'
-import MaterialTextField from 'material-ui/TextField'
+import TextInput from './TextInput'
+import MaskedTextInput from './MaskedTextInput'
 
-// const getTitle = ({ title, required }) => `${title}${required ? '*' : ''}`
+import { maskedText } from '../../validators'
+import formField from '../../decorators/formField'
+import { TEXT_FIELD } from '../../constants'
 
-export default class TextField extends React.PureComponent {
-  renderField = ({
-    input: { name, onChange, value, ...input },
-    meta: { error, touched, active },
-    mask,
-    title,
-    required,
-  }) => mask ? (
-    <MaskedTextField
-      mask={mask}
-      name={name}
-      title={title}
-      required={required}
-      onChange={onChange}
-      value={value}
-      error={touched && error}
-      focused={active}
-      {...input}
-    />
-  ) : (
-    <MaterialTextField
-      name={name}
-      fullWidth={true}
-      autoComplete={false}
-      floatingLabelText={title}
-      required={required}
-      value={value}
-      onChange={onChange}
-      helperText={touched ? error : undefined}
-      error={error && touched}
-      {...input}
-    />
-  )
-  render() {
-    return (
-      <Field
-        component={this.renderField}
-        {...this.props}
-      />
-    )
+const validate = (value, props) => {
+  if (props.mask && maskedText(props.mask, value)) {
+    return TEXT_FIELD.VALIDATE_MESSAGES.PATTERN_MISMATCH
   }
 }
+
+function TextField(props) {
+  const { mask } = props
+  if (mask) {
+    return <MaskedTextInput { ...props } />
+  }
+  return <TextInput { ...props } />
+}
+
+export default formField({ validate })(TextField)
