@@ -1,17 +1,4 @@
-export const getFullFieldName = ({field, parentName, name}) => {
-  //console.log('getFullFieldName', field, parentName, name);
-  if (field.name){
-    return field.name
-  } else if (!name) {
-    return parentName
-  } else {
-    return parentName ? `${parentName}[${name}]` : name
-  }
-}
-
-export const getText = (defaultTemplates, templates, param, ...args) => (
-  formatString( templates && templates[param] || defaultTemplates[param], ...args )
-)
+import { assocPath } from 'ramda'
 
 export function formatString(str, ...args) {
   const regEx = /{\d}/g
@@ -36,4 +23,62 @@ export const parseDateStr = value => {
   return date
 }
 
-export const formatFieldTitle = (title, required) => `${title}${required ? '*' : ''}`
+const parseFile = (files, path) => {
+  if (files.length > 0) {
+    const { name: filename, size, lastModified: last_modified, type: mime_type } = files[0]
+    return new Promise((resolve) => {
+      const fr = new FileReader()
+      fr.addEventListener('load', () => resolve([
+        path,
+        [{
+          filename,
+          size,
+          last_modified,
+          mime_type,
+          content: fr.result
+        }]
+      ]))
+
+      fr.readAsDataURL(files[0])
+    })
+  }
+  return null
+}
+
+const setValue = (data, value, path) => assocPath(path, value, data)
+
+const getPath = (path, name) => path ? path.concat(name) : [name]
+
+export const convetData = (data, cb) => {
+  const promises = []
+  const findFileList = (value, path) => {
+    if (Array.isArray(value)) {
+      value.map((el, index) => findFileList(el, getPath(path, index)))
+    }
+
+    if (typeof value === 'object') {
+      if (value instanceof FileList) {
+        promises.push(parseFile(value, path))
+      }
+      Object.keys(value).reduce((res, key) => ({
+        ...res,
+        [key]: findFileList(value[key], getPath(path, key))
+      }), {})
+    }
+  }
+
+  findFileList(data)
+
+  if (promises.length > 0) {
+    let result = data
+    Promise
+    .all(promises)
+    .then(res => res.forEach(([path, value]) => {
+      result = setValue(result, value, path)
+    })
+    ).then(() => cb(result))
+    .catch(e => console.log('error', e))
+  } else {
+    cb(data)
+  }
+}
