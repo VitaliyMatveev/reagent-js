@@ -13,7 +13,7 @@ export default class MaskedTextInput extends PureComponent {
   }
 
   render() {
-    const { input, meta, title, mask, pattern } = this.props
+    const { input, meta, title, mask, pattern, placeholder } = this.props
     const { name, value, ...rest } = input
     const { error, touched, active } = meta
     const { muiTheme, muiTheme: { textField } } = this.context
@@ -42,8 +42,8 @@ export default class MaskedTextInput extends PureComponent {
           name={name}
           pattern={pattern}
           value={value}
-          placeholder={active ? '' : ' '}
-          autoComplete={false}
+          placeholder={active ? placeholder || '' : ' '}
+          autoComplete="off"
         />
         <TextFieldUnderline
           muiTheme={muiTheme}

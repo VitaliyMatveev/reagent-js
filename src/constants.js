@@ -29,6 +29,7 @@ export const TIME_RANGE_FIELD = {
 export const NUMBER_FIELD = {
   VALIDATE_MESSAGES: {
     INVALIDATE_NUMBER: 'Значение должно быть числом',
+    NUMBER_IS_TOO_LARGE: 'Значение числа слишком большое',
     MAX: max => `Значение должно быть меньшее, либо равное ${max}`,
     MIN: min => `Значение должно быть большее, либо равное ${min}`,
     INVALIDATE_STEP: (min, max) => (
