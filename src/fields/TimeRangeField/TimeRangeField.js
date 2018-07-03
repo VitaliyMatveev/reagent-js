@@ -24,7 +24,7 @@ const validate = (value) => {
   if (typeof value === 'string') {
     return TIME_RANGE_FIELD.VALIDATE_MESSAGES.PATTERN_MISMATCH
   }
-  if (value.start > value.finish) {
+  if (value && value.start > value.finish) {
     return TIME_RANGE_FIELD.VALIDATE_MESSAGES.INVALID_TIME
   }
 }
