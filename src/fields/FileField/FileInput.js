@@ -5,6 +5,8 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import FileUpload from 'material-ui/svg-icons/file/file-upload'
 import NavigationClose from 'material-ui/svg-icons/navigation/close'
 
+import FieldError from '../../components/FieldError'
+
 import './style.less'
 
 export default class FileInput extends Component{
@@ -24,12 +26,12 @@ export default class FileInput extends Component{
       input,
       input: { name, active, value, onBlur, onFocus },
       title,
+      meta: { touched, error },
       required,
     } = this.props
 
     const { muiTheme, muiTheme: { palette: { primary1Color, secondaryTextColor } } } = this.context
     const showTitle = active || value
-    console.log('value', value)
     return (
       <div
         className='file-upload-widget'
@@ -54,14 +56,22 @@ export default class FileInput extends Component{
           ref='filename'
           value={value && value[0].name || 'Выберите файл для загрузки'}
         />
+        <FieldError
+            text={touched && error}
+            muiTheme={muiTheme}
+            style={{
+              paddingLeft: '3.25rem',
+            }}
+          />
         <FloatingActionButton
           className='file-upload-widget__button'
           mini={true}
           onClick={this.handleClick}
           tabIndex={-1}
+          backgroundColor={touched && error ? 'red' : undefined}
           >
           {
-            value ? <NavigationClose/> : <FileUpload/>
+            value ? <NavigationClose/> : <FileUpload />
           }
         </FloatingActionButton>
         <input
@@ -69,7 +79,6 @@ export default class FileInput extends Component{
           name={ name }
           type='file'
           ref='input'
-          required={ !!required }
           className='file-upload-widget__input'
           onChange={this.handleChange}
         />
