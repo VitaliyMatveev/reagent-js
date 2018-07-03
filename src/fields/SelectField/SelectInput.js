@@ -11,6 +11,13 @@ export default class SelectInput extends Component {
     popupOpened: false,
   }
 
+  componentDidMount() {
+    const { items, input: { value, onChange } } = this.props
+    if (!value) {
+      return onChange(items[0].id)
+    }
+  }
+
   handleKeyDown = event => {
     //console.log(event.keyCode)
     switch (event.keyCode) {
