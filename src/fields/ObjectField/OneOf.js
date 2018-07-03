@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { string, object, arrayOf, shape } from 'prop-types'
+import { string, arrayOf, shape } from 'prop-types'
 import { Field } from 'react-final-form'
 
 import ObjectInput from './ObjectInput'
@@ -25,11 +25,7 @@ export default class OneOf extends Component {
   }
 }
 
-class OneOfSelectInput extends Component {
-  static contextTypes = {
-    reactFinalForm: object,
-  }
-  
+class OneOfSelectInput extends Component { 
   static propTypes = {
     oneOfFieldName: string.isRequired,
     oneOfFieldTitle: string.isRequired,
@@ -42,14 +38,6 @@ class OneOfSelectInput extends Component {
         required: arrayOf(string),
       })
     ).isRequired,
-  }
-
-  componentDidMount() {
-    const { oneOf, input: { name, value } } = this.props
-    if (!value) {
-      const initialValue = oneOf[0].id 
-      this.context.reactFinalForm.change(name, initialValue)
-    }
   }
 
   getSelectItems = () => this.props.oneOf.map(({ id, title }) => ({
