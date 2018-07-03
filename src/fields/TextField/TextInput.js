@@ -3,7 +3,7 @@ import MaterialTextField from 'material-ui/TextField'
 
 export default class TextInput extends PureComponent {
   render() {
-    const { input, meta, title } = this.props
+    const { input, meta, title, disabled } = this.props
     const { name, onChange, value, ...rest } = input
     const { error, touched } = meta
     return (
@@ -15,6 +15,7 @@ export default class TextInput extends PureComponent {
         value={value}
         onChange={onChange}
         errorText={touched && error}
+        disabled={disabled}
         {...rest}
       />
     )
