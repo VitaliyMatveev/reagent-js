@@ -14,9 +14,13 @@ export const maskedText = (mask, value) => {
     '*': '[a-zа-я0-9]',
     '#': '[A-ZА-Я0-9]',
   }
-  const regex = mask.split('').map(char => char in maskChars ? maskChars[char] : char).join('')
-  console.log({regex})
-  return !RegExp(regex).test(value)
+
+  const regex = mask
+    .split('')
+    .map(char => char in maskChars ? maskChars[char] : char)
+    .join('')
+
+  return value && !RegExp(regex).test(value) 
 }
 
 export const date = value => {
