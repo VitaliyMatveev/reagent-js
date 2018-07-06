@@ -63,9 +63,14 @@ class ItemListWithFilter extends React.Component {
     checked: this.props.selectedItems.includes(String(item.id))
   }))
 
+  handleFocus = ({ target }) => {
+    const { length } = target.value;
+    target.setSelectionRange(length, length);
+  }
+
   render() {
     const { items, searchWords, onSearch, onCheck, type } = this.props
-    const Component = type === ITEM_TYPE.RADIO ? RadioItems : CheckboxItems 
+    const Component = type === ITEM_TYPE.RADIO ? RadioItems : CheckboxItems
     return (
       <div style={styles.itemListWithFilter}>
         <TextField
@@ -73,9 +78,10 @@ class ItemListWithFilter extends React.Component {
           ref={ c => c && c.focus && c.focus() }
           value={searchWords}
           onChange={onSearch}
+          onFocus={this.handleFocus}
           fullWidth={true}
         />
-        <Component 
+        <Component
           items={this.getItems()}
           onCheck={onCheck}
         />
