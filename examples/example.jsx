@@ -16,6 +16,12 @@ class App extends Component {
             input: {
               type: 'string',
               title: 'String'
+            },
+            select: {
+              items: Array.from(Array(50)).map((_, index) => ({ id: index, title: `Item ${index}` })),
+              multiple: true,
+              title: 'Field of type "select" with property "multiple: true"',
+              type: 'select',
             }
           }
         }}
