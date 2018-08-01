@@ -25,8 +25,13 @@ class App extends Component {
               title: 'Number',
               type: 'number',
             },
-          },
-          required: ['inputNumber'],
+            select: {
+              items: Array.from(Array(50)).map((_, index) => ({ id: index, title: `Item ${index}` })),
+              multiple: true,
+              title: 'Field of type "select" with property "multiple: true"',
+              type: 'select',
+            }
+          }
         }}
         onSubmit={data => console.log('res:', data)}
       />
