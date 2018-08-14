@@ -3,18 +3,20 @@ import MaterialTextField from 'material-ui/TextField'
 
 export default class TextInput extends PureComponent {
   render() {
-    const { input, meta, title, disabled } = this.props
+    const { disabled, input, meta, multiLine, placeholder, title } = this.props
     const { name, onChange, value, ...rest } = input
     const { error, touched } = meta
     return (
       <MaterialTextField
         name={name}
         fullWidth={true}
-        autoComplete={false}
+        autoComplete="off"
         floatingLabelText={title}
         value={value}
         onChange={onChange}
         errorText={touched && error}
+        hintText={placeholder}
+        multiLine={multiLine}
         disabled={disabled}
         {...rest}
       />

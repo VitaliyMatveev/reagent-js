@@ -17,6 +17,14 @@ class App extends Component {
               type: 'string',
               title: 'String'
             },
+            inputNumber: {
+              max: 10,
+              min: -10,
+              placeholder: 'placeholder',
+              step: 0.01,
+              title: 'Number',
+              type: 'number',
+            },
             select: {
               items: Array.from(Array(50)).map((_, index) => ({ id: index, title: `Item ${index}` })),
               multiple: true,

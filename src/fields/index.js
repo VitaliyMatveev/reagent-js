@@ -11,6 +11,7 @@ import DateField from './DateField'
 import BooleanField from './BooleanField'
 import ArrayField from './ArrayField'
 import RichTextField from './RichTextField'
+import NumberField from './NumberField';
 
 export const fields = {
   string: TextField,
@@ -26,6 +27,7 @@ export const fields = {
   boolean: BooleanField,
   array: ArrayField,
   html: RichTextField,
+  number: NumberField,
 }
 
 export { default } from './Field'
