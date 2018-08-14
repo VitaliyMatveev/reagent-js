@@ -8,6 +8,7 @@ import arrayMutators from 'final-form-arrays'
 
 import Field, { fields } from '../../fields'
 import { convetData } from '../../utils'
+import removeFieldsFromState from '../../mutators/removeFieldsFromState'
 
 import './style.less'
 
@@ -114,7 +115,8 @@ export default class RegentForm extends Component {
     return (
       <Form
         mutators={{
-          ...arrayMutators
+          ...arrayMutators,
+          removeFieldsFromState
         }}
         onSubmit={this.handleSubmit}
         initialValues={value}
