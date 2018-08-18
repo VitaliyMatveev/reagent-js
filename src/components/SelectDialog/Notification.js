@@ -8,7 +8,7 @@ const Notification = ({ totalCount, itemsCount }) => {
     return (
       <ListItem
         key='has_more'
-        secondaryText='По заданному фильтру, ничего не найдено'
+        secondaryText='По заданному фильтру ничего не найдено'
         disabled={true}
       />
     )
@@ -16,7 +16,7 @@ const Notification = ({ totalCount, itemsCount }) => {
     return (
       <ListItem
         key='has_more'
-        secondaryText={formatString('Показаные первые {1} элементов из {2}', itemsCount, totalCount)}
+        secondaryText={formatString('Показаны первые {1} элементов из {2}', itemsCount, totalCount)}
         disabled={true}
       />
     )
