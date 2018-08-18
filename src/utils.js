@@ -49,7 +49,7 @@ const setValue = (data, value, path) => assocPath(path, value, data)
 
 const getPath = (path, name) => path ? path.concat(name) : [name]
 
-export const convetData = (data, cb) => {
+export const convertData = (data, cb) => {
   const promises = []
   const findFileList = (value, path) => {
     if (Array.isArray(value)) {

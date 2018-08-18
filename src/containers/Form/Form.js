@@ -7,7 +7,7 @@ import CloseIcon from 'material-ui/svg-icons/navigation/close'
 import arrayMutators from 'final-form-arrays'
 
 import Field, { fields } from '../../fields'
-import { convetData } from '../../utils'
+import { convertData } from '../../utils'
 import removeFieldsFromState from '../../mutators/removeFieldsFromState'
 
 import './style.less'
@@ -21,7 +21,7 @@ const styles = {
   }
 }
 
-export default class RegentForm extends Component {
+export default class ReagentForm extends Component {
   static defaultProps = {
     direction: 'vertical',
   }
@@ -107,7 +107,7 @@ export default class RegentForm extends Component {
   
   handleSubmit = data => {
     const { onSubmit } = this.props
-    convetData(data, onSubmit)
+    convertData(data, onSubmit)
   }
 
   render () {
