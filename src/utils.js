@@ -52,6 +52,9 @@ const getPath = (path, name) => path ? path.concat(name) : [name]
 export const convertData = (data, cb) => {
   const promises = []
   const findFileList = (value, path) => {
+    if (!value) {
+      return
+    }
     if (Array.isArray(value)) {
       value.map((el, index) => findFileList(el, getPath(path, index)))
     }
