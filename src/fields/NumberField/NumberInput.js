@@ -1,9 +1,9 @@
 import React from 'react';
 
-import TextField from '../TextField';
+import TextInput from '../TextField/TextInput';
 
 export default props => (
   <div className="c-number-field">
-    <TextField {...props} />
+    <TextInput {...props} />
   </div>
 );
