@@ -44,9 +44,8 @@ class OneOfSelectInput extends PureComponent {
     reactFinalForm: object,
   }
 
-  componentWillReceiveProps({ input: { value, onChange }, fieldName }) {
+  componentWillReceiveProps({ input: { value }, fieldName }) {
     const currentValue = this.props.input.value
-    const nextValue = value
     const { removeFieldsFromState } = this.context.reactFinalForm.mutators
 
     if (currentValue && value !== currentValue) {

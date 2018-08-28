@@ -9,6 +9,7 @@ import arrayMutators from 'final-form-arrays'
 import Field, { fields } from '../../fields'
 import { convertData } from '../../utils'
 import removeFieldsFromState from '../../mutators/removeFieldsFromState'
+import removeFieldFromState from '../../mutators/removeFieldFromState'
 
 import './style.less'
 
@@ -116,7 +117,8 @@ export default class ReagentForm extends Component {
       <Form
         mutators={{
           ...arrayMutators,
-          removeFieldsFromState
+          removeFieldsFromState,
+          removeFieldFromState,
         }}
         onSubmit={this.handleSubmit}
         initialValues={value}
