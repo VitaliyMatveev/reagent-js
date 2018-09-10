@@ -19,9 +19,13 @@ export default class ObjectField extends Component {
     name: string,
     title: string,
   }
-  
+
   static contextTypes = {
     reactFinalForm: object,
+  }
+
+  static defaultProps = {
+    properties: {},
   }
 
   componentWillReceiveProps(nextProps) {
