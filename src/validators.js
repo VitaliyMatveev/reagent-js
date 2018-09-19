@@ -1,6 +1,8 @@
 import { parseDateStr } from './utils'
 
-export const required = value => !value || value.toString().trim() === ''
+export const required = value => (
+  [NaN, null, undefined].includes(value) || value.toString().trim() === ''
+);
 export const min = minimum => value => value < minimum
 export const max = maximum => value => value > maximum
 
@@ -12,6 +14,7 @@ export const maskedText = (mask, value) => {
     '*': '[a-zа-я0-9]',
     '#': '[A-ZА-Я0-9]',
   }
+
   const regex = mask
     .split('')
     .map(char => char in maskChars ? maskChars[char] : char)
