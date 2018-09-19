@@ -1,4 +1,4 @@
-import TextInput from './TextInput'
+import TextInput from '../TextField/TextInput'
 
 import formField from '../../decorators/formField'
 import { OKTMO_FIELD } from '../../constants'
@@ -9,4 +9,11 @@ const validate = value => {
   }
 }
 
-export default formField({ validate })(TextInput)
+const parse = (value) => {
+  if (value && value.length > 0) {
+    return value.replace(/\D/g, '').slice(0, 11)
+  }
+  return value;
+};
+
+export default formField({ validate, parse })(TextInput)
