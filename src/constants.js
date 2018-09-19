@@ -26,6 +26,12 @@ export const TIME_RANGE_FIELD = {
   }
 }
 
+export const OKTMO_FIELD = {
+  VALIDATE_MESSAGES: {
+    INVALID_LENGTH: 'ОКТМО должно содержать 8 или 11 знаков',
+  }
+}
+
 export const NUMBER_FIELD = {
   VALIDATE_MESSAGES: {
     INVALIDATE_NUMBER: 'Значение должно быть числом',
