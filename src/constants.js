@@ -25,3 +25,9 @@ export const TIME_RANGE_FIELD = {
     INVALID_TIME: 'Не верный диапазон времени'
   }
 }
+
+export const OKTMO_FIELD = {
+  VALIDATE_MESSAGES: {
+    INVALID_LENGTH: 'ОКТМО должно содержать 8 или 11 знаков',
+  }
+}
