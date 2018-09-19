@@ -13,6 +13,9 @@ export const maskedText = (mask, value) => {
     A: '[A-ZА-Я]',
     '*': '[a-zа-я0-9]',
     '#': '[A-ZА-Я0-9]',
+    '+': '\\+',
+    '(': '\\(',
+    ')': '\\)',
   }
 
   const regex = mask
