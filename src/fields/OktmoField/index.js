@@ -1,1 +1,1 @@
-export { default } from './OgrnField'
+export { default } from './OktmoField'
