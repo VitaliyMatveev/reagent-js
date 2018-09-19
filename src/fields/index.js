@@ -12,7 +12,7 @@ import BooleanField from './BooleanField'
 import ArrayField from './ArrayField'
 import RichTextField from './RichTextField'
 import NumberField from './NumberField';
-import OktmoField from './OktmoField/OktmoField';
+import OktmoField from './OktmoField';
 
 export const fields = {
   string: TextField,
