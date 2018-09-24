@@ -1,7 +1,7 @@
 import formField from '../../decorators/formField';
 import { NUMBER_FIELD } from '../../constants';
 
-import NumberInput from './NumberInput';
+import TextInput from '../TextField/TextInput';
 
 /**
  * Returns digits length of a number
@@ -113,4 +113,4 @@ const validate = (value, { min, max, step }) => {
   return null;
 };
 
-export default formField({ format, parse, validate })(NumberInput);
+export default formField({ format, parse, validate })(TextInput);

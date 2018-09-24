@@ -12,7 +12,7 @@ import BooleanField from './BooleanField'
 import ArrayField from './ArrayField'
 import RichTextField from './RichTextField'
 import NumberField from './NumberField';
-import OktmoField from './OktmoField';
+import catalogFields from './CatalogFields';
 
 export const fields = {
   string: TextField,
@@ -29,7 +29,7 @@ export const fields = {
   array: ArrayField,
   html: RichTextField,
   number: NumberField,
-  oktmo: OktmoField,
+  ...catalogFields
 }
 
 export { default } from './Field'

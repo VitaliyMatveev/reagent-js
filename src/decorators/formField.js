@@ -4,7 +4,7 @@ import { string, bool } from 'prop-types'
 import * as validators from '../validators'
 import { REQUIRED } from '../constants'
 
-export default function formField({ validate, format, parse } = {}) {
+export default function formField({ validate, ...additionalProps } = {}) {
   return WrappedComponent => class FormField extends PureComponent {
     static propTypes = {
       name: string.isRequired,
@@ -32,11 +32,10 @@ export default function formField({ validate, format, parse } = {}) {
         <Field
           {...rest}
           name={name}
-          format={format}
-          parse={parse}
           title={fieldTitle}
           component={WrappedComponent}
           validate={this.validate}
+          {...additionalProps}
         />
       )
     }
