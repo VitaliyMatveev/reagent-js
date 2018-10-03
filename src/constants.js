@@ -1,3 +1,6 @@
+import React from 'react';
+import MaskedTextInput from './fields/TextField/MaskedTextInput';
+
 export const REQUIRED = 'Заполните поле'
 
 export const SELECT_FIELD = {
@@ -35,5 +38,72 @@ export const NUMBER_FIELD = {
     INVALIDATE_STEP: (min, max) => (
       `Неверное значение. Два ближайших возможных значения ${min} и ${max}`
     ),
+  },
+};
+
+export const CATALOG_CONSTANTS = {
+  BIK: {
+    length: 9,
+    message: 'БИК должен состоять из 9 цифр',
+  },
+
+  CHECKING_ACCOUNT: {
+    length: 20,
+    message: 'Расчётный счёт должен состоять из 20 цифр',
+  },
+
+  CORRESPONDENT_ACCOUNT: {
+    length: 20,
+    message: 'Корреспондентский счёт должен состоять из 20 цифр',
+  },
+
+  INN: {
+    length: [10, 12],
+    message: 'ИНН должен состоять из 10 цифр для юридического лица и 12 цифр для ' +
+      'физического лица или индивидуального предпринимателя',
+  },
+
+  KPP: {
+    length: 9,
+    message: 'КПП должен содержать 9 знаков',
+    parse: (value) => {
+      if (value && value.length) {
+        return value.slice(0, 4).replace(/\D/g, '') +
+          value.slice(4, 6).replace(/\W/g, '').toUpperCase() +
+          value.slice(6, 9).replace(/\D/g, '');
+      }
+      return value;
+    }
+  },
+
+  OGRN: {
+    length: 13,
+    message: 'ОГРН должен состоять из 13 цифр',
+  },
+
+  OKATO: {
+    length: 11,
+    message: 'ОКАТО должен состоять из 11 цифр',
+  },
+
+  OKOGU: {
+    length: 7,
+    message: 'ОКОГУ должен состоять из 7 цифр',
+  },
+
+  OKPO: {
+    length: 8,
+    message: 'ОКПО должен состоять из 8 цифр',
+  },
+
+  OKTMO: {
+    length: [8, 11],
+    message: 'ОКТМО должно содержать 8 или 11 знаков',
+  },
+
+  SNILS: {
+    length: 11,
+    message: 'СНИЛС должен состоять из 11 цифр',
+    input: props => <MaskedTextInput mask="111-111-111 11" {...props} />,
   },
 };

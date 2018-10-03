@@ -1,8 +1,10 @@
-import catalogField from './decorators/catalogField';
-import * as CATALOG_FIELDS from './constants';
+import formField from '../../decorators/formField';
+import { lengthParser, lengthValidator } from '../../utils';
+import TextInput from '../TextField/TextInput';
 
-export default Object.entries(CATALOG_FIELDS)
-  .reduce((result, [fieldName, { input, ...rules }]) => {
-    result[fieldName.toLowerCase()] = catalogField(rules)(input);
-    return result;
-  }, {});
+export default ({ format, input, length, message, parse, validate }) =>
+  formField({
+    parse: parse || lengthParser({ length }),
+    validate: validate || lengthValidator({ length, message }),
+    format,
+  })(input || TextInput)

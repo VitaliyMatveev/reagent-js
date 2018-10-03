@@ -12,7 +12,9 @@ import BooleanField from './BooleanField'
 import ArrayField from './ArrayField'
 import RichTextField from './RichTextField'
 import NumberField from './NumberField';
-import catalogFields from './CatalogFields';
+import catalogField from './CatalogFields';
+
+import { CATALOG_CONSTANTS } from '../constants';
 
 export const fields = {
   string: TextField,
@@ -29,7 +31,17 @@ export const fields = {
   array: ArrayField,
   html: RichTextField,
   number: NumberField,
-  ...catalogFields
+  bik: catalogField(CATALOG_CONSTANTS.BIK),
+  checking_account: catalogField(CATALOG_CONSTANTS.CHECKING_ACCOUNT),
+  correspondent_account: catalogField(CATALOG_CONSTANTS.CORRESPONDENT_ACCOUNT),
+  inn: catalogField(CATALOG_CONSTANTS.INN),
+  kpp: catalogField(CATALOG_CONSTANTS.KPP),
+  ogrn: catalogField(CATALOG_CONSTANTS.OGRN),
+  okato: catalogField(CATALOG_CONSTANTS.OKATO),
+  okogu: catalogField(CATALOG_CONSTANTS.OKOGU),
+  okpo: catalogField(CATALOG_CONSTANTS.OKPO),
+  oktmo: catalogField(CATALOG_CONSTANTS.OKTMO),
+  snils: catalogField(CATALOG_CONSTANTS.SNILS),
 }
 
 export { default } from './Field'
