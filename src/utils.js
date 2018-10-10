@@ -9,14 +9,14 @@ export function formatString(str, ...args) {
 
 export const parseDateStr = value => {
   if (!value) return null
-  
+
   if (value.includes('_')) {
     throw new Error('has_underscore')
   }
-  
+
   const dateParts = value.split('.')
   const date = new Date(`${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`)
-  
+
   if (date == 'Invalid Date') {
     throw new Error('invalid_date')
   }
@@ -85,3 +85,30 @@ export const convertData = (data, cb) => {
     cb(data)
   }
 }
+
+export const lengthValidator = ({ length, message, validate }) => (value, name) => {
+  if (value && ![].concat(length).includes(value.length)) {
+    return message;
+  }
+
+  if (validate) {
+    return validate(value, name);
+  }
+
+  return null;
+};
+
+export const lengthParser = ({ length, parse }) => (value, allValues) => {
+  let newVal = value;
+
+  if (value && value.length) {
+    const maxLength = Math.max(...[].concat(length));
+    newVal = newVal.replace(/\D/g, '').slice(0, maxLength);
+  }
+
+  if (parse) {
+    newVal = parse(newVal, allValues);
+  }
+
+  return newVal;
+};
