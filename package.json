@@ -1,6 +1,6 @@
 {
   "name": "reagents-js",
-  "version": "1.1.13-beta",
+  "version": "1.1.14-beta",
   "main": "dist/main.bundle.js",
   "module": "src/index.js",
   "description": "React components set",
