@@ -31,23 +31,20 @@ export default class RichTextInput extends Component {
     this.props.input.onChange(editorStateToValue(editorState))
   }
 
-  _toggleBlockType(blockType) {
-     this._handleChange(
-       RichUtils.toggleBlockType(
-         this.state.editorState,
-         blockType
-       )
-     )
-   }
-
-  _toggleInlineStyle(inlineStyle) {
-    this._handleChange(
-      RichUtils.toggleInlineStyle(
-        this.state.editorState,
-        inlineStyle
-      )
+  toggleBlockType = blockType => this.handleChange(
+    RichUtils.toggleBlockType(
+      this.state.editorState,
+      blockType
     )
-  }
+  )
+
+  toggleInlineStyle = inlineStyle => this.handleChange(
+    RichUtils.toggleInlineStyle(
+      this.state.editorState,
+      inlineStyle
+    )
+  )
+
   render () {
     const { input: { value }, title} = this.props
     const { editorState } = this.state
@@ -67,11 +64,11 @@ export default class RichTextInput extends Component {
         <div className='c-rich-text-field__controls'>
           <BlockStyleControls
             editorState={editorState}
-            onToggle={this._toggleBlockType.bind(this)}
+            onToggle={this.toggleBlockType}
           />
           <InlineStyleControls
             editorState={editorState}
-            onToggle={this._toggleInlineStyle.bind(this)}
+            onToggle={this.toggleInlineStyle}
           />
         </div>
         <DraftEditor
