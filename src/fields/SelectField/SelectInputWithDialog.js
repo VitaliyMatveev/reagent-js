@@ -63,7 +63,7 @@ export default class SelectInputWithDialog extends Component {
   }
 
   handleSelectedItemClick = id => {
-    const { max, input: { value, onChange } } = this.props    
+    const { max, input: { value, onChange } } = this.props
     if (max === 1) {
       onChange(null)
     } else {
@@ -84,12 +84,6 @@ export default class SelectInputWithDialog extends Component {
       )
     )
     //const findedItems = searchWords == '' ? items : items.filter(({title}) => title.toLowerCase().includes(searchWords))
-  }
-  handleShowMore = () => {
-    const { lastViewedIndex } = this.state
-    if (lastViewedIndex < this.props.items.length) {
-      this.setState({lastViewedIndex: lastViewedIndex + 20})
-    }
   }
 
   render () {
@@ -133,7 +127,6 @@ export default class SelectInputWithDialog extends Component {
           searchWords={searchWords}
           totalCount={items.length}
           onClose={this.handleClose}
-          onMore={this.handleShowMore}
           onSearch={this.handleSearch}
           onCheck={this.handleItemCheck}
           type={max === 1 ? 'radio' : 'select'}

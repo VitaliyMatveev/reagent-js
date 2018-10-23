@@ -3,6 +3,9 @@ import { func } from 'prop-types'
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton'
 
 const styles = {
+  radioButtonGroup: {
+    overflow: 'auto',
+  },
   radioButton: {
     paddingTop: 8,
   },
@@ -24,7 +27,10 @@ export default class RadioItems extends PureComponent {
   render() {
     const { onCheck, items } = this.props
     return (
-      <RadioButtonGroup onChange={onCheck}>
+      <RadioButtonGroup
+        onChange={onCheck}
+        style={styles.radioButtonGroup}
+      >
         { items.map(this.renderItem) }
       </RadioButtonGroup>
     )
