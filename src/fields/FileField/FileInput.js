@@ -15,11 +15,13 @@ export default class FileInput extends Component{
   }
 
   handleClick = () => {
-    const { value, onChange } = this.props.input 
-    return value ? onChange(null) : this.refs.input.click()
+    const { value, onChange } = this.props.input
+    return value ? onChange('') : this.refs.input.click()
   }
-  
-  handleChange = ({ target: { files }}) => this.props.input.onChange(files)
+
+  handleChange = ({ target: { files }}) => {
+    this.props.input.onChange(files.length ? files : '');
+  }
 
   render() {
     const {
@@ -29,9 +31,12 @@ export default class FileInput extends Component{
       meta: { touched, error },
       required,
     } = this.props
-
     const { muiTheme, muiTheme: { palette: { primary1Color, secondaryTextColor } } } = this.context
-    const showTitle = active || value
+
+    const file = value && value[0];
+    const showTitle = active || file;
+    const filenameTitle = file && (file.name || file.filename) || 'Выберите файл для загрузки';
+
     return (
       <div
         className='file-upload-widget'
@@ -54,7 +59,7 @@ export default class FileInput extends Component{
           className={`file-upload-widget__file-name ${showTitle ? 'file-upload-widget__file-name_focused' : ''}`}
           tabIndex={-1}
           ref='filename'
-          value={value && value[0].name || 'Выберите файл для загрузки'}
+          value={filenameTitle}
         />
         <FieldError
             text={touched && error}
