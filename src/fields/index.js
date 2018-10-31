@@ -13,6 +13,7 @@ import ArrayField from './ArrayField'
 import RichTextField from './RichTextField'
 import NumberField from './NumberField';
 import catalogField from './CatalogFields';
+import EmailField from './EmailField';
 
 import { CATALOG_CONSTANTS } from '../constants';
 
@@ -42,6 +43,7 @@ export const fields = {
   okpo: catalogField(CATALOG_CONSTANTS.OKPO),
   oktmo: catalogField(CATALOG_CONSTANTS.OKTMO),
   snils: catalogField(CATALOG_CONSTANTS.SNILS),
+  email: EmailField,
 }
 
 export { default } from './Field'

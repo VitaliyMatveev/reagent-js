@@ -16,6 +16,13 @@ export const DATE_FIELD = {
   }
 }
 
+export const EMAIL_FIELD = {
+  REGEX: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+  VALIDATE_MESSAGES: {
+    INVALID: 'Неверный формат'
+  }
+}
+
 export const TEXT_FIELD = {
   VALIDATE_MESSAGES: {
     PATTERN_MISMATCH: 'Неверный формат'
