@@ -105,7 +105,7 @@ export const CATALOG_CONSTANTS = {
   SNILS: {
     input: props => <MaskedTextInput mask="111-111-111 11" {...props} />,
     validate: value => {
-      if (!/\d{3}-\d{3}-\d{3}[ ]\d{2}/.test(value)) {
+      if (value && !/\d{3}-\d{3}-\d{3}[ ]\d{2}/.test(value)) {
         return 'СНИЛС должен состоять из 11 цифр';
       }
       return null;
