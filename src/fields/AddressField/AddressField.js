@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Field } from 'react-final-form'
 import TextField from 'material-ui/TextField'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import SocialLocationCity from 'material-ui/svg-icons/social/location-city'
 import AddressDialog from './AddressDialog'
+import formField from '../../decorators/formField';
 
 const KEY_CODE = {
   ESC: 27,
@@ -22,7 +22,7 @@ const addressPartitionals = {
   appartment: 'Помещение'
 }
 
-class AddressField extends Component {
+class AddressInput extends Component {
   constructor (props) {
     super (props)
     this.state={
@@ -33,8 +33,6 @@ class AddressField extends Component {
   handleOpen = () => this.setState({ open: true })
   
   handleClose = () => this.setState({ open: false }, () => this.refs.text_field.focus())
-
-  parse = (value, name) => console.log('parse', value, name) || value
 
   getAddressObject = e => Object.keys(addressPartitionals).reduce(
     (result, name) => {
@@ -68,32 +66,32 @@ class AddressField extends Component {
     onChange(this.getAddressObject(e))
   }
 
-  renderField = ({
-    title,
-    input: {
-      // name,
-      value,
-      onBlur,
-      onChange,
-    },
-    meta: {
-      error,
-    },
-    required,
-  }) => {
+  render() {
+    const {
+      title,
+      input: {
+        // name,
+        value,
+        onBlur,
+        onChange,
+      },
+      meta: {
+        error,
+        touched,
+      },
+      required,
+    } = this.props
     const { open } = this.state
-    const fieldTitle = `${title}${required ? ' *' : ''}`
     return (
       <div className='c-field c-address-field'>
         <TextField
           className='c-address-field__input'
           onKeyUp={this.handleKeyUp}
           onBlur={onBlur}
-          floatingLabelText={fieldTitle}
+          floatingLabelText={title}
           required={required}
           fullWidth={true}
-          errorText={error}
-          // ref='text_field'
+          errorText={touched && error}
           value={this.formatAddressString(value)}
         />
         <FloatingActionButton
@@ -116,17 +114,6 @@ class AddressField extends Component {
       </div>
     )
   }
-
-  render() {
-    return (
-      <Field
-        component={this.renderField}
-        parse={this.parse}
-        {...this.props}
-      />
-    )
-  }
 }
 
-
-export default AddressField
+export default formField()(AddressInput)
