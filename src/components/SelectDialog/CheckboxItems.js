@@ -27,13 +27,13 @@ export default class CheckboxItems extends PureComponent {
       primaryText={title}
       secondaryText={description}
       leftCheckbox={this.renderCheckbox(id, checked, this.props.onCheck)}
-    />  
+    />
   )
   render() {
     const { items } = this.props
     return (
       <div style={styles.itemList}>
-        { items.splice(0, 30).map(this.renderItem) }
+        { items.map(this.renderItem) }
       </div>
     )
   }

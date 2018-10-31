@@ -12,7 +12,7 @@ const Notification = ({ totalCount, itemsCount }) => {
         disabled={true}
       />
     )
-  } else if (itemsCount > 30) {
+  } else if (itemsCount < totalCount) {
     return (
       <ListItem
         key='has_more'

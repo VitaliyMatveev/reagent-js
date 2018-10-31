@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom';
 import { equals } from 'ramda'
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField'
@@ -34,7 +35,7 @@ const SelectDialog = ({open, title, onClose, ...props}) => (
     open={ open }
     onRequestClose={onClose}
     bodyStyle={styles.dialog}
-    >
+  >
     <ItemListWithFilter
       {...props}
     />
@@ -47,18 +48,51 @@ const ITEM_TYPE = {
 }
 
 class ItemListWithFilter extends React.Component {
+  static propTypes = {
+    items: PropTypes.arrayOf(
+      PropTypes.object,
+    ),
+    type: PropTypes.string,
+  }
+
   static defaultProps = {
+    items: [],
     type: ITEM_TYPE.SELECT
   }
 
-  shouldComponentUpdate(nextProps) {
+  state = {
+    displayed: 30,
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const isItemsUpdated = !equals(nextProps.items, this.props.items);
+
+    if (isItemsUpdated) {
+      this.setState({ displayed: 30 });
+    }
+
     return nextProps.open != this.props.open ||
-      !equals(nextProps.items, this.props.items) ||
+      isItemsUpdated ||
+      !equals(nextState.displayed, this.state.displayed) ||
       !equals(nextProps.selectedItems, this.props.selectedItems) ||
       !equals(nextProps.searchWords, this.props.searchWords)
   }
 
-  getItems = () => this.props.items.slice(0, 30).map(item => ({
+  componentDidMount() {
+    this.items.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    this.items.removeEventListener('scroll', this.handleScroll);
+  }
+
+  getItemsRef = (node) => {
+    if (node) {
+      this.items = ReactDOM.findDOMNode(node);
+    }
+  }
+
+  getItems = () => this.props.items.slice(0, this.state.displayed).map(item => ({
     ...item,
     checked: this.props.selectedItems.includes(String(item.id))
   }))
@@ -68,9 +102,29 @@ class ItemListWithFilter extends React.Component {
     target.setSelectionRange(length, length);
   }
 
+  handleScroll = () => {
+    const {
+      clientHeight,
+      scrollHeight,
+      scrollTop,
+    } = this.items;
+
+    if (scrollHeight - scrollTop === clientHeight) {
+      const { items: { length } } = this.props;
+      const { displayed } = this.state;
+      const nextDisplayed = displayed + 30;
+
+      this.setState({
+        displayed: nextDisplayed < length ? nextDisplayed : length,
+      })
+    }
+  }
+
   render() {
     const { items, searchWords, onSearch, onCheck, type } = this.props
     const Component = type === ITEM_TYPE.RADIO ? RadioItems : CheckboxItems
+    const displayedItems = this.getItems();
+
     return (
       <div style={styles.itemListWithFilter}>
         <TextField
@@ -82,12 +136,13 @@ class ItemListWithFilter extends React.Component {
           fullWidth={true}
         />
         <Component
-          items={this.getItems()}
+          ref={this.getItemsRef}
+          items={displayedItems}
           onCheck={onCheck}
         />
         <Notification
-          totalCount={this.props.totalCount}
-          itemsCount={items.length}
+          itemsCount={displayedItems.length}
+          totalCount={items.length}
         />
       </div>
     )
