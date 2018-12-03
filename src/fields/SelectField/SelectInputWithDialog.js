@@ -43,9 +43,16 @@ export default class SelectInputWithDialog extends Component {
     }
   }
 
-  handleOpen = () => this.setState({ open: true })
+  handleClose = () => {
+    const { isMouseDown } = this.state;
+    let newState = { isMouseDown: false };
 
-  handleClose = () => this.setState({ open: false, searchWords: '' }, this.focus)
+    if (!isMouseDown) {
+      newState = { ...newState, open: false, searchWords: '' };
+    }
+
+    this.setState(newState);
+  }
 
   handleSearch = (e, text) => this.setState({ searchWords: text })
 
@@ -71,9 +78,17 @@ export default class SelectInputWithDialog extends Component {
     }
   }
 
-  handleChange = (e, text) => this.setState({open: true, searchWords: text})
+  handleFocus = (e) => {
+    const { input: { onFocus } } = this.props;
 
-  focus = () => this.refs.input.focus()
+    onFocus(e);
+    e.target.blur();
+    this.setState({ open: true });
+  }
+
+  handleMouseDown = () => {
+    this.setState({ isMouseDown: true });
+  }
 
   filterItems (items, searchWords, selectedItems) {
     return items.filter( item =>
@@ -85,6 +100,7 @@ export default class SelectInputWithDialog extends Component {
     )
     //const findedItems = searchWords == '' ? items : items.filter(({title}) => title.toLowerCase().includes(searchWords))
   }
+
 
   render () {
     const { title, items, required, input, meta, max } = this.props
@@ -102,14 +118,16 @@ export default class SelectInputWithDialog extends Component {
         />
         <div>
           <TextField
+            autoComplete="off"
             name='multiselect_input'
             hintText='поиск...'
             fullWidth
             value=''
-            onChange={this.handleChange}
-            onFocus={onFocus}
+            onFocus={this.handleFocus}
             onBlur={onBlur}
+            onMouseDown={this.handleMouseDown}
             ref='input'
+            style={{ cursor: 'pointer' }}
           />
           <SelectedItemList
             name={name}
