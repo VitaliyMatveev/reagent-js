@@ -1,10 +1,22 @@
 import React, { PureComponent } from 'react'
+import areIntlLocalesSupported from 'intl-locales-supported';
 import DatePickerDialog from 'material-ui/DatePicker/DatePickerDialog'
 import MaskedTextInput from '../TextField/MaskedTextInput'
 import Avatar from 'material-ui/Avatar'
 import Calendar from 'material-ui/svg-icons/action/today'
 
 import { parseDateStr } from '../../utils'
+
+if (global.Intl) {
+  if (!areIntlLocalesSupported('ru-RU')) {
+    const IntlPolyfill = require('intl');
+
+    Intl.NumberFormat = IntlPolyfill.NumberFormat;
+    Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
+  }
+} else {
+  global.Intl = require('intl');
+}
 
 export default class DateInput extends PureComponent {
   handleAccept = date => {
@@ -40,7 +52,7 @@ export default class DateInput extends PureComponent {
     }
   }
 
-  render() { 
+  render() {
     return (
       <div
         className='c-field c-date-field'
@@ -61,7 +73,8 @@ export default class DateInput extends PureComponent {
         <DatePickerDialog
           container='inline'
           mode='landscape'
-          locale='en-US'
+          DateTimeFormat={Intl.DateTimeFormat}
+          locale="ru-RU"
           cancelLabel='Закрыть'
           firstDayOfWeek={1}
           ref='dialog'
