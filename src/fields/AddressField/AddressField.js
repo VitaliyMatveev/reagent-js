@@ -4,6 +4,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import SocialLocationCity from 'material-ui/svg-icons/social/location-city'
 import AddressDialog from './AddressDialog'
 import formField from '../../decorators/formField';
+import { REQUIRED } from '../../constants';
 
 const KEY_CODE = {
   ESC: 27,
@@ -20,6 +21,13 @@ const addressPartitionals = {
   house: 'Дом',
   building: 'Строение',
   appartment: 'Помещение'
+}
+
+const validate = value => {
+  if (!value || Object.keys(value).length === 0) {
+    return REQUIRED
+  }
+  return null
 }
 
 class AddressInput extends Component {
@@ -116,4 +124,4 @@ class AddressInput extends Component {
   }
 }
 
-export default formField()(AddressInput)
+export default formField({ validate })(AddressInput)
