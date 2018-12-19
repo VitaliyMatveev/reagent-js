@@ -78,7 +78,7 @@ const parse = (value) => {
     return parseFloat(value);
   }
 
-  return value;
+  return value || null;
 };
 
 const validate = (value, { min, max, step }) => {

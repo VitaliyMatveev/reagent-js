@@ -25,6 +25,8 @@ export default function formField({ validate, format, parse } = {}) {
       return null
     }
 
+    parse = value => (parse ? parse(value) : value) || null
+
     render() {
       const { title, required, name, ...rest } = this.props
       const fieldTitle = title ? `${title}${required ? '*' : ''}` : null
@@ -33,7 +35,7 @@ export default function formField({ validate, format, parse } = {}) {
           {...rest}
           name={name}
           format={format}
-          parse={parse}
+          parse={this.parse}
           title={fieldTitle}
           component={WrappedComponent}
           validate={this.validate}

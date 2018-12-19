@@ -25,7 +25,6 @@ export default class CheckboxInput extends Component {
     />
   )
 
-  //parse = ()
   render() {
     const {
       input,
