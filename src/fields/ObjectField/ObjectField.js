@@ -6,13 +6,6 @@ import OneOf from './OneOf'
 
 import './style.less'
 
-const compareObjeckPropsKeys = (nextProps, prevProps) => Object.keys(prevProps).filter(key => !(key in nextProps))
-
-const getFieldsToRemove = (nextProps, prevProps) => {
-  const unusedFieldList = compareObjeckPropsKeys(nextProps.properties, prevProps.properties)
-  return unusedFieldList.map(fieldName => `${nextProps.name}.${fieldName}`)
-}
-
 export default class ObjectField extends Component {
   static propTypes = {
     properties: object,
@@ -20,19 +13,8 @@ export default class ObjectField extends Component {
     title: string,
   }
 
-  static contextTypes = {
-    reactFinalForm: object,
-  }
-
   static defaultProps = {
     properties: {},
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { removeFieldFromState } = this.context.reactFinalForm.mutators
-    getFieldsToRemove(nextProps, this.props).forEach(
-      name => removeFieldFromState(name)
-    )
   }
 
   renderInput = () => this.props.oneOf ? (

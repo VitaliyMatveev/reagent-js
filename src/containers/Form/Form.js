@@ -7,9 +7,7 @@ import CloseIcon from 'material-ui/svg-icons/navigation/close'
 import arrayMutators from 'final-form-arrays'
 
 import Field, { fields } from '../../fields'
-import { convertData } from '../../utils'
-import removeFieldsFromState from '../../mutators/removeFieldsFromState'
-import removeFieldFromState from '../../mutators/removeFieldFromState'
+import { getFieldValue } from '../../utils'
 
 import './style.less'
 
@@ -108,7 +106,7 @@ export default class ReagentForm extends Component {
   
   handleSubmit = data => {
     const { onSubmit } = this.props
-    convertData(data, onSubmit)
+    getFieldValue(this.props.schema, data).then(onSubmit)
   }
 
   render () {
@@ -117,8 +115,6 @@ export default class ReagentForm extends Component {
       <Form
         mutators={{
           ...arrayMutators,
-          removeFieldsFromState,
-          removeFieldFromState,
         }}
         onSubmit={this.handleSubmit}
         initialValues={value}
