@@ -1,5 +1,3 @@
-import { assocPath } from 'ramda'
-
 export function formatString(str, ...args) {
   const regEx = /{\d}/g
   return regEx.test(str) ? str.match(regEx).reduce(
@@ -45,45 +43,34 @@ const parseFile = (files, path) => {
   return null
 }
 
-const setValue = (data, value, path) => assocPath(path, value, data)
+const getObjectPropertiesValue = (properties, value) => {
+  const keys = Object.keys(properties)
+  return Promise.all(keys.map(name => getFieldValue(properties[name], value[name]))).then(values => values.reduce(
+    (result, item, index) => {
+      result[keys[index]] = item
+      return result
+    }, {})
+  )
+}
 
-const getPath = (path, name) => path ? path.concat(name) : [name]
-
-export const convertData = (data, cb) => {
-  const promises = []
-  const findFileList = (value, path) => {
-    if (!value) {
-      return
-    }
-    if (Array.isArray(value)) {
-      value.map((el, index) => findFileList(el, getPath(path, index)))
-    }
-
-    if (typeof value === 'object') {
-      if (value instanceof FileList) {
-        promises.push(parseFile(value, path))
-      }
-      Object.keys(value).reduce((res, key) => ({
-        ...res,
-        [key]: findFileList(value[key], getPath(path, key))
-      }), {})
-    }
+export const getFieldValue = async (field, value) => {
+  if (!field.type) {
+    throw new Error('Field must have type property', field)
   }
-
-  findFileList(data)
-
-  if (promises.length > 0) {
-    let result = data
-    Promise
-    .all(promises)
-    .then(res => res.forEach(([path, value]) => {
-      result = setValue(result, value, path)
-    })
-    ).then(() => cb(result))
-    .catch(e => console.log('error', e))
-  } else {
-    cb(data)
+  if (field.type === 'object') {
+    if (field.oneOf) {
+      const { properties } = field.oneOf.find(props => props.id === value[field.oneOfFieldName])
+      return getObjectPropertiesValue(properties, value)
+    }
+    return getObjectPropertiesValue(field.properties, value)
   }
+  if (field.type === 'array') {
+    return await Promise.all(value.map(item => getFieldValue(field.items, item)))
+  }
+  if (field.type === 'file') {
+    return await parseFile(value)
+  }
+  return value
 }
 
 export const lengthValidator = ({ length, message, validate }) => (value, name) => {
