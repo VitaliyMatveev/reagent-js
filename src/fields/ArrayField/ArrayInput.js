@@ -16,11 +16,13 @@ export default class ArrayInput extends PureComponent {
     name: string,
     direction: string,
     title: string,
+    max: number,
     required: bool,
   }
 
   handleAdd = () => {
-    const { items: { type }, fields } = this.props
+    const { items: { type }, fields, max } = this.props
+    if (fields.length >= max) { return null }
     const value = type === 'object' ? {} : ''
     fields.push(value)
   }
@@ -38,7 +40,7 @@ export default class ArrayInput extends PureComponent {
   )
 
   render() {
-    const { fields, direction, title } = this.props
+    const { fields, direction, max, title } = this.props
     return (
       <div className={`c-dynamic-field${direction == 'horizontal' ? ' c-dynamic-field_horizontal' : ''}`}>
         <div style={{
@@ -52,6 +54,7 @@ export default class ArrayInput extends PureComponent {
             secondary={true}
             mini={true}
             onClick={this.handleAdd}
+            disabled={fields.length >= max}
             style={{marginRight: '0.25rem'}}
             >
             <AddIcon/>
