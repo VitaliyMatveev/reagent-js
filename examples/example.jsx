@@ -1,40 +1,55 @@
 import React, { Component } from 'react'
-import Form from '../src'
+import array_field from './arrayField'
+
+const currentPath = window.location.pathname
+
+const examples = {
+  array_field, 
+}
+
+const findCurrenctExample = (currentPath, examples) => {
+  const findedKey = Object.keys(examples).find(key => currentPath.includes(key))
+  if (findedKey) {
+    return examples[findedKey]
+  }
+  return null
+}
 
 class App extends Component {
+  state={
+    result: null
+  }
+  handleSubmit = data => {
+    this.setState({ result: JSON.stringify(data)})
+  }
   render() {
-    return (
-      <Form
-        schema={{
-          type: 'object',
-          properties: {
-            key: {
-              type: 'string',
-              value: 'one',
-              title: 'First'
-            },
-            input: {
-              type: 'string',
-              title: 'String'
-            },
-            inputNumber: {
-              max: 10,
-              min: -10,
-              placeholder: 'placeholder',
-              step: 0.01,
-              title: 'Number',
-              type: 'number',
-            },
-            select: {
-              items: Array.from(Array(50)).map((_, index) => ({ id: index, title: `Item ${index}` })),
-              multiple: true,
-              title: 'Field of type "select" with property "multiple: true"',
-              type: 'select',
-            }
+    const Example = findCurrenctExample(currentPath, examples)
+    if (Example) {
+      const { result } = this.state
+      return <div>
+        <h1>{Example.title}</h1>
+        <a href='/'>go back</a>
+        <Example onSubmit={this.handleSubmit} />
+        {result &&
+        <div>
+          <h2>RESULT</h2>
+          {
+            result
           }
-        }}
-        onSubmit={data => console.log('res:', data)}
-      />
+        </div>
+        }
+      </div>
+    }
+    return (
+      <div>
+        <h1>Select examples</h1>
+        <ul>
+        { Object.entries(examples).map(([key, { title }]) =>
+            <li key={key}><a href={`/${key}`}>{title}</a></li>
+          )
+        }
+      </ul>
+      </div>
     )
   }
 }
