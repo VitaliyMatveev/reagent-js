@@ -113,9 +113,7 @@ export default class ReagentForm extends Component {
     const { value } = this.props
     return (
       <Form
-        mutators={{
-          ...arrayMutators,
-        }}
+        mutators={arrayMutators}
         onSubmit={this.handleSubmit}
         initialValues={value}
         render={this.renderForm}
