@@ -1,1 +1,1 @@
-export { default } from './FieldHint'
+export { default, TYPE } from './FieldHint'

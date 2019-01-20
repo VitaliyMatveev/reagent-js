@@ -65,7 +65,7 @@ export const getFieldValue = async (field, value) => {
     return getObjectPropertiesValue(field.properties, value)
   }
   if (field.type === 'array') {
-    return await Promise.all(value.map(item => getFieldValue(field.items, item)))
+    return await value && Promise.all(value.map(item => getFieldValue(field.items, item)))
   }
   if (field.type === 'file') {
     return await parseFile(value)
