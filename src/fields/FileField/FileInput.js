@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { object } from 'prop-types'
+import { object, string } from 'prop-types'
 import TextFieldLabel from 'material-ui/TextField/TextFieldLabel'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import FileUpload from 'material-ui/svg-icons/file/file-upload'
@@ -14,6 +14,14 @@ export default class FileInput extends Component{
     muiTheme: object,
   }
 
+  static propsTypes = {
+    accept: string,
+  }
+
+  static defaultProps = {
+    accept: null,
+  }
+
   handleClick = () => {
     const { value, onChange } = this.props.input
     return value ? onChange('') : this.refs.input.click()
@@ -25,6 +33,7 @@ export default class FileInput extends Component{
 
   render() {
     const {
+      accept,
       input,
       input: { name, active, value, onBlur, onFocus },
       title,
@@ -80,6 +89,7 @@ export default class FileInput extends Component{
           }
         </FloatingActionButton>
         <input
+          accept={accept}
           id={ name }
           name={ name }
           type='file'
