@@ -9,6 +9,12 @@ import FieldError from '../../components/FieldError'
 
 import './style.less'
 
+const styles = {
+  fieldError: {
+    paddingLeft: '3.25rem',
+  },
+};
+
 export default class FileInput extends Component{
   static contextTypes = {
     muiTheme: object,
@@ -33,7 +39,7 @@ export default class FileInput extends Component{
     } = this.props
     const { muiTheme, muiTheme: { palette: { primary1Color, secondaryTextColor } } } = this.context
 
-    const file = value && value[0];
+    const file = value && value.length ? value[0] : value;
     const showTitle = active || file;
     const filenameTitle = file && (file.name || file.filename) || 'Выберите файл для загрузки';
 
@@ -64,9 +70,7 @@ export default class FileInput extends Component{
         <FieldError
             text={touched && error}
             muiTheme={muiTheme}
-            style={{
-              paddingLeft: '3.25rem',
-            }}
+            style={styles.fieldError}
           />
         <FloatingActionButton
           className='file-upload-widget__button'
