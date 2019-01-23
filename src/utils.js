@@ -21,7 +21,7 @@ export const parseDateStr = value => {
   return date
 }
 
-const readFunc = (readAs) => {
+const getFileReadFunc = (readAs) => {
   switch (readAs) {
     case 'arrayBuffer':
       return 'readAsArrayBuffer';
@@ -49,7 +49,7 @@ const parseFile = ({ readAs }, files) => {
 
     return new Promise((resolve) => {
       const fr = new FileReader()
-      const readMethod = readFunc(readAs);
+      const readMethod = getFileReadFunc(readAs);
 
       if (!fr[readMethod]) {
         throw new Error(`FileReader doesn't support method '${readMethod}'`);

@@ -104,3 +104,21 @@ test('result should contain all array items', () => {
     }
   )
 })
+
+test('correct format file field', () => {
+  const schema = {
+    type: 'file',    
+  }
+  const value = [new File(["test file"], "text.txt")]
+  const meta = [
+    'filename',
+    'size',
+    'last_modified',
+    'mime_type',
+    'content',
+  ]
+  return getFieldValue(schema, value). then( result => {
+    expect(result).toHaveLength(1)
+    meta.map(item => expect(result).toHaveProperty(`0.${item}`))
+  })
+})
