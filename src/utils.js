@@ -20,7 +20,7 @@ export const parseDateStr = value => {
   }
   return date
 }
-
+ 
 const getFileReadFunc = (readAs) => {
   switch (readAs) {
     case 'arrayBuffer':

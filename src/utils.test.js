@@ -1,4 +1,5 @@
 import { getFieldValue } from './utils'
+import { FILE_FIELD } from './constants';
 
 test('result should contain', () => {
   const schema = {
@@ -118,7 +119,65 @@ test('correct format file field', () => {
     'content',
   ]
   return getFieldValue(schema, value). then( result => {
-    expect(result).toHaveLength(1)
-    meta.map(item => expect(result).toHaveProperty(`0.${item}`))
+    meta.map(item => expect(result).toHaveProperty(item))
+  })
+})
+
+test('correct read file as raw', () => {
+  const schema = {
+    type: 'file',
+    readAs: FILE_FIELD.READ_AS.RAW
+  }
+  const value = [new File(["test file"], "text.txt")]
+  return getFieldValue(schema, value). then( result => {
+    expect(result).toEqual(value[0])
+  })
+})
+
+test('correct read file as arrayBuffer', () => {
+  const schema = {
+    type: 'file',
+    readAs: FILE_FIELD.READ_AS.ARRAY_BUFFER
+  }
+  const value = [new File(["test file"], "text.txt")]
+  return getFieldValue(schema, value). then( result => {
+    expect(result).toHaveProperty('content')
+    expect(result.content instanceof ArrayBuffer).toBeTruthy()
+  })
+})
+
+test('correct read file as binaryString', () => {
+  const schema = {
+    type: 'file',
+    readAs: FILE_FIELD.READ_AS.BINARY_STRING
+  }
+  const value = [new File(["test file"], "text.txt")]
+  return getFieldValue(schema, value). then( result => {
+    expect(result).toHaveProperty('content')
+    expect(typeof result.content).toEqual('string')
+  })
+})
+
+test('correct read file as text', () => {
+  const schema = {
+    type: 'file',
+    readAs: FILE_FIELD.READ_AS.TEXT
+  }
+  const value = [new File(["test file"], "text.txt")]
+  return getFieldValue(schema, value). then( result => {
+    expect(result).toHaveProperty('content')
+    expect(typeof result.content).toEqual('string')
+  })
+})
+
+test('correct read file as dataUrl', () => {
+  const schema = {
+    type: 'file',
+    readAs: FILE_FIELD.READ_AS.DATA_URL
+  }
+  const value = [new File(["test file"], "text.txt")]
+  return getFieldValue(schema, value). then( result => {
+    expect(result).toHaveProperty('content')
+    expect(typeof result.content).toEqual('string')
   })
 })
