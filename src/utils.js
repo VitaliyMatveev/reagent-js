@@ -26,9 +26,6 @@ const getFileReadFunc = (readAs) => {
     case 'arrayBuffer':
       return 'readAsArrayBuffer';
 
-    case 'binaryString':
-      return 'readAsBinaryString';
-
     case 'text':
       return 'readAsText';
 
@@ -43,7 +40,7 @@ const parseFile = ({ readAs }, files) => {
   if (!files) return null;
 
   if (files.length) {
-    if (readAs === 'raw') return files[0];
+    if (readAs === 'raw') return files;
 
     const { name: filename, size, lastModified: last_modified, type: mime_type } = files[0]
 
@@ -60,13 +57,13 @@ const parseFile = ({ readAs }, files) => {
           ? fr.result.match(BASE64_FROM_DATA_URL_REGEX)[1]
           : fr.result;
 
-        resolve({
+        resolve([{
           filename,
           size,
           last_modified,
           mime_type,
           content,
-        });
+        }]);
       });
 
       fr[readMethod](files[0]);
