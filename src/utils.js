@@ -21,21 +21,19 @@ export const parseDateStr = value => {
   return date
 }
 
-const parseFile = (files, path) => {
+const parseFile = (files) => {
   if (files.length > 0) {
+    files
     const { name: filename, size, lastModified: last_modified, type: mime_type } = files[0]
     return new Promise((resolve) => {
       const fr = new FileReader()
-      fr.addEventListener('load', () => resolve([
-        path,
-        [{
-          filename,
-          size,
-          last_modified,
-          mime_type,
-          content: fr.result
-        }]
-      ]))
+      fr.addEventListener('load', () => resolve([{
+        filename,
+        size,
+        last_modified,
+        mime_type,
+        content: fr.result
+      }]))
 
       fr.readAsDataURL(files[0])
     })
