@@ -27,6 +27,10 @@ export default class FormField extends React.PureComponent {
     const { field: { type, ...other }, name } = this.props
     const { fields } = this.context
 
+    if (type === 'data') {
+      return null
+    }
+
     if (!(type in fields)) {
       throw new Error(`Не найдено описание поля для типа ${type}. Доступные типы: ${Object.keys(fields).join(', ')}`)
     }

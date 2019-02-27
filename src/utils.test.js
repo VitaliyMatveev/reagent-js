@@ -184,3 +184,27 @@ test('should interrupt recursion if value undefined', () => {
     expect(result).toHaveProperty('first', value.first)
   })
 })
+
+test('should forward value from field with type data to result object', () => {
+  const schema = {
+    type: 'object',
+    properties: {
+      first: {
+        type: 'string'
+      },
+      second: {
+        type: 'object',
+        properties: {
+          child: {
+            type: 'data'
+          }
+        }
+      }
+    }
+  }
+  const value = { second: {child: '12345', undefinedChild: 54321 }}
+  return getFieldValue(schema, value).then(result => {
+    expect(result).toHaveProperty('second.child', value.second.child)
+    expect(result).not.toHaveProperty('second.undefinedChild')
+  })
+})
