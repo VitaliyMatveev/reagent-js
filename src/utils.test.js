@@ -159,3 +159,28 @@ test('correct read file as dataUrl', () => {
     expect(typeof result[0].content).toEqual('string')
   })
 })
+
+test('should interrupt recursion if value undefined', () => {
+  const schema = {
+    type: 'object',
+    properties: {
+      first: {
+        type: 'string'
+      },
+      second: {
+        type: 'object',
+        properties: {
+          child: {
+            type: 'string'
+          }
+        }
+      }
+    }
+  }
+  const value = {
+    first: 'test'
+  }
+  return getFieldValue(schema, value).then(result => {
+    expect(result).toHaveProperty('first', value.first)
+  })
+})
