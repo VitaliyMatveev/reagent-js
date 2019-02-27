@@ -1,4 +1,5 @@
 import { getFieldValue } from './utils'
+import { FILE_FIELD } from './constants';
 
 test('result should contain', () => {
   const schema = {
@@ -105,11 +106,13 @@ test('result should contain all array items', () => {
   )
 })
 
+/* FILE FIELD */
+const value = [new File(["test file"], "text.txt")]
+const schema = {
+  type: 'file',    
+}
+
 test('correct format file field', () => {
-  const schema = {
-    type: 'file',    
-  }
-  const value = [new File(["test file"], "text.txt")]
   const meta = [
     'filename',
     'size',
@@ -120,5 +123,39 @@ test('correct format file field', () => {
   return getFieldValue(schema, value). then( result => {
     expect(result).toHaveLength(1)
     meta.map(item => expect(result).toHaveProperty(`0.${item}`))
+  })
+})
+
+test('correct read file as raw', () => {
+  schema.readAs = FILE_FIELD.READ_AS.RAW
+  return getFieldValue(schema, value). then( result => {
+    expect(result[0]).toEqual(value[0])
+  })
+})
+
+test('correct read file as arrayBuffer', () => {
+  schema.readAs = FILE_FIELD.READ_AS.ARRAY_BUFFER
+  
+  return getFieldValue(schema, value). then( result => {
+    expect(result).toHaveProperty('0.content')
+    expect(result[0].content instanceof ArrayBuffer).toBeTruthy()
+  })
+})
+
+test('correct read file as text', () => {
+  schema.readAs = FILE_FIELD.READ_AS.TEXT
+
+  return getFieldValue(schema, value). then( result => {
+    expect(result).toHaveProperty('0.content')
+    expect(typeof result[0].content).toEqual('string')
+  })
+})
+
+test('correct read file as dataUrl', () => {
+  schema.readAs = FILE_FIELD.READ_AS.DATA_URL
+  
+  return getFieldValue(schema, value). then( result => {
+    expect(result).toHaveProperty('0.content')
+    expect(typeof result[0].content).toEqual('string')
   })
 })

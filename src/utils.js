@@ -20,25 +20,57 @@ export const parseDateStr = value => {
   }
   return date
 }
+ 
+const getFileReadFunc = (readAs) => {
+  switch (readAs) {
+    case 'arrayBuffer':
+      return 'readAsArrayBuffer';
 
-const parseFile = (files) => {
-  if (files.length > 0) {
-    files
+    case 'text':
+      return 'readAsText';
+
+    default:
+      return 'readAsDataURL';
+  }
+}
+
+const BASE64_FROM_DATA_URL_REGEX = /^data:(?:[-\w]+\/[-\w\+\.]+)?;base64,(.*)$/m
+
+const parseFile = ({ readAs }, files) => {
+  if (!files) return null;
+
+  if (files.length) {
+    if (readAs === 'raw') return files;
+
     const { name: filename, size, lastModified: last_modified, type: mime_type } = files[0]
+
     return new Promise((resolve) => {
       const fr = new FileReader()
-      fr.addEventListener('load', () => resolve([{
-        filename,
-        size,
-        last_modified,
-        mime_type,
-        content: fr.result
-      }]))
+      const readMethod = getFileReadFunc(readAs);
 
-      fr.readAsDataURL(files[0])
+      if (!fr[readMethod]) {
+        throw new Error(`FileReader doesn't support method '${readMethod}'`);
+      }
+
+      fr.addEventListener('load', () => {
+        const content = readAs === 'base64'
+          ? fr.result.match(BASE64_FROM_DATA_URL_REGEX)[1]
+          : fr.result;
+
+        resolve([{
+          filename,
+          size,
+          last_modified,
+          mime_type,
+          content,
+        }]);
+      });
+
+      fr[readMethod](files[0]);
     })
   }
-  return null
+
+  return files;
 }
 
 const getObjectPropertiesValue = (properties, value) => {
@@ -66,7 +98,7 @@ export const getFieldValue = async (field, value) => {
     return await value && Promise.all(value.map(item => getFieldValue(field.items, item)))
   }
   if (field.type === 'file') {
-    return await parseFile(value)
+    return await parseFile(field, value);
   }
   return value
 }

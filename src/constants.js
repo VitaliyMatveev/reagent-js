@@ -127,3 +127,12 @@ export const ARRAY_FIELD = {
   },
   MAX_LIMIT_REACHED: 'Добавлено максимальное количество элементов',
 }
+
+export const FILE_FIELD = {
+  READ_AS: {
+    ARRAY_BUFFER: 'arrayBuffer',
+    TEXT: 'text',
+    DATA_URL: 'dataUrl',
+    RAW: 'raw',
+  }
+}
