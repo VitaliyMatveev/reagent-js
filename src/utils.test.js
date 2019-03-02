@@ -69,6 +69,45 @@ test('result should contain only one variant of oneOf', () => {
   )
 })
 
+test('result should contain oneOf key field in result', () => {
+  const schema = {
+    type: 'object',
+    oneOfFieldName: 'variant',
+    oneOf: [{
+      type: 'object',
+      id: 'first',
+      properties: {
+        first: {
+          type: 'string'
+        },
+        third: {
+          type: 'string'
+        }
+      }
+    }, {
+      type: 'object',
+      id: 'second',
+      properties: {
+        second: {
+          type: 'string'
+        }
+      }
+    }]
+  }
+
+  const value = {
+    variant: 'first',
+    first: 'test first 2',
+    
+  }
+
+  return getFieldValue(schema, value).then(
+    result => {
+      expect(result).toHaveProperty('variant', value.variant)
+    }
+  )
+})
+
 test('result should contain all array items', () => {
   const schema = {
     type: 'array',

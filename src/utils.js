@@ -93,7 +93,7 @@ export const getFieldValue = async (field, value) => {
   if (field.type === 'object') {
     if (field.oneOf) {
       const { properties } = field.oneOf.find(props => props.id === value[field.oneOfFieldName])
-      return getObjectPropertiesValue(properties, value)
+      return getObjectPropertiesValue({...properties, [field.oneOfFieldName]: { type: 'string'}}, value)
     }
     return getObjectPropertiesValue(field.properties, value)
   }
