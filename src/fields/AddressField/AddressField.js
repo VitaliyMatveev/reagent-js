@@ -23,8 +23,8 @@ const addressPartitionals = {
   appartment: 'Помещение'
 }
 
-const validate = value => {
-  if (!value || Object.keys(value).length === 0) {
+const validate = (value, {required}) => {
+  if (required && (!value || Object.keys(value).length === 0)) {
     return REQUIRED
   }
   return null

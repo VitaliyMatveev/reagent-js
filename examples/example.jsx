@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import array_field from './arrayField'
+import commonFields from './commonFields'
 
 const currentPath = window.location.pathname
 
 const examples = {
-  array_field, 
+  array_field,
+  commonFields,
 }
 
 const findCurrenctExample = (currentPath, examples) => {
