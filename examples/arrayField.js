@@ -23,8 +23,13 @@ const FormWithArrays = ({ onSubmit }) =>
             type: 'string',
             title: 'Array item'
           }
+        },
+        requiredField: {
+          type: 'array',
+          title: 'Required array field'
         }
-      }
+      },
+      required: ['requiredField']
     }}
     onSubmit={onSubmit}
   />

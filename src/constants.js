@@ -124,6 +124,7 @@ export const ARRAY_FIELD = {
   VALIDATE_MESSAGES: {
     MAX: max => `Должно быть меньше либо равно ${max} элементов`,
     MIN: min => `Должно быть более ${min} элементов`,
+    REQUIRED,
   },
   MAX_LIMIT_REACHED: 'Добавлено максимальное количество элементов',
 }
