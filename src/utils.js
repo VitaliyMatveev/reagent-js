@@ -85,7 +85,7 @@ const getObjectPropertiesValue = (properties, value) => {
 
 export const getFieldValue = async (field, value) => {
   if (!value) {
-    return
+    return null
   }
   if (!field.type) {
     throw new Error('Field must have type property', field)
